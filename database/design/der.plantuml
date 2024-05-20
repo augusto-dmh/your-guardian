@@ -1,0 +1,98 @@
+@startuml DER
+
+entity User {
+    id BIGINT UNSIGNED <<PK>>
+    firstName VARCHAR(255)
+    lastName VARCHAR(255)
+    birthdate DATE
+    email VARCHAR(255) <<UK>>
+    password TEXT
+    isAdmin BOOLEAN
+    created_at DATE
+    updated_at DATE
+    --
+}
+
+entity Wallet {
+    id BIGINT UNSIGNED <<PK>>
+    user_id BIGINT UNSIGNED <<FK>> <<UK>>
+    balance DECIMAL(10, 2)
+    created_at DATE
+    updated_at DATE
+    --
+}
+
+entity Transaction {
+    id BIGINT UNSIGNED <<PK>>
+    wallet_id BIGINT UNSIGNED <<FK>>
+    transaction_category_id BIGINT UNSIGNED <<FK>>
+    amount DECIMAL(10, 2)
+    type ENUM('income', 'expense')
+    created_at DATE
+    updated_at DATE
+    --
+}
+
+entity Bill {
+    id BIGINT UNSIGNED <<PK>>
+    user_id BIGINT UNSIGNED <<FK>>
+    title VARCHAR(255)
+    description TEXT
+    amount DECIMAL(10, 2)
+    due_date DATE
+    status ENUM('pending', 'paid', 'overdue')
+    created_at DATE
+    updated_at DATE
+    --
+}
+
+entity Notification {
+    id BIGINT UNSIGNED <<PK>>
+    user_id BIGINT UNSIGNED <<FK>>
+    title VARCHAR(255)
+    message TEXT
+    read BOOLEAN
+    created_at DATE
+    updated_at DATE
+    --
+}
+
+entity Task {
+    id BIGINT UNSIGNED <<PK>>
+    user_id BIGINT UNSIGNED <<FK>>
+    task_category_id BIGINT UNSIGNED <<FK>>
+    title VARCHAR(255)
+    description TEXT
+    due_date DATE
+    status ENUM('pending', 'completed', 'failed')
+    created_at DATE
+    updated_at DATE
+    --
+}
+
+entity Transaction_Category {
+    id BIGINT UNSIGNED <<PK>>
+    name VARCHAR(255)
+    created_at DATE
+    updated_at DATE
+    --
+}
+
+entity Task_Category {
+    id BIGINT UNSIGNED <<PK>>
+    name VARCHAR(255)
+    created_at DATE
+    updated_at DATE
+    --
+}
+
+
+User ||--|| Wallet
+Wallet ||--o{ Transaction
+User ||--o{ Bill
+User ||--o{ Notification
+User ||--o{ Task
+Task_Category ||--o{ Task
+Transaction_Category ||--o{ Transaction
+
+@enduml
