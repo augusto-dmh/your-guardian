@@ -25,6 +25,14 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
     ];
 
+    public static $rules = [
+        'first_name' => 'required|string|max:255',
+        'last_name' => 'required|string|max:255',
+        'birthdate' => 'required|date',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => 'required|string|min:8',
+    ];
+
     /**
      * The attributes that should be hidden for serialization.
      *

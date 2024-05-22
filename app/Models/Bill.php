@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Models;
+
+use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class Bill extends Model
+{
+    use HasFactory;
+
+    protected $table = 'bills';
+
+    protected $fillable = [
+        'user_id',
+        'title',
+        'description',
+        'amount',
+        'due_date',
+        'status',
+    ];
+
+    public static $rules = [
+        'user_id' => 'required|exists:users,id',
+        'title' => 'required|string|max:255',
+        'description' => 'required|string|max:65535',
+        'amount' => 'required|numeric',
+        'due_date' => 'required|date',
+        'status' => 'required|string|in:unpaid,paid,overdue',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+}
