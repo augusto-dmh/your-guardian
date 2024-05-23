@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS wallets (
     id BIGINT UNSIGNED,
-    user_id BIGINT UNSIGNED,
+    user_id BIGINT UNSIGNED ON DELETE CASCADE,
     balance DECIMAL(10, 2),
     created_at DATE,
     updated_at DATE
@@ -29,8 +29,8 @@ CREATE TABLE IF NOT EXISTS transaction_categories (
 
 CREATE TABLE IF NOT EXISTS transactions (
     id BIGINT UNSIGNED,
-    wallet_id BIGINT UNSIGNED,
-    transaction_category_id BIGINT UNSIGNED,
+    wallet_id BIGINT UNSIGNED ON DELETE CASCADE,
+    transaction_category_id BIGINT UNSIGNED ON DELETE SET NULL,
     amount DECIMAL(10, 2),
     type ENUM('income', 'expense'),
     created_at DATE,
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS transactions (
 
 CREATE TABLE IF NOT EXISTS bills (
     id BIGINT UNSIGNED,
-    user_id BIGINT UNSIGNED,
+    user_id BIGINT UNSIGNED ON DELETE CASCADE,
     title VARCHAR(255),
     description TEXT,
     amount DECIMAL(10, 2),
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS bills (
 
 CREATE TABLE IF NOT EXISTS notifications (
     id BIGINT UNSIGNED,
-    user_id BIGINT UNSIGNED,
+    user_id BIGINT UNSIGNED ON DELETE CASCADE,
     title VARCHAR(255),
     message VARCHAR(255),
     is_read BOOLEAN,
@@ -68,8 +68,8 @@ CREATE TABLE IF NOT EXISTS task_categories (
 
 CREATE TABLE IF NOT EXISTS tasks (
     id BIGINT UNSIGNED,
-    user_id BIGINT UNSIGNED,
-    task_category_id BIGINT UNSIGNED,
+    user_id BIGINT UNSIGNED ON DELETE CASCADE,
+    task_category_id BIGINT UNSIGNED ON DELETE SET NULL,
     title VARCHAR(255),
     description TEXT,
     due_date DATE,

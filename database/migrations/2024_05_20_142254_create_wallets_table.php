@@ -14,7 +14,7 @@ return new class extends Migration
             $table->decimal('balance', 10, 2);
             $table->timestamps();
 
-            $table->foreign('user_id', 'fk_wallets_user_id')->references('id')->on('users');
+            $table->foreign('user_id', 'fk_wallets_user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

@@ -19,8 +19,8 @@ return new class extends Migration
             $table->enum('status', ['pending', 'completed', 'failed']);
             $table->timestamps();
 
-            $table->foreign('user_id', 'fk_tasks_user_id')->references('id')->on('users');
-            $table->foreign('task_category_id', 'fk_tasks_task_category_id')->references('id')->on('task_categories');
+            $table->foreign('user_id', 'fk_tasks_user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('task_category_id', 'fk_tasks_task_category_id')->references('id')->on('task_categories')->onDelete('set null');
         });
     }
 

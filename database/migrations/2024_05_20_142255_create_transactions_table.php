@@ -17,8 +17,8 @@ return new class extends Migration
             $table->enum('type', ['income', 'expense']);
             $table->timestamps();
 
-            $table->foreign('wallet_id', 'fk_transactions_wallet_id')->references('id')->on('wallets');
-            $table->foreign('transaction_category_id', 'fk_transactions_transaction_category_id')->references('id')->on('transaction_categories');
+            $table->foreign('wallet_id', 'fk_transactions_wallet_id')->references('id')->on('wallets')->onDelete('cascade');
+            $table->foreign('transaction_category_id', 'fk_transactions_transaction_category_id')->references('id')->on('transaction_categories')->onDelete('set null');
         });
     }
 

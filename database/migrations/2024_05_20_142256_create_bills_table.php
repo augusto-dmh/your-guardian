@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('status', ['pending', 'paid', 'overdue']);
             $table->timestamps();
 
-            $table->foreign('user_id', 'fk_bills_user_id')->references('id')->on('users');
+            $table->foreign('user_id', 'fk_bills_user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
