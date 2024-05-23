@@ -6,7 +6,7 @@ entity User {
     lastName VARCHAR(255)
     birthdate DATE
     email VARCHAR(255) <<UK>>
-    password TEXT
+    password VARCHAR(255)
     isAdmin BOOLEAN
     created_at DATE
     updated_at DATE
@@ -50,7 +50,7 @@ entity Notification {
     id BIGINT UNSIGNED <<PK>>
     user_id BIGINT UNSIGNED <<FK>>
     title VARCHAR(255)
-    message TEXT
+    message VARCHAR(255)
     read BOOLEAN
     created_at DATE
     updated_at DATE
@@ -70,7 +70,7 @@ entity Task {
     --
 }
 
-entity Transaction_Category {
+entity TransactionCategory {
     id BIGINT UNSIGNED <<PK>>
     name VARCHAR(255)
     created_at DATE
@@ -78,7 +78,7 @@ entity Transaction_Category {
     --
 }
 
-entity Task_Category {
+entity TaskCategory {
     id BIGINT UNSIGNED <<PK>>
     name VARCHAR(255)
     created_at DATE
@@ -92,7 +92,7 @@ Wallet ||--o{ Transaction
 User ||--o{ Bill
 User ||--o{ Notification
 User ||--o{ Task
-Task_Category ||--o{ Task
-Transaction_Category ||--o{ Transaction
+TaskCategory ||--o{ Task
+TransactionCategory ||--o{ Transaction
 
 @enduml
