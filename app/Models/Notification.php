@@ -21,6 +21,10 @@ class Notification extends Model
         'is_read' => 'required|boolean',
     ];
 
+    protected $attributes = [
+        'is_read' => false,
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

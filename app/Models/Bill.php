@@ -21,6 +21,10 @@ class Bill extends Model
         'status',
     ];
 
+    protected $attributes = [
+        'status' => 'pending',
+    ];
+
     public static $rules = [
         'user_id' => 'required|exists:users,id',
         'title' => 'required|string|max:255',

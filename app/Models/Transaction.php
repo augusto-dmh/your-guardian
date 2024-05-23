@@ -28,6 +28,10 @@ class Transaction extends Model
         'type' => 'required|string|in:income,expense',
     ];
 
+    protected $attributes = [
+        'type' => 'expense',
+    ];
+
     public function wallet()
     {
         return $this->belongsTo(Wallet::class);

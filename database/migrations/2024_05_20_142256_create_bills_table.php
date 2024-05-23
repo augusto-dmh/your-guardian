@@ -12,9 +12,11 @@ return new class extends Migration {
             $table->unsignedBigInteger('user_id');
             $table->string('title');
             $table->text('description');
-            $table->decimal('amount', 10, 2);
+            $table->decimal('amount', 10, 2)->default(0);
             $table->date('due_date');
-            $table->enum('status', ['pending', 'paid', 'overdue']);
+            $table
+                ->enum('status', ['pending', 'paid', 'overdue'])
+                ->default('pending');
             $table->timestamps();
 
             $table

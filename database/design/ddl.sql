@@ -7,34 +7,34 @@ CREATE TABLE IF NOT EXISTS users (
     birthdate DATE,
     email VARCHAR(255),
     password VARCHAR(255),
-    is_admin BOOLEAN,
-    created_at DATE,
-    updated_at DATE
+    is_admin BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS wallets (
     id BIGINT UNSIGNED,
     user_id BIGINT UNSIGNED ON DELETE CASCADE,
-    balance DECIMAL(10, 2),
-    created_at DATE,
-    updated_at DATE
+    balance DECIMAL(10, 2) DEFAULT 0.00,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS transaction_categories (
     id BIGINT UNSIGNED,
     name VARCHAR(255),
-    created_at DATE,
-    updated_at DATE
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS transactions (
     id BIGINT UNSIGNED,
     wallet_id BIGINT UNSIGNED ON DELETE CASCADE,
     transaction_category_id BIGINT UNSIGNED ON DELETE SET NULL,
-    amount DECIMAL(10, 2),
-    type ENUM('income', 'expense'),
-    created_at DATE,
-    updated_at DATE
+    amount DECIMAL(10, 2) DEFAULT 0.00,
+    type ENUM('income', 'expense') DEFAULT 'expense',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS bills (
@@ -42,11 +42,11 @@ CREATE TABLE IF NOT EXISTS bills (
     user_id BIGINT UNSIGNED ON DELETE CASCADE,
     title VARCHAR(255),
     description TEXT,
-    amount DECIMAL(10, 2),
+    amount DECIMAL(10, 2) DEFAULT 0.00,
     due_date DATE,
-    status ENUM('pending', 'paid', 'overdue'),
-    created_at DATE,
-    updated_at DATE
+    status ENUM('pending', 'paid', 'overdue') DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS notifications (
@@ -54,16 +54,16 @@ CREATE TABLE IF NOT EXISTS notifications (
     user_id BIGINT UNSIGNED ON DELETE CASCADE,
     title VARCHAR(255),
     message VARCHAR(255),
-    is_read BOOLEAN,
-    created_at DATE,
-    updated_at DATE
+    is_read BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS task_categories (
     id BIGINT UNSIGNED,
     name VARCHAR(255),
-    created_at DATE,
-    updated_at DATE
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS tasks (
@@ -73,9 +73,9 @@ CREATE TABLE IF NOT EXISTS tasks (
     title VARCHAR(255),
     description TEXT,
     due_date DATE,
-    status ENUM('pending', 'completed', 'failed'),
-    created_at DATE,
-    updated_at DATE
+    status ENUM('pending', 'completed', 'failed') DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 ALTER TABLE users

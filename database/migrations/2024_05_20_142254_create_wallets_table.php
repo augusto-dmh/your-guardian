@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('wallets', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->unique('uk_wallets_user_id');
-            $table->decimal('balance', 10, 2);
+            $table->decimal('balance', 10, 2)->default(0);
             $table->timestamps();
 
             $table

@@ -11,8 +11,8 @@ return new class extends Migration {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('wallet_id');
             $table->unsignedBigInteger('transaction_category_id');
-            $table->decimal('amount', 10, 2);
-            $table->enum('type', ['income', 'expense']);
+            $table->decimal('amount', 10, 2)->default(0);
+            $table->enum('type', ['income', 'expense'])->default('expense');
             $table->timestamps();
 
             $table
