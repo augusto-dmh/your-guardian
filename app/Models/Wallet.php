@@ -17,7 +17,7 @@ class Wallet extends Model
 
     public static $rules = [
         'user_id' => 'required|exists:users,id',
-        'balance' => 'required|numeric',
+        'balance' => 'numeric',
     ];
 
     public function user()

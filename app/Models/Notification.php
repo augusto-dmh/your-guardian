@@ -17,8 +17,8 @@ class Notification extends Model
     public static $rules = [
         'user_id' => 'required|exists:users,id',
         'title' => 'required|string|max:255',
-        'message' => 'required|string|max:255',
-        'is_read' => 'required|boolean',
+        'message' => 'string|max:255',
+        'is_read' => 'boolean',
     ];
 
     protected $attributes = [

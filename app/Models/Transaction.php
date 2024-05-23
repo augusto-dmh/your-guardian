@@ -22,10 +22,9 @@ class Transaction extends Model
 
     public static $rules = [
         'wallet_id' => 'required|exists:wallets,id',
-        'transaction_category_id' =>
-            'required|exists:transaction_categories,id',
+        'transaction_category_id' => 'exists:transaction_categories,id',
         'amount' => 'required|numeric',
-        'type' => 'required|string|in:income,expense',
+        'type' => 'string|in:income,expense',
     ];
 
     protected $attributes = [

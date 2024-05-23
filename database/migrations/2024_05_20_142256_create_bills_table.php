@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->string('title');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->decimal('amount', 10, 2)->default(0);
             $table->date('due_date');
             $table

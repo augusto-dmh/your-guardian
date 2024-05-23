@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->string('title');
-            $table->string('message');
+            $table->string('message')->nullable();
             $table->boolean('is_read')->default(false);
             $table->timestamps();
 

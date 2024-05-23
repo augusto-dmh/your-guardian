@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('task_category_id');
             $table->string('title');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->date('due_date');
             $table
                 ->enum('status', ['pending', 'completed', 'failed'])

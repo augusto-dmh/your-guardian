@@ -24,11 +24,11 @@ class Task extends Model
 
     public static $rules = [
         'user_id' => 'required|exists:users,id',
-        'task_category_id' => 'required|exists:task_categories,id',
+        'task_category_id' => 'exists:task_categories,id',
         'title' => 'required|string|max:255',
-        'description' => 'required|string|max:65535',
+        'description' => 'string|max:65535',
         'due_date' => 'required|date',
-        'status' => 'required|string|in:pending,completed,failed',
+        'status' => 'string|in:pending,completed,failed',
     ];
 
     protected $attributes = [
