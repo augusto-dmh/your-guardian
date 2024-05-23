@@ -12,12 +12,7 @@ class Notification extends Model
 
     protected $table = 'notifications';
 
-    protected $fillable = [
-        'user_id',
-        'title',
-        'message',
-        'is_read',
-    ];
+    protected $fillable = ['user_id', 'title', 'message', 'is_read'];
 
     public static $rules = [
         'user_id' => 'required|exists:users,id',

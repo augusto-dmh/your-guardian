@@ -60,10 +60,17 @@ class ResetPasswordNotification extends Notification
     public function toMail($notifiable)
     {
         if (static::$toMailCallback) {
-            return call_user_func(static::$toMailCallback, $notifiable, $this->token);
+            return call_user_func(
+                static::$toMailCallback,
+                $notifiable,
+                $this->token
+            );
         }
 
-        return $this->buildMailMessage($this->resetUrl($notifiable), $notifiable);
+        return $this->buildMailMessage(
+            $this->resetUrl($notifiable),
+            $notifiable
+        );
     }
 
     /**
@@ -74,15 +81,34 @@ class ResetPasswordNotification extends Notification
      */
     protected function buildMailMessage($url, $notifiable)
     {
-        return (new MailMessage)
+        return (new MailMessage())
             ->from('app.yourguardian@gmail.com', 'YourGuardian')
             ->salutation('Best regards, Your Guardian.')
             ->greeting(Lang::get("Hello $notifiable->first_name"))
             ->subject(Lang::get('Reset Password Notification'))
-            ->line(Lang::get('We received a password reset request for your account.'))
+            ->line(
+                Lang::get(
+                    'We received a password reset request for your account.'
+                )
+            )
             ->action(Lang::get('Reset Password'), $url)
-            ->line(Lang::get('This password reset link will expire in :count minutes.', ['count' => config('auth.passwords.' . config('auth.defaults.passwords') . '.expire')]))
-            ->line(Lang::get('If you did not request a password reset, no further action is required.'));
+            ->line(
+                Lang::get(
+                    'This password reset link will expire in :count minutes.',
+                    [
+                        'count' => config(
+                            'auth.passwords.' .
+                                config('auth.defaults.passwords') .
+                                '.expire'
+                        ),
+                    ]
+                )
+            )
+            ->line(
+                Lang::get(
+                    'If you did not request a password reset, no further action is required.'
+                )
+            );
     }
 
     /**
@@ -94,13 +120,23 @@ class ResetPasswordNotification extends Notification
     protected function resetUrl($notifiable)
     {
         if (static::$createUrlCallback) {
-            return call_user_func(static::$createUrlCallback, $notifiable, $this->token);
+            return call_user_func(
+                static::$createUrlCallback,
+                $notifiable,
+                $this->token
+            );
         }
 
-        return url(route('password.reset', [
-            'token' => $this->token,
-            'email' => $notifiable->getEmailForPasswordReset(),
-        ], false));
+        return url(
+            route(
+                'password.reset',
+                [
+                    'token' => $this->token,
+                    'email' => $notifiable->getEmailForPasswordReset(),
+                ],
+                false
+            )
+        );
     }
 
     /**

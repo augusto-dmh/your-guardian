@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Mailer
@@ -87,20 +86,13 @@ return [
 
         'failover' => [
             'transport' => 'failover',
-            'mailers' => [
-                'smtp',
-                'log',
-            ],
+            'mailers' => ['smtp', 'log'],
         ],
 
         'roundrobin' => [
             'transport' => 'roundrobin',
-            'mailers' => [
-                'ses',
-                'postmark',
-            ],
+            'mailers' => ['ses', 'postmark'],
         ],
-
     ],
 
     /*
@@ -118,5 +110,4 @@ return [
         'address' => env('MAIL_FROM_ADDRESS', 'app.yourguardian@gmail.com'),
         'name' => env('MAIL_FROM_NAME', 'YourGuardian'),
     ],
-
 ];

@@ -13,10 +13,7 @@ class Wallet extends Model
 
     protected $table = 'wallets';
 
-    protected $fillable = [
-        'user_id',
-        'balance',
-    ];
+    protected $fillable = ['user_id', 'balance'];
 
     public static $rules = [
         'user_id' => 'required|exists:users,id',

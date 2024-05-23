@@ -23,14 +23,22 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         VerifyEmail::toMailUsing(function (object $notifiable, string $url) {
-            return (new MailMessage)
+            return (new MailMessage())
                 ->from('app.yourguardian@gmail.com', 'YourGuardian')
                 ->salutation('Best regards, Your Guardian.')
                 ->greeting(Lang::get("Hello $notifiable->first_name"))
                 ->subject(Lang::get('Verify Email Address'))
-                ->line(Lang::get('Please click the button below to verify your email address.'))
+                ->line(
+                    Lang::get(
+                        'Please click the button below to verify your email address.'
+                    )
+                )
                 ->action(Lang::get('Verify Email Address'), $url)
-                ->line(Lang::get('If you did not create an account, no further action is required.'));
+                ->line(
+                    Lang::get(
+                        'If you did not create an account, no further action is required.'
+                    )
+                );
         });
     }
 }
