@@ -25,6 +25,7 @@ entity Wallet {
 entity Transaction {
     id BIGINT UNSIGNED <<PK>>
     wallet_id BIGINT UNSIGNED <<FK>>
+    bill_id BIGINT UNSIGNED <<FK>> <<UK>>
     transaction_category_id BIGINT UNSIGNED <<FK>>
     amount DECIMAL(10, 2)
     type ENUM('income', 'expense')
@@ -94,5 +95,6 @@ User ||--o{ Notification
 User ||--o{ Task
 TaskCategory ||--o{ Task
 TransactionCategory ||--o{ Transaction
+Bill |o--|| Transaction
 
 @enduml

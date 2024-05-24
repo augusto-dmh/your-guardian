@@ -15,6 +15,7 @@ class Transaction extends Model
 
     protected $fillable = [
         'wallet_id',
+        'bill_id',
         'transaction_category_id',
         'amount',
         'type',
@@ -22,6 +23,7 @@ class Transaction extends Model
 
     public static $rules = [
         'wallet_id' => 'required|exists:wallets,id',
+        'bill_id' => 'exists:bills,id',
         'transaction_category_id' => 'exists:transaction_categories,id',
         'amount' => 'required|numeric',
         'type' => 'string|in:income,expense',
@@ -34,6 +36,11 @@ class Transaction extends Model
     public function wallet()
     {
         return $this->belongsTo(Wallet::class);
+    }
+
+    public function bill()
+    {
+        return $this->belongsTo(Bill::class);
     }
 
     public function transactionCategory()

@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS transaction_categories (
 CREATE TABLE IF NOT EXISTS transactions (
     id BIGINT UNSIGNED AUTO_INCREMENT,
     wallet_id BIGINT UNSIGNED ON DELETE CASCADE NOT NULL,
+    bill_id BIGINT UNSIGNED ON DELETE CASCADE,
     transaction_category_id BIGINT UNSIGNED ON DELETE SET NULL,
     amount DECIMAL(10, 2) DEFAULT 0.00 NOT NULL,
     type ENUM('income', 'expense') DEFAULT 'expense',
@@ -93,6 +94,8 @@ ADD CONSTRAINT PRIMARY KEY (id);
 ALTER TABLE transactions
 ADD CONSTRAINT PRIMARY KEY (id),
 ADD CONSTRAINT fk_transactions_wallet_id FOREIGN KEY (wallet_id) REFERENCES wallets(id),
+ADD CONSTRAINT uk_transactions_bill_id UNIQUE KEY (bill_id),
+ADD CONSTRAINT fk_transactions_bill_id FOREIGN KEY (bill_id) REFERENCES bills(id),
 ADD CONSTRAINT fk_transactions_transaction_category_id FOREIGN KEY (transaction_category_id) REFERENCES transaction_categories(id);
 
 ALTER TABLE bills

@@ -10,6 +10,7 @@ return new class extends Migration {
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('wallet_id');
+            $table->unsignedBigInteger('bill_id')->nullable();
             $table->unsignedBigInteger('transaction_category_id')->nullable();
             $table->decimal('amount', 10, 2)->default(0);
             $table->enum('type', ['income', 'expense'])->default('expense');
@@ -19,6 +20,11 @@ return new class extends Migration {
                 ->foreign('wallet_id', 'fk_transactions_wallet_id')
                 ->references('id')
                 ->on('wallets')
+                ->onDelete('cascade');
+            $table
+                ->foreign('bill_id', 'fk_transactions_bill_id')
+                ->references('id')
+                ->on('bills')
                 ->onDelete('cascade');
             $table
                 ->foreign(
