@@ -12,10 +12,11 @@ class TransactionCategory extends Model
 
     protected $table = 'transaction_categories';
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'transaction_type'];
 
     public static $rules = [
         'name' => 'required|string|max:255',
+        'transaction_type' => 'in:expense,income',
     ];
 
     public function transactions()

@@ -66,6 +66,7 @@ entity Task {
 entity TransactionCategory {
     id BIGINT UNSIGNED <<PK>>
     name VARCHAR(255)
+    transaction_type ENUM('income', 'expense')
     created_at DATE
     updated_at DATE
     --

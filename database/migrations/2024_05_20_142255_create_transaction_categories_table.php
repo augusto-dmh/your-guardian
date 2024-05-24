@@ -10,6 +10,9 @@ return new class extends Migration {
         Schema::create('transaction_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table
+                ->enum('transaction_type', ['expense', 'income'])
+                ->default('expense');
             $table->timestamps();
         });
     }
