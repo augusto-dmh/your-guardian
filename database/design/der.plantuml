@@ -13,18 +13,9 @@ entity User {
     --
 }
 
-entity Wallet {
-    id BIGINT UNSIGNED <<PK>>
-    user_id BIGINT UNSIGNED <<FK>> <<UK>>
-    balance DECIMAL(10, 2)
-    created_at DATE
-    updated_at DATE
-    --
-}
-
 entity Transaction {
     id BIGINT UNSIGNED <<PK>>
-    wallet_id BIGINT UNSIGNED <<FK>>
+    user_id BIGINT UNSIGNED <<FK>>
     bill_id BIGINT UNSIGNED <<FK>> <<UK>>
     transaction_category_id BIGINT UNSIGNED <<FK>>
     amount DECIMAL(10, 2)
@@ -88,8 +79,7 @@ entity TaskCategory {
 }
 
 
-User ||--|| Wallet
-Wallet ||--o{ Transaction
+User ||--o| Transaction
 User ||--o{ Bill
 User ||--o{ Notification
 User ||--o{ Task

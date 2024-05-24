@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use App\Models\Wallet;
 use App\Models\TransactionCategory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +15,6 @@ class Transaction extends Model
     protected $table = 'transactions';
 
     protected $fillable = [
-        'wallet_id',
         'bill_id',
         'transaction_category_id',
         'amount',
@@ -22,7 +22,6 @@ class Transaction extends Model
     ];
 
     public static $rules = [
-        'wallet_id' => 'required|exists:wallets,id',
         'bill_id' => 'exists:bills,id',
         'transaction_category_id' => 'exists:transaction_categories,id',
         'amount' => 'required|numeric',
@@ -33,9 +32,9 @@ class Transaction extends Model
         'type' => 'expense',
     ];
 
-    public function wallet()
+    public function user()
     {
-        return $this->belongsTo(Wallet::class);
+        return $this->belongsTo(User::class);
     }
 
     public function bill()

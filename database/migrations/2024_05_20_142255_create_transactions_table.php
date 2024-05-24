@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('wallet_id');
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('bill_id')->nullable();
             $table->unsignedBigInteger('transaction_category_id')->nullable();
             $table->decimal('amount', 10, 2)->default(0);
@@ -17,9 +17,9 @@ return new class extends Migration {
             $table->timestamps();
 
             $table
-                ->foreign('wallet_id', 'fk_transactions_wallet_id')
+                ->foreign('user_id', 'fk_transactions_user_id')
                 ->references('id')
-                ->on('wallets')
+                ->on('users')
                 ->onDelete('cascade');
             $table
                 ->foreign('bill_id', 'fk_transactions_bill_id')
