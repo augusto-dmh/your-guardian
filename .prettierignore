@@ -19,7 +19,7 @@ storage
 *.tmp
 
 # Ignore compiled files
-resources/views/**/*.php
+resources/views/vendor/**/*.php
 
 # Ignore Blade cache files
 bootstrap/cache/*.php
