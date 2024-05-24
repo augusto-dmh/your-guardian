@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('tasks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('task_category_id');
+            $table->unsignedBigInteger('task_category_id')->nullable();
             $table->string('title');
             $table->text('description')->nullable();
             $table->date('due_date');
