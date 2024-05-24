@@ -1,4 +1,4 @@
-@startuml DER
+@startuml erd
 
 entity User {
     id BIGINT UNSIGNED <<PK>>
@@ -20,6 +20,7 @@ entity Transaction {
     transaction_category_id BIGINT UNSIGNED <<FK>>
     amount DECIMAL(10, 2)
     type ENUM('income', 'expense')
+    description TEXT
     created_at DATE
     updated_at DATE
     --
@@ -79,7 +80,7 @@ entity TaskCategory {
 }
 
 
-User ||--o| Transaction
+User ||--o{ Transaction
 User ||--o{ Bill
 User ||--o{ Notification
 User ||--o{ Task
