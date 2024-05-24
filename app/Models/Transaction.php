@@ -19,6 +19,7 @@ class Transaction extends Model
         'transaction_category_id',
         'amount',
         'type',
+        'description',
     ];
 
     public static $rules = [
@@ -26,6 +27,7 @@ class Transaction extends Model
         'transaction_category_id' => 'exists:transaction_categories,id',
         'amount' => 'required|numeric',
         'type' => 'string|in:income,expense',
+        'description' => 'string|max:65535',
     ];
 
     protected $attributes = [

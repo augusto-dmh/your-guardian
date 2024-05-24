@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS transactions (
     transaction_category_id BIGINT UNSIGNED ON DELETE SET NULL,
     amount DECIMAL(10, 2) DEFAULT 0.00 NOT NULL,
     type ENUM('income', 'expense') DEFAULT 'expense',
+    description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
