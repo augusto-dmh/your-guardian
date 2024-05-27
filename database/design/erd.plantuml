@@ -40,11 +40,12 @@ entity Bill {
 }
 
 entity Notification {
-    id BIGINT UNSIGNED <<PK>>
-    user_id BIGINT UNSIGNED <<FK>>
-    title VARCHAR(255)
-    message VARCHAR(255)
-    read BOOLEAN
+    id UUID <<PK>>
+    type VARCHAR(255)
+    notifiable_id BIGINT UNSIGNED <<FK>>
+    notifiable_type VARCHAR(255)
+    data TEXT
+    read_at DATE
     created_at DATE
     updated_at DATE
     --
@@ -83,7 +84,8 @@ entity TaskCategory {
 
 User ||--o{ Transaction
 User ||--o{ Bill
-User ||--o{ Notification
+Bill ||--o{ Notification
+Task ||--o{ Notification
 User ||--o{ Task
 TaskCategory ||--o{ Task
 TransactionCategory ||--o{ Transaction
