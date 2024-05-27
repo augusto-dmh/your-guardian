@@ -26,6 +26,10 @@ class TransactionCategoryFactory extends Factory
     {
         return [
             'name' => $this->faker->word,
+            'transaction_type' => $this->faker->randomElement([
+                'income',
+                'expense',
+            ]),
             'created_at' => now(),
             'updated_at' => now(),
         ];
