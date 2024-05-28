@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Bill;
+use App\Models\Task;
 use App\Models\Transaction;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\ResetPasswordNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Notifications\ResetPasswordNotification;
 
 // class User extends Authenticatable implements MustVerifyEmail
 class User extends Authenticatable

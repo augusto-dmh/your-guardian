@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\User;
-use App\Models\Wallet;
+use App\Models\Bill;
 use App\Models\TransactionCategory;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
