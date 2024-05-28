@@ -1,8 +1,10 @@
 <?php
 
-use App\Models\TransactionCategory;
+use App\Http\Controllers\TransactionCategoryController;
 
-Route::get('/transaction-categories/{type}', function ($type) {
-    $categories = TransactionCategory::where('transaction_type', $type)->get();
-    return response()->json($categories);
-});
+Route::get('/transaction-categories/{type}', [
+    TransactionCategoryController::class,
+    'show',
+])
+    ->middleware('auth')
+    ->name('transaction-categories.show');
