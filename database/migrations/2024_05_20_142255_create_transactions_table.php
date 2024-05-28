@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('bill_id')->nullable();
             $table->unsignedBigInteger('transaction_category_id')->nullable();
-            $table->decimal('amount', 10, 2)->default(0);
+            $table->decimal('amount', 11, 2)->default(0);
             $table->enum('type', ['income', 'expense'])->default('expense');
             $table->text('description')->nullable();
             $table->timestamps();

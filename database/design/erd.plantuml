@@ -18,7 +18,7 @@ entity Transaction {
     user_id BIGINT UNSIGNED <<FK>>
     bill_id BIGINT UNSIGNED <<FK>> <<UK>>
     transaction_category_id BIGINT UNSIGNED <<FK>>
-    amount DECIMAL(10, 2)
+    amount DECIMAL(11, 2)
     type ENUM('income', 'expense')
     description TEXT
     created_at DATE
@@ -31,7 +31,7 @@ entity Bill {
     user_id BIGINT UNSIGNED <<FK>>
     title VARCHAR(255)
     description TEXT
-    amount DECIMAL(10, 2)
+    amount DECIMAL(11, 2)
     due_date DATE
     status ENUM('pending', 'paid', 'overdue')
     created_at DATE
