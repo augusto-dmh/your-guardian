@@ -1,0 +1,37 @@
+<x-layout>
+    <h1>Create Bill</h1>
+
+    <form action="{{ route('bills.store') }}" method="post">
+        @csrf
+        <div class="form-group">
+            <label for="name">name:</label>
+            <input type="text" name="name" placeholder="Name">
+        </div>
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" name="title" placeholder="Title">
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <input type="text" name="description" placeholder="Description">
+        </div>
+        <div class="form-group">
+            <label for="amount">Amount:</label>
+            <input type="text" name="amount" placeholder="Amount">
+        </div>
+        <div class="form-group">
+            <label for="due_date">Due date:</label>
+            <input type="date" name="due_date" id="due_date">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description:</label><br>
+            <textarea id="description" name="description" rows="4" cols="50"></textarea><br>
+        </div>
+
+        <div class="form-group">
+            <button>Create Bill</button>
+        </div>
+    </form>
+</x-layout>
+
