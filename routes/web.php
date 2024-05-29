@@ -7,3 +7,4 @@ require __DIR__ . '/custom/profile.php';
 require __DIR__ . '/custom/transaction.php';
 require __DIR__ . '/custom/transactionCategory.php';
 require __DIR__ . '/custom/wallet.php';
+require __DIR__ . '/custom/bill.php';
