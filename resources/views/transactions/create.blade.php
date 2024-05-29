@@ -53,6 +53,5 @@
 
         document.getElementById('type').dispatchEvent(new Event('change'));
     </script>
-    </table>
 </x-layout>
 
