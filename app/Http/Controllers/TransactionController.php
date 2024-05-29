@@ -43,9 +43,9 @@ class TransactionController extends Controller
         $user->transactions()->create([
             'amount' => $amount,
             'type' => $type,
-            'transaction_category_id' => TransactionCategory::find([
+            'transaction_category_id' => TransactionCategory::where([
                 'name' => $category,
-            ])->id,
+            ])->first()->id,
             'description' => $description,
         ]);
 
