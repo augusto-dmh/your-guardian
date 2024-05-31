@@ -35,6 +35,10 @@ class Bill extends Model
         'status' => 'string|in:unpaid,paid,overdue',
     ];
 
+    protected $casts = [
+        'due_date' => 'datetime',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
