@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 
 class BillController extends Controller
 {
-    public function edit(Bill $bill) {
+    public function edit(Bill $bill)
+    {
         return view('bills.edit', $bill);
     }
 
@@ -17,7 +18,8 @@ class BillController extends Controller
         return view('bills.create');
     }
 
-    public function index() {
+    public function index()
+    {
         $bills = Auth::user()->bills()->get();
 
         return view('bills.index', $bills);
@@ -25,17 +27,19 @@ class BillController extends Controller
 
     public function store(Request $request)
     {
-        Auth::user()->bills()->create([
-            'name' => $request->name,
-            'title' => $request->title,
-            'description' => $request->description,
-            'amount' => $request->amount,
-            'due_date' => $request->due_date,
-        ]);
-        
+        Auth::user()
+            ->bills()
+            ->create([
+                'name' => $request->name,
+                'title' => $request->title,
+                'description' => $request->description,
+                'amount' => $request->amount,
+                'due_date' => $request->due_date,
+            ]);
+
         return redirect()->back();
     }
-    
+
     public function update(Request $request, Bill $bill)
     {
         $bill->update([
@@ -45,11 +49,12 @@ class BillController extends Controller
             'amount' => $request->amount,
             'due_date' => $request->due_date,
         ]);
-        
+
         return redirect()->back();
     }
-    
-    public function show(Bill $bill) {
+
+    public function show(Bill $bill)
+    {
         return view('bills.show', $bill);
     }
 
