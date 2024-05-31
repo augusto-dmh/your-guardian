@@ -10,7 +10,7 @@ class BillController extends Controller
 {
     public function edit(Bill $bill)
     {
-        return view('bills.edit', $bill);
+        return view('bills.edit', compact('bill'));
     }
 
     public function create()
@@ -22,7 +22,7 @@ class BillController extends Controller
     {
         $bills = Auth::user()->bills()->get();
 
-        return view('bills.index', $bills);
+        return view('bills.index', compact('bills'));
     }
 
     public function store(Request $request)
@@ -47,6 +47,7 @@ class BillController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'amount' => $request->amount,
+            'status' => $request->status,
             'due_date' => $request->due_date,
         ]);
 
@@ -55,7 +56,7 @@ class BillController extends Controller
 
     public function show(Bill $bill)
     {
-        return view('bills.show', $bill);
+        return view('bills.show', compact('bill'));
     }
 
     public function destroy(Bill $bill)
