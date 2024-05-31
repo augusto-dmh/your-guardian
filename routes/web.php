@@ -8,3 +8,4 @@ require __DIR__ . '/custom/transaction.php';
 require __DIR__ . '/custom/transactionCategory.php';
 require __DIR__ . '/custom/wallet.php';
 require __DIR__ . '/custom/bill.php';
+require __DIR__ . '/custom/task.php';
