@@ -8,27 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
-    public function edit(Transaction $transaction)
-    {
-        return view('transactions.edit', [
-            'transaction' => $transaction,
-            'transactionCategories' => TransactionCategory::all(),
-        ]);
-    }
-
-    public function create()
-    {
-        return view('transactions.create', [
-            'user' => Auth::user(),
-            'transactionCategories' => TransactionCategory::all(),
-        ]);
-    }
-
-    public function index()
-    {
-        return view('transactions.index');
-    }
-
     public function store()
     {
         $user = Auth::user();
@@ -50,6 +29,18 @@ class TransactionController extends Controller
         ]);
 
         return redirect()->back();
+    }
+
+    public function index()
+    {
+        return view('transactions.index');
+    }
+
+    public function show(Transaction $transaction)
+    {
+        return view('transactions.show', [
+            'transaction' => $transaction,
+        ]);
     }
 
     public function update(Transaction $transaction)
@@ -77,17 +68,26 @@ class TransactionController extends Controller
         return redirect()->back();
     }
 
-    public function show(Transaction $transaction)
-    {
-        return view('transactions.show', [
-            'transaction' => $transaction,
-        ]);
-    }
-
     public function destroy(Transaction $transaction)
     {
         $transaction->delete();
 
         return redirect()->back();
+    }
+
+    public function create()
+    {
+        return view('transactions.create', [
+            'user' => Auth::user(),
+            'transactionCategories' => TransactionCategory::all(),
+        ]);
+    }
+
+    public function edit(Transaction $transaction)
+    {
+        return view('transactions.edit', [
+            'transaction' => $transaction,
+            'transactionCategories' => TransactionCategory::all(),
+        ]);
     }
 }

@@ -9,20 +9,6 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function index()
-    {
-        $tasks = Auth::user()->tasks()->get();
-
-        return view('tasks.index', compact('tasks'));
-    }
-
-    public function create()
-    {
-        $taskCategories = TaskCategory::all();
-
-        return view('tasks.create', compact('taskCategories'));
-    }
-
     public function store(Request $request)
     {
         Auth::user()
@@ -41,16 +27,16 @@ class TaskController extends Controller
         return redirect()->back();
     }
 
+    public function index()
+    {
+        $tasks = Auth::user()->tasks()->get();
+
+        return view('tasks.index', compact('tasks'));
+    }
+
     public function show(Task $task)
     {
         return view('tasks.show', compact('task'));
-    }
-
-    public function edit(Task $task)
-    {
-        $taskCategories = TaskCategory::all();
-
-        return view('tasks.edit', compact('task', 'taskCategories'));
     }
 
     public function update(Request $request, Task $task)
@@ -65,5 +51,19 @@ class TaskController extends Controller
         $task->delete();
 
         return redirect()->back();
+    }
+
+    public function create()
+    {
+        $taskCategories = TaskCategory::all();
+
+        return view('tasks.create', compact('taskCategories'));
+    }
+
+    public function edit(Task $task)
+    {
+        $taskCategories = TaskCategory::all();
+
+        return view('tasks.edit', compact('task', 'taskCategories'));
     }
 }
