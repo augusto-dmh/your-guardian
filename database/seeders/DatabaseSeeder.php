@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\TaskCategory;
 use App\Models\TransactionCategory;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -16,5 +17,6 @@ class DatabaseSeeder extends Seeder
     {
         User::factory(10)->create();
         TransactionCategory::factory(10)->create();
+        TaskCategory::factory(10)->create();
     }
 }
