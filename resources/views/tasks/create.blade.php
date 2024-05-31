@@ -1,7 +1,7 @@
 <x-layout>
     <h1>Create Task</h1>
 
-    <form action="{{ route('task.store') }}" method="post">
+    <form action="{{ route('tasks.store') }}" method="post">
         @csrf
 
         <div class="form-group">

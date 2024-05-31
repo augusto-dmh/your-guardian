@@ -4,28 +4,28 @@ use App\Http\Controllers\TaskController;
 
 Route::get('/tasks/create', [TaskController::class, 'create'])
     ->middleware('auth')
-    ->name('task.create');
+    ->name('tasks.create');
 
 Route::post('/tasks', [TaskController::class, 'store'])
     ->middleware('auth')
-    ->name('task.store');
+    ->name('tasks.store');
 
 Route::get('/tasks', [TaskController::class, 'index'])
     ->middleware('auth')
-    ->name('task.index');
+    ->name('tasks.index');
 
 Route::get('tasks/{task}/edit', [TaskController::class, 'edit'])
     ->middleware('auth')
-    ->name('task.edit');
+    ->name('tasks.edit');
 
 Route::get('/tasks/{task}', [TaskController::class, 'show'])
     ->middleware('auth')
-    ->name('task.show');
+    ->name('tasks.show');
 
 Route::put('/tasks/{task}', [TaskController::class, 'update'])
     ->middleware('auth')
-    ->name('task.update');
+    ->name('tasks.update');
 
 Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])
     ->middleware('auth')
-    ->name('task.destroy');
+    ->name('tasks.destroy');
