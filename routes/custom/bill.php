@@ -14,18 +14,18 @@ Route::get('/bills', [BillController::class, 'index'])
     ->middleware('auth')
     ->name('bills.index');
 
-Route::get('bills/{transaction}/edit', [BillController::class, 'edit'])
+Route::get('bills/{bill}/edit', [BillController::class, 'edit'])
     ->middleware('auth')
     ->name('bills.edit');
 
-Route::get('/bills/{transaction}', [BillController::class, 'show'])
+Route::get('/bills/{bill}', [BillController::class, 'show'])
     ->middleware('auth')
     ->name('bills.show');
 
-Route::put('/bills/{transaction}', [BillController::class, 'update'])
+Route::put('/bills/{bill}', [BillController::class, 'update'])
     ->middleware('auth')
     ->name('bills.update');
 
-Route::delete('/bills/{transaction}', [BillController::class, 'destroy'])
+Route::delete('/bills/{bill}', [BillController::class, 'destroy'])
     ->middleware('auth')
     ->name('bills.destroy');

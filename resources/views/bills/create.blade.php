@@ -3,17 +3,10 @@
 
     <form action="{{ route('bills.store') }}" method="post">
         @csrf
-        <div class="form-group">
-            <label for="name">name:</label>
-            <input type="text" name="name" placeholder="Name">
-        </div>
+
         <div class="form-group">
             <label for="title">Title:</label>
             <input type="text" name="title" placeholder="Title">
-        </div>
-        <div class="form-group">
-            <label for="description">Description:</label>
-            <input type="text" name="description" placeholder="Description">
         </div>
         <div class="form-group">
             <label for="amount">Amount:</label>
