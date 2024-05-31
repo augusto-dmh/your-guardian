@@ -30,6 +30,7 @@ class TaskController extends Controller
             ->create([
                 'name' => $request->name,
                 'title' => $request->title,
+                'status' => $request->status,
                 'due_date' => $request->due_date,
                 'description' => $request->description,
                 'task_category_id' => TaskCategory::where([
@@ -47,7 +48,9 @@ class TaskController extends Controller
 
     public function edit(Task $task)
     {
-        return view('tasks.edit', compact('task'));
+        $taskCategories = TaskCategory::all();
+
+        return view('tasks.edit', compact('task', 'taskCategories'));
     }
 
     public function update(Request $request, Task $task)
