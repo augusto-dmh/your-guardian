@@ -7,16 +7,24 @@
 
         <div class="form-group">
             <label for="title">Title:</label>
-            <input type="text" name="title" placeholder="Title" value="{{$task->title}}">
+            <input type="text" name="title" placeholder="Title" value="{{ $task->title }}">
+            @error('title')
+                <p>{{ $message }}</p>
+            @enderror
         </div>
         <div class="form-group">
             <label for="due_date">Due date:</label>
-            <input type="date" name="due_date" id="due_date" value="{{$task->due_date}}">
+            <input type="date" name="due_date" id="due_date" value="{{ $task->due_date }}">
+            @error('due_date')
+                <p>{{ $message }}</p>
+            @enderror
         </div>
         <div class="form-group">
             <select name="category" id="category">
                 @foreach ($taskCategories as $taskCategory)
-                    <option value="{{ $taskCategory->name }}" {{$taskCategory->name === $task->taskCategory->name ? 'selected' : ''}}>{{ ucFirst($taskCategory->name) }}</option>
+                    <option value="{{ $taskCategory->name }}"
+                        {{ $taskCategory->name === $task->taskCategory->name ? 'selected' : '' }}>
+                        {{ ucFirst($taskCategory->name) }}</option>
                 @endforeach
             </select>
         </div>
@@ -32,6 +40,9 @@
         <div class="form-group">
             <label for="description">Description:</label><br>
             <textarea id="description" name="description" rows="4" cols="50"></textarea><br>
+            @error('description')
+                <p>{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="form-group">

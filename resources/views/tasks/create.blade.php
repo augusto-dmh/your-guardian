@@ -7,10 +7,16 @@
         <div class="form-group">
             <label for="title">Title:</label>
             <input type="text" name="title" placeholder="Title">
+            @error('title')
+                <p>{{ $message }}</p>
+            @enderror
         </div>
         <div class="form-group">
             <label for="due_date">Due date:</label>
             <input type="date" name="due_date" id="due_date">
+            @error('due_date')
+                <p>{{ $message }}</p>
+            @enderror
         </div>
         <div class="form-group">
             <select name="task_category_id" id="category">
@@ -31,6 +37,9 @@
         <div class="form-group">
             <label for="description">Description:</label><br>
             <textarea id="description" name="description" rows="4" cols="50"></textarea><br>
+            @error('description')
+                <p>{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="form-group">

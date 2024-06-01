@@ -12,19 +12,14 @@ class TransactionController extends Controller
     {
         $user = Auth::user();
 
-        $amount = request('amount');
+        $validatedData = request()->validate(Transaction::$rules);
+
         $type = request('type');
-        $transaction_category_id = request('transaction_category_id');
-        $description = request('description');
+        $amount = request('amount');
 
         $type === 'expense' && ($amount = -$amount);
 
-        $user->transactions()->create([
-            'amount' => $amount,
-            'type' => $type,
-            'transaction_category_id' => $transaction_category_id,
-            'description' => $description,
-        ]);
+        $user->transactions()->create($validatedData);
 
         return redirect()->back();
     }
@@ -43,10 +38,10 @@ class TransactionController extends Controller
 
     public function update(Transaction $transaction)
     {
+        $validatedData = request()->validate(Transaction::$rules);
+
         $amount = request('amount');
         $type = request('type');
-        $task_category_id = request('task_category_id');
-        $description = request('description');
 
         $amount =
             ($type === 'expense' && $amount > 0) ||
@@ -54,12 +49,7 @@ class TransactionController extends Controller
                 ? -$amount
                 : $amount;
 
-        $transaction->update([
-            'amount' => $amount,
-            'type' => $type,
-            'transaction_category_id' => $task_category_id,
-            'description' => $description,
-        ]);
+        $transaction->update($validatedData);
 
         return redirect()->back();
     }

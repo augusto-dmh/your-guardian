@@ -11,16 +11,9 @@ class TaskController extends Controller
 {
     public function store(Request $request)
     {
-        Auth::user()
-            ->tasks()
-            ->create([
-                'name' => $request->name,
-                'title' => $request->title,
-                'status' => $request->status,
-                'due_date' => $request->due_date,
-                'description' => $request->description,
-                'task_category_id' => $request->task_category_id,
-            ]);
+        $validatedData = $request->validate(Task::$rules);
+
+        Auth::user()->tasks()->create($validatedData);
 
         return redirect()->back();
     }
@@ -39,7 +32,9 @@ class TaskController extends Controller
 
     public function update(Request $request, Task $task)
     {
-        $task->update($request->all());
+        $validatedData = $request->validate(Task::$rules);
+
+        $task->update($validatedData);
 
         return redirect()->back();
     }

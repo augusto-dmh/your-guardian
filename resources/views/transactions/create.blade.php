@@ -8,6 +8,9 @@
         <div class="form-group">
             <label for="amount">Amount:</label>
             <input type="text" name="amount" placeholder="Amount" value="">
+            @error('amount')
+                <p>{{ $message }}</p>
+            @enderror
         </div>
         <div class="form-group">
             <label for="type">Type:</label>
@@ -24,6 +27,9 @@
         <div class="form-group">
             <label for="description">Description:</label><br>
             <textarea id="description" name="description" rows="4" cols="50"></textarea><br>
+            @error('description')
+                <p>{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="form-group">
