@@ -67,8 +67,10 @@
             const response = await fetch('/transaction-categories/' + type);
             const categories = await response.json();
             const categorySelect = document.getElementById('transaction_category_id');
+            const oldCategoryId = "{{ old('transaction_category_id') }}";
+
             categorySelect.innerHTML = categories.map(function(category) {
-                return `<option value="${category.id}" {{ old('transaction_category_id', $transaction->transactionCategory->id) == category . id ? 'selected' : '' }}>${category.name}</option>`;
+                return `<option value="${category.id}" ${oldCategoryId == category.id ? 'selected' : ''}>${category.name}</option>`;
             }).join('');
 
             loadingElement.classList.add('hidden');
