@@ -11,7 +11,7 @@
 
         <div class="form-group">
             <label for="amount">Amount:</label>
-            <input type="text" name="amount" placeholder="Amount" value={{ $transaction->amount }}>
+            <input type="text" name="amount" placeholder="Amount" value="{{ old('amount', $transaction->amount) }}">
             @error('amount')
                 <p>{{ $message }}</p>
             @enderror
@@ -19,16 +19,18 @@
         <div class="form-group">
             <label for="type">Type:</label>
             <select id="type" name="type">
-                <option value="income" {{ $transaction->type === 'income' ? 'selected' : '' }}>Income</option>
-                <option value="expense" {{ $transaction->type === 'expense' ? 'selected' : '' }}>Expense</option>
+                <option value="income" {{ old('type', $transaction->type) === 'income' ? 'selected' : '' }}>Income
+                </option>
+                <option value="expense" {{ old('type', $transaction->type) === 'expense' ? 'selected' : '' }}>Expense
+                </option>
             </select>
         </div>
         <div class="form-group">
             <label for="transaction_category_id">Category:</label>
             <select name="transaction_category_id" id="transaction_category_id">
                 @foreach ($transactionCategories as $transactionCategory)
-                    <option value={{ $transactionCategory->id }}
-                        {{ $transactionCategory->name === $transaction->transactionCategory->name ? 'selected' : '' }}>
+                    <option value="{{ $transactionCategory->id }}"
+                        {{ old('transaction_category_id', $transaction->transactionCategory->id) == $transactionCategory->id ? 'selected' : '' }}>
                         {{ $transactionCategory->name }}
                     </option>
                 @endforeach
@@ -37,7 +39,7 @@
 
         <div class="form-group">
             <label for="description">Description:</label><br>
-            <textarea id="description" name="description" rows="4" cols="50">{{ $transaction->description }}</textarea><br>
+            <textarea id="description" name="description" rows="4" cols="50">{{ old('description', $transaction->description) }}</textarea><br>
             @error('description')
                 <p>{{ $message }}</p>
             @enderror
@@ -66,13 +68,12 @@
             const categories = await response.json();
             const categorySelect = document.getElementById('transaction_category_id');
             categorySelect.innerHTML = categories.map(function(category) {
-                return `<option value="${category.name}">${category.name}</option>`;
+                return `<option value="${category.id}" {{ old('transaction_category_id', $transaction->transactionCategory->id) == category . id ? 'selected' : '' }}>${category.name}</option>`;
             }).join('');
 
             loadingElement.classList.add('hidden');
             overlayElement.classList.add('hidden');
         });
-
 
         document.getElementById('type').dispatchEvent(new Event('change'));
     </script>

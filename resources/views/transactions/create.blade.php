@@ -7,7 +7,7 @@
         @csrf
         <div class="form-group">
             <label for="amount">Amount:</label>
-            <input type="text" name="amount" placeholder="Amount" value="">
+            <input type="text" name="amount" placeholder="Amount" value="{{ old('amount') }}">
             @error('amount')
                 <p>{{ $message }}</p>
             @enderror
@@ -15,8 +15,8 @@
         <div class="form-group">
             <label for="type">Type:</label>
             <select id="type" name="type">
-                <option value="income">Income</option>
-                <option value="expense" selected>Expense</option>
+                <option value="income" {{ old('type') === 'income' ? 'selected' : '' }}>Income</option>
+                <option value="expense" {{ old('type') === 'expense' ? 'selected' : '' }}>Expense</option>
             </select>
         </div>
         <div class="form-group">
@@ -26,7 +26,7 @@
 
         <div class="form-group">
             <label for="description">Description:</label><br>
-            <textarea id="description" name="description" rows="4" cols="50"></textarea><br>
+            <textarea id="description" name="description" rows="4" cols="50">{{ old('description') }}</textarea><br>
             @error('description')
                 <p>{{ $message }}</p>
             @enderror
@@ -48,9 +48,8 @@
             const response = await fetch('/transaction-categories/' + type);
             const categories = await response.json();
             const categorySelect = document.getElementById('transaction_category_id');
-            console.log(categorySelect);
             categorySelect.innerHTML = categories.map(function(category) {
-                return `<option value="${category.id}">${category.name}</option>`;
+                return `<option value="${category.id}" {{ old('transaction_category_id') == category . id ? 'selected' : '' }}>${category.name}</option>`;
             }).join('');
 
             loadingElement.classList.add('hidden');

@@ -7,14 +7,15 @@
 
         <div class="form-group">
             <label for="title">Title:</label>
-            <input type="text" name="title" placeholder="Title" value="{{ $task->title }}">
+            <input type="text" name="title" placeholder="Title" value="{{ old('title', $task->title) }}">
             @error('title')
                 <p>{{ $message }}</p>
             @enderror
         </div>
         <div class="form-group">
             <label for="due_date">Due date:</label>
-            <input type="date" name="due_date" id="due_date" value="{{ $task->due_date }}">
+            <input type="date" name="due_date" id="due_date"
+                value="{{ old('due_date', $task->due_date->format('Y-m-d')) }}">
             @error('due_date')
                 <p>{{ $message }}</p>
             @enderror
@@ -23,7 +24,7 @@
             <select name="category" id="category">
                 @foreach ($taskCategories as $taskCategory)
                     <option value="{{ $taskCategory->name }}"
-                        {{ $taskCategory->name === $task->taskCategory->name ? 'selected' : '' }}>
+                        {{ old('category', $task->taskCategory->name) === $taskCategory->name ? 'selected' : '' }}>
                         {{ ucFirst($taskCategory->name) }}</option>
                 @endforeach
             </select>
@@ -31,15 +32,18 @@
         <div class="form-group">
             <label for="status">Status:</label>
             <select name="status" id="status">
-                <option value="pending" {{ $task->status === 'pending' ? 'selected' : '' }}>Pending</option>
-                <option value="completed" {{ $task->status === 'completed' ? 'selected' : '' }}>Completed</option>
-                <option value="failed" {{ $task->status === 'failed' ? 'selected' : '' }}>Failed</option>
+                <option value="pending" {{ old('status', $task->status) === 'pending' ? 'selected' : '' }}>Pending
+                </option>
+                <option value="completed" {{ old('status', $task->status) === 'completed' ? 'selected' : '' }}>Completed
+                </option>
+                <option value="failed" {{ old('status', $task->status) === 'failed' ? 'selected' : '' }}>Failed
+                </option>
             </select>
         </div>
 
         <div class="form-group">
             <label for="description">Description:</label><br>
-            <textarea id="description" name="description" rows="4" cols="50"></textarea><br>
+            <textarea id="description" name="description" rows="4" cols="50">{{ old('description', $task->description) }}</textarea><br>
             @error('description')
                 <p>{{ $message }}</p>
             @enderror
