@@ -24,7 +24,7 @@ class Task extends Model
     public static $rules = [
         'task_category_id' => 'exists:task_categories,id',
         'title' => 'required|string|max:255',
-        'description' => 'string|max:65535',
+        'description' => 'nullable|string|max:65535',
         'due_date' => 'required|date',
         'status' => 'string|in:pending,completed,failed',
     ];

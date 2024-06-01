@@ -27,7 +27,7 @@ class Transaction extends Model
         'transaction_category_id' => 'exists:transaction_categories,id',
         'amount' => 'required|numeric',
         'type' => 'string|in:income,expense',
-        'description' => 'string|max:65535',
+        'description' => 'nullable|string|max:65535',
     ];
 
     protected $attributes = [
