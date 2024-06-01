@@ -21,10 +21,10 @@
             @enderror
         </div>
         <div class="form-group">
-            <select name="category" id="category">
+            <select name="task_category_id" id="task_category_id">
                 @foreach ($taskCategories as $taskCategory)
-                    <option value="{{ $taskCategory->name }}"
-                        {{ old('category', $task->taskCategory->name) === $taskCategory->name ? 'selected' : '' }}>
+                    <option value="{{ $taskCategory->id }}"
+                        {{ old('task_category_id', $task->taskCategory->task_category_id) === $taskCategory->id ? 'selected' : '' }}>
                         {{ ucFirst($taskCategory->name) }}</option>
                 @endforeach
             </select>
