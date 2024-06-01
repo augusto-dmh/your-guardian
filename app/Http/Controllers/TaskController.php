@@ -19,9 +19,7 @@ class TaskController extends Controller
                 'status' => $request->status,
                 'due_date' => $request->due_date,
                 'description' => $request->description,
-                'task_category_id' => TaskCategory::where([
-                    'name' => $request->category,
-                ])->first()->id,
+                'task_category_id' => $request->task_category_id,
             ]);
 
         return redirect()->back();

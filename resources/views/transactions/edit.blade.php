@@ -21,12 +21,12 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="category">Category:</label>
-            <select name="category" id="category">
-                @foreach ($transactionCategories as $category)
-                    <option value={{ $category->name }}
-                        {{ $category->name === $transaction->transactionCategory->name ? 'selected' : '' }}>
-                        {{ $category->name }}
+            <label for="transaction_category_id">Category:</label>
+            <select name="transaction_category_id" id="transaction_category_id">
+                @foreach ($transactionCategories as $transactionCategory)
+                    <option value={{ $transactionCategory->id }}
+                        {{ $transactionCategory->name === $transaction->transactionCategory->name ? 'selected' : '' }}>
+                        {{ $transactionCategory->name }}
                     </option>
                 @endforeach
             </select>
@@ -58,7 +58,7 @@
             const type = this.value;
             const response = await fetch('/transaction-categories/' + type);
             const categories = await response.json();
-            const categorySelect = document.getElementById('category');
+            const categorySelect = document.getElementById('transaction_category_id');
             categorySelect.innerHTML = categories.map(function(category) {
                 return `<option value="${category.name}">${category.name}</option>`;
             }).join('');

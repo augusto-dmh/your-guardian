@@ -14,7 +14,7 @@ class TransactionController extends Controller
 
         $amount = request('amount');
         $type = request('type');
-        $category = request('category');
+        $transaction_category_id = request('transaction_category_id');
         $description = request('description');
 
         $type === 'expense' && ($amount = -$amount);
@@ -22,9 +22,7 @@ class TransactionController extends Controller
         $user->transactions()->create([
             'amount' => $amount,
             'type' => $type,
-            'transaction_category_id' => TransactionCategory::where([
-                'name' => $category,
-            ])->first()->id,
+            'transaction_category_id' => $transaction_category_id,
             'description' => $description,
         ]);
 
@@ -47,7 +45,7 @@ class TransactionController extends Controller
     {
         $amount = request('amount');
         $type = request('type');
-        $category = request('category');
+        $task_category_id = request('task_category_id');
         $description = request('description');
 
         $amount =
@@ -59,9 +57,7 @@ class TransactionController extends Controller
         $transaction->update([
             'amount' => $amount,
             'type' => $type,
-            'transaction_category_id' => TransactionCategory::where([
-                'name' => $category,
-            ])->first()->id,
+            'transaction_category_id' => $task_category_id,
             'description' => $description,
         ]);
 

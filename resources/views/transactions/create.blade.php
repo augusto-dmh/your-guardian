@@ -17,8 +17,8 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="category">Category:</label>
-            <select name="category" id="category"></select>
+            <label for="transaction_category_id">Category:</label>
+            <select name="transaction_category_id" id="transaction_category_id"></select>
         </div>
 
         <div class="form-group">
@@ -41,10 +41,10 @@
             const type = this.value;
             const response = await fetch('/transaction-categories/' + type);
             const categories = await response.json();
-            const categorySelect = document.getElementById('category');
+            const categorySelect = document.getElementById('transaction_category_id');
             console.log(categorySelect);
             categorySelect.innerHTML = categories.map(function(category) {
-                return `<option value="${category.name}">${category.name}</option>`;
+                return `<option value="${category.id}">${category.name}</option>`;
             }).join('');
 
             loadingElement.classList.add('hidden');

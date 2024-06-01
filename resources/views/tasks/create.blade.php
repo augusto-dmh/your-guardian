@@ -13,9 +13,9 @@
             <input type="date" name="due_date" id="due_date">
         </div>
         <div class="form-group">
-            <select name="category" id="category">
+            <select name="task_category_id" id="category">
                 @foreach ($taskCategories as $taskCategory)
-                    <option value="{{ $taskCategory->name }}">{{ ucFirst($taskCategory->name) }}</option>
+                    <option value="{{ $taskCategory->id }}">{{ ucFirst($taskCategory->name) }}</option>
                 @endforeach
             </select>
         </div>
