@@ -14,7 +14,6 @@ class Task extends Model
     protected $table = 'tasks';
 
     protected $fillable = [
-        'user_id',
         'task_category_id',
         'title',
         'description',
@@ -23,7 +22,6 @@ class Task extends Model
     ];
 
     public static $rules = [
-        'user_id' => 'required|exists:users,id',
         'task_category_id' => 'exists:task_categories,id',
         'title' => 'required|string|max:255',
         'description' => 'string|max:65535',
@@ -38,7 +36,6 @@ class Task extends Model
     protected $casts = [
         'due_date' => 'datetime',
     ];
-    
 
     public function user()
     {
