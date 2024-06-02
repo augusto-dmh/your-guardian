@@ -57,6 +57,17 @@ class User extends Authenticatable
         ];
     }
 
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function getBalanceAttribute()
+    {
+        $balance = $this->transactions->sum('amount');
+        return number_format($balance, 2);
+    }
+
     public function sendPasswordResetNotification($token): void
     {
         $this->notify(new ResetPasswordNotification($token));
