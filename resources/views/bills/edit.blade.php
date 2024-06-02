@@ -39,4 +39,3 @@
     </div>
 
 </x-layout>
-

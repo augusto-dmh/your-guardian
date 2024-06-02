@@ -15,12 +15,11 @@
             @foreach (auth()->user()->tasks as $task)
                 <tr>
                     <td>{{ $task->taskCategory->name }}</td>
-                    <td><a href="{{route('tasks.show', $task)}}">{{ $task->title }}</a></td>
+                    <td><a href="{{ route('tasks.show', $task) }}">{{ $task->title }}</a></td>
                     <td>{{ Str::limit($task->description, 20, '...') }}</td>
                     <td>{{ $task->created_at->format('m-d-Y') }}</td>
                     <td>
-                        <form action="{{ route('tasks.destroy', ['task' => $task]) }}"
-                            method="POST">
+                        <form action="{{ route('tasks.destroy', ['task' => $task]) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <input type="submit" value="Delete">

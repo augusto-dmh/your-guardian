@@ -1,60 +1,112 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+    <x-auth-card>
+        <!-- Validation Errors -->
+        <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <div class="grid grid-cols-2 gap-4">
-            <div class="mt-4">
-                <x-input-label for="first_name" :value="__('First Name')" />
-                <x-text-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" :value="old('first_name')"
-                    autocomplete="first_name" />
-                <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
+        <form method="POST" action="{{ route('register') }}">
+            @csrf
+
+            <!-- First Name -->
+            <div class="grid gap-6">
+                <div class="space-y-2">
+                    <x-form.label for="first_name" :value="__('First Name')" />
+
+                    <x-form.input-with-icon-wrapper>
+                        <x-slot name="icon">
+                            <x-heroicon-o-user aria-hidden="true" class="w-5 h-5" />
+                        </x-slot>
+
+                        <x-form.input withicon id="first_name" class="block w-full" type="text" name="first_name"
+                            :value="old('first_name')" required autofocus placeholder="{{ __('First Name') }}" />
+                    </x-form.input-with-icon-wrapper>
+                </div>
+
+                <!-- Last Name -->
+                <div class="space-y-2">
+                    <x-form.label for="last_name" :value="__('Last Name')" />
+
+                    <x-form.input-with-icon-wrapper>
+                        <x-slot name="icon">
+                            <x-heroicon-o-user aria-hidden="true" class="w-5 h-5" />
+                        </x-slot>
+
+                        <x-form.input withicon id="last_name" class="block w-full" type="text" name="last_name"
+                            :value="old('last_name')" required autofocus placeholder="{{ __('Last Name') }}" />
+                    </x-form.input-with-icon-wrapper>
+                </div>
+
+                <!-- Birthdate -->
+                <div class="space-y-2">
+                    <x-form.label for="birthdate" :value="__('Birthdate')" />
+
+                    <x-form.input-with-icon-wrapper>
+                        <x-slot name="icon">
+                            <x-heroicon-o-calendar aria-hidden="true" class="w-5 h-5" />
+                        </x-slot>
+
+                        <x-form.input withicon id="birthdate" class="block w-full" type="date" name="birthdate"
+                            :value="old('birthdate')" required autofocus placeholder="{{ __('Birthdate') }}" />
+                    </x-form.input-with-icon-wrapper>
+                </div>
+
+                <!-- Email Address -->
+                <div class="space-y-2">
+                    <x-form.label for="email" :value="__('Email')" />
+
+                    <x-form.input-with-icon-wrapper>
+                        <x-slot name="icon">
+                            <x-heroicon-o-mail aria-hidden="true" class="w-5 h-5" />
+                        </x-slot>
+
+                        <x-form.input withicon id="email" class="block w-full" type="email" name="email"
+                            :value="old('email')" required placeholder="{{ __('Email') }}" />
+                    </x-form.input-with-icon-wrapper>
+                </div>
+
+                <!-- Password -->
+                <div class="space-y-2">
+                    <x-form.label for="password" :value="__('Password')" />
+
+                    <x-form.input-with-icon-wrapper>
+                        <x-slot name="icon">
+                            <x-heroicon-o-lock-closed aria-hidden="true" class="w-5 h-5" />
+                        </x-slot>
+
+                        <x-form.input withicon id="password" class="block w-full" type="password" name="password"
+                            required autocomplete="new-password" placeholder="{{ __('Password') }}" />
+                    </x-form.input-with-icon-wrapper>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="space-y-2">
+                    <x-form.label for="password_confirmation" :value="__('Confirm Password')" />
+
+                    <x-form.input-with-icon-wrapper>
+                        <x-slot name="icon">
+                            <x-heroicon-o-lock-closed aria-hidden="true" class="w-5 h-5" />
+                        </x-slot>
+
+                        <x-form.input withicon id="password_confirmation" class="block w-full" type="password"
+                            name="password_confirmation" required placeholder="{{ __('Confirm Password') }}" />
+                    </x-form.input-with-icon-wrapper>
+                </div>
+
+                <div>
+                    <x-button class="justify-center w-full gap-2">
+                        <x-heroicon-o-user-add class="w-6 h-6" aria-hidden="true" />
+
+                        <span>{{ __('Register') }}</span>
+                    </x-button>
+                </div>
+
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                    {{ __('Already registered?') }}
+                    <a href="{{ route('login') }}" class="text-blue-500 hover:underline">
+                        {{ __('Login') }}
+                    </a>
+                </p>
             </div>
-
-            <div class="mt-4">
-                <x-input-label for="last_name" :value="__('Last Name')" />
-                <x-text-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" :value="old('last_name')"
-                    autocomplete="last_name" />
-                <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
-            </div>
-        </div>
-
-        <div class="mt-4">
-            <x-input-label for="birthdate" :value="__('Birthdate')" />
-            <x-text-input id="birthdate" class="block mt-1 w-full" type="date" name="birthdate" :value="old('birthdate')"
-                autocomplete="birthdate" />
-            <x-input-error :messages="$errors->get('birthdate')" class="mt-2" />
-        </div>
-
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
-                autocomplete="email" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password"
-                autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-            <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password"
-                name="password_confirmation" autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
+        </form>
+    </x-auth-card>
 </x-guest-layout>
+
