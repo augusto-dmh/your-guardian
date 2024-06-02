@@ -8,32 +8,34 @@
 
         <form action="{{ route('transactions.store') }}" method="post" class="form-main">
             @csrf
-            <div class="form-group">
-                <label for="amount">Amount:</label>
-                <input type="text" name="amount" placeholder="Amount" value="{{ old('amount') }}">
-                @error('amount')
-                    <p>{{ $message }}</p>
-                @enderror
-            </div>
-            <div class="form-group">
-                <label for="type">Type:</label>
-                <select id="type" name="type">
-                    <option value="income" {{ old('type') === 'income' ? 'selected' : '' }}>Income</option>
-                    <option value="expense" {{ old('type') === 'expense' ? 'selected' : '' }}>Expense</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="transaction_category_id">Category:</label>
-                <select name="transaction_category_id" id="transaction_category_id"></select>
-            </div>
 
-            <div class="form-group">
-                <label for="description">Description:</label><br>
-                <textarea id="description" name="description" rows="4" cols="50">{{ old('description') }}</textarea><br>
-                @error('description')
-                    <p>{{ $message }}</p>
-                @enderror
-            </div>
+            <fieldset>
+                <div class="form-group">
+                    <label for="amount">Amount:</label>
+                    <input type="text" name="amount" placeholder="Amount" value="{{ old('amount') }}">
+                    @error('amount')
+                        <p>{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="type">Type:</label>
+                    <select id="type" name="type">
+                        <option value="income" {{ old('type') === 'income' ? 'selected' : '' }}>Income</option>
+                        <option value="expense" {{ old('type') === 'expense' ? 'selected' : '' }}>Expense</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="transaction_category_id">Category:</label>
+                    <select name="transaction_category_id" id="transaction_category_id"></select>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" rows="4" cols="50">{{ old('description') }}</textarea>
+                    @error('description')
+                        <p>{{ $message }}</p>
+                    @enderror
+                </div>
+            </fieldset>
 
             <div class="form-group">
                 <button>Create transaction</button>

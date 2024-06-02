@@ -10,43 +10,45 @@
             @csrf
             @method('PUT')
 
-            <div class="form-group">
-                <label for="amount">Amount:</label>
-                <input type="text" name="amount" placeholder="Amount"
-                    value="{{ old('amount', $transaction->amount) }}">
-                @error('amount')
-                    <p>{{ $message }}</p>
-                @enderror
-            </div>
-            <div class="form-group">
-                <label for="type">Type:</label>
-                <select id="type" name="type">
-                    <option value="income" {{ old('type', $transaction->type) === 'income' ? 'selected' : '' }}>Income
-                    </option>
-                    <option value="expense" {{ old('type', $transaction->type) === 'expense' ? 'selected' : '' }}>
-                        Expense
-                    </option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="transaction_category_id">Category:</label>
-                <select name="transaction_category_id" id="transaction_category_id">
-                    @foreach ($transactionCategories as $transactionCategory)
-                        <option value="{{ $transactionCategory->id }}"
-                            {{ old('transaction_category_id', $transaction->transactionCategory->id) == $transactionCategory->id ? 'selected' : '' }}>
-                            {{ $transactionCategory->name }}
+            <fieldset>
+                <div class="form-group">
+                    <label for="amount">Amount:</label>
+                    <input type="text" name="amount" placeholder="Amount"
+                        value="{{ old('amount', $transaction->amount) }}">
+                    @error('amount')
+                        <p>{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="type">Type:</label>
+                    <select id="type" name="type">
+                        <option value="income" {{ old('type', $transaction->type) === 'income' ? 'selected' : '' }}>
+                            Income
                         </option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="description">Description:</label><br>
-                <textarea id="description" name="description" rows="4" cols="50">{{ old('description', $transaction->description) }}</textarea><br>
-                @error('description')
-                    <p>{{ $message }}</p>
-                @enderror
-            </div>
+                        <option value="expense" {{ old('type', $transaction->type) === 'expense' ? 'selected' : '' }}>
+                            Expense
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="transaction_category_id">Category:</label>
+                    <select name="transaction_category_id" id="transaction_category_id">
+                        @foreach ($transactionCategories as $transactionCategory)
+                            <option value="{{ $transactionCategory->id }}"
+                                {{ old('transaction_category_id', $transaction->transactionCategory->id) == $transactionCategory->id ? 'selected' : '' }}>
+                                {{ $transactionCategory->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" rows="4" cols="50">{{ old('description', $transaction->description) }}</textarea>
+                    @error('description')
+                        <p>{{ $message }}</p>
+                    @enderror
+                </div>
+            </fieldset>
 
             <div class="form-group">
                 <button>Update</button>

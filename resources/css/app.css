@@ -71,6 +71,12 @@ select:hover {
     background-color: var(--secondary-bg-color);
 }
 
+fieldset {
+    display: flex;
+    flex-flow: column wrap;
+    gap: 1rem;
+}
+
 label {
     display: block;
 }
@@ -89,7 +95,7 @@ label {
     padding: 2rem;
     display: flex;
     flex-flow: column wrap;
-    gap: 1rem;
+    gap: 2rem;
 }
 
 h1 {
