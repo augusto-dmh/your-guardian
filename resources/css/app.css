@@ -98,6 +98,27 @@ label {
     gap: 2rem;
 }
 
+.wallet {
+    display: flex;
+    flex-flow: column wrap;
+    gap: 1rem;
+    margin: 0 auto;
+    width: min(70rem, 100%);
+    box-shadow:
+        rgba(47, 118, 141, 0.1) 3px 3px 3px 3px inset,
+        rgb(47, 118, 141) 5px 5px,
+        rgb(47, 118, 141, 0.3) 10px 10px,
+        rgb(47, 118, 141, 0.2) 15px 15px,
+        rgb(47, 118, 141, 0.1) 20px 20px,
+        rgb(47, 118, 141, 0.05) 25px 25px;
+    border: 0.025rem var(--secondary-bg-color) solid;
+    padding: 2rem;
+}
+
+.wallet p span {
+    color: var(--secondary-txt-color);
+}
+
 h1 {
     font-size: 5.5rem;
 }
