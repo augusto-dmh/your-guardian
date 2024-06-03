@@ -4,8 +4,10 @@ namespace App\Console\Commands;
 
 use Carbon\Carbon;
 use App\Models\Bill;
+use App\Models\User;
 use Illuminate\Console\Command;
 use App\Notifications\BillDueTomorrow;
+use App\Notifications\BillsDueTomorrow;
 
 class SendBillDueTomorrowNotifications extends Command
 {
@@ -17,10 +19,18 @@ class SendBillDueTomorrowNotifications extends Command
     {
         $tomorrow = Carbon::tomorrow();
 
-        $bills = Bill::whereDate('due_date', $tomorrow)->get();
+        $users = User::all();
 
-        foreach ($bills as $bill) {
-            $bill->user->notify(new BillDueTomorrow($bill));
+        foreach ($users as $user) {
+            $bills = $user->bills()->whereDate('due_date', $tomorrow)->get();
+
+            if ($bills->isEmpty()) {
+                continue;
+            }
+
+            count($bills) > 1
+                ? $user->notify(new BillsDueTomorrow($bills))
+                : $user->notify(new BillDueTomorrow($bills->first()));
         }
     }
 }
