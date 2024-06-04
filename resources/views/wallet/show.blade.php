@@ -6,17 +6,17 @@ $user = auth()->user();
 
 <x-layout>
     <div class="wallet">
-        <h3>{{ $user->full_name }}</h2>
+        <h3>{{ $full_name }}</h2>
 
-            <p><span>Balance:</span> ${{ $user->balance }}</p>
+            <p><span>Balance:</span> ${{ $balance }}</p>
             <p><span>Next Bill Due:</span>
-                {{ $user->bills()->orderBy('due_date', 'asc')->first()->due_date->format('Y-m-d') ?? 'none' }}
+                {{ $nextBillDueDate }}
             </p>
             <p><span>Next Task Due:</span>
-                {{ $user->tasks()->orderBy('due_date', 'asc')->first()->due_date->format('Y-m-d') ?? 'none' }}
+                {{ $nextTaskDueDate }}
             </p>
             <p><span>Last Transaction:</span>
-                @if ($lastTransaction = $user->transactions->last())
+                @if ($lastTransaction)
                     Amount: ${{ $lastTransaction->amount }} |
                     Type: {{ $lastTransaction->type }} |
                     Category: {{ $lastTransaction->transactionCategory->name ?? 'none' }} |
