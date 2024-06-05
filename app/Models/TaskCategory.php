@@ -14,10 +14,6 @@ class TaskCategory extends Model
 
     protected $fillable = ['name'];
 
-    public static $rules = [
-        'name' => 'required|string|max:255',
-    ];
-
     public function tasks()
     {
         return $this->hasMany(Task::class);

@@ -23,15 +23,6 @@ class Transaction extends Model
         'description',
     ];
 
-    public static $rules = [
-        'user_id' => 'exists:users,id',
-        'bill_id' => 'exists:bills,id',
-        'transaction_category_id' => 'exists:transaction_categories,id',
-        'amount' => 'required|numeric',
-        'type' => 'string|in:income,expense',
-        'description' => 'required|string|max:65535',
-    ];
-
     protected $attributes = [
         'type' => 'expense',
     ];

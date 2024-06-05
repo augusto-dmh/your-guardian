@@ -14,11 +14,6 @@ class TransactionCategory extends Model
 
     protected $fillable = ['name', 'transaction_type'];
 
-    public static $rules = [
-        'name' => 'required|string|max:255',
-        'transaction_type' => 'in:expense,income',
-    ];
-
     public function transactions()
     {
         return $this->hasMany(Transaction::class);

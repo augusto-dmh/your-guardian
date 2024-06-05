@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TransactionRequest;
 use App\Models\Transaction;
 use App\Models\TransactionCategory;
 use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
-    public function store()
+    public function store(TransactionRequest $request)
     {
         $user = Auth::user();
 
-        $validatedData = request()->validate(Transaction::$rules);
+        $validatedData = $request->validate($request->validated());
 
-        $type = request('type');
-        $amount = request('amount');
+        $type = $request->type;
+        $amount = $request->amount;
 
         $type === 'expense' && ($amount = -$amount);
 
@@ -36,12 +37,14 @@ class TransactionController extends Controller
         ]);
     }
 
-    public function update(Transaction $transaction)
-    {
-        $validatedData = request()->validate(Transaction::$rules);
+    public function update(
+        TransactionRequest $request,
+        Transaction $transaction
+    ) {
+        $validatedData = $request->validate($request->validated());
 
-        $amount = request('amount');
-        $type = request('type');
+        $amount = $request->amount;
+        $type = $request->type;
 
         $amount =
             ($type === 'expense' && $amount > 0) ||

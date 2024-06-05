@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskRequest;
 use Auth;
 use App\Models\Task;
 use App\Models\TaskCategory;
-use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function store(Request $request)
+    public function store(TaskRequest $request)
     {
-        $validatedData = $request->validate(Task::$rules);
+        $validatedData = $request->validate($request->validated());
 
         Auth::user()->tasks()->create($validatedData);
 
@@ -30,9 +30,9 @@ class TaskController extends Controller
         return view('tasks.show', compact('task'));
     }
 
-    public function update(Request $request, Task $task)
+    public function update(TaskRequest $request, Task $task)
     {
-        $validatedData = $request->validate(Task::$rules);
+        $validatedData = $request->validate($request->validated());
 
         $task->update($validatedData);
 
