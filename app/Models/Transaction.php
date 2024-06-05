@@ -15,6 +15,7 @@ class Transaction extends Model
     protected $table = 'transactions';
 
     protected $fillable = [
+        'user_id',
         'bill_id',
         'transaction_category_id',
         'amount',
@@ -23,11 +24,12 @@ class Transaction extends Model
     ];
 
     public static $rules = [
+        'user_id' => 'required|exists:users,id',
         'bill_id' => 'exists:bills,id',
         'transaction_category_id' => 'exists:transaction_categories,id',
         'amount' => 'required|numeric',
         'type' => 'string|in:income,expense',
-        'description' => 'nullable|string|max:65535',
+        'description' => 'required|string|max:65535',
     ];
 
     protected $attributes = [

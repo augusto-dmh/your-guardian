@@ -29,10 +29,10 @@ class Bill extends Model
     public static $rules = [
         'user_id' => 'required|exists:users,id',
         'title' => 'required|string|max:255',
-        'description' => 'string|max:65535',
-        'amount' => 'numeric',
+        'description' => 'nullable|string|max:65535',
+        'amount' => 'required|numeric',
         'due_date' => 'required|date',
-        'status' => 'string|in:unpaid,paid,overdue',
+        'status' => 'string|in:pending,paid,overdue',
     ];
 
     protected $casts = [
