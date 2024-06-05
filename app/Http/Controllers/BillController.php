@@ -2,23 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BillRequest;
 use App\Models\Bill;
 use Auth;
-use Illuminate\Http\Request;
 
 class BillController extends Controller
 {
-    public function store(Request $request)
+    public function store(BillRequest $request)
     {
-        Auth::user()
-            ->bills()
-            ->create([
-                'name' => $request->name,
-                'title' => $request->title,
-                'description' => $request->description,
-                'amount' => $request->amount,
-                'due_date' => $request->due_date,
-            ]);
+        Auth::user()->bills()->create($request->validated());
 
         return redirect()->back();
     }
@@ -35,16 +27,9 @@ class BillController extends Controller
         return view('bills.show', compact('bill'));
     }
 
-    public function update(Request $request, Bill $bill)
+    public function update(BillRequest $request, Bill $bill)
     {
-        $bill->update([
-            'name' => $request->name,
-            'title' => $request->title,
-            'description' => $request->description,
-            'amount' => $request->amount,
-            'status' => $request->status,
-            'due_date' => $request->due_date,
-        ]);
+        $bill->update($request->validated());
 
         return redirect()->back();
     }

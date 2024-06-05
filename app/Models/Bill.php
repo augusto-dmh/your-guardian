@@ -26,15 +26,6 @@ class Bill extends Model
         'status' => 'pending',
     ];
 
-    public static $rules = [
-        'user_id' => 'exists:users,id',
-        'title' => 'required|string|max:255',
-        'description' => 'nullable|string|max:65535',
-        'amount' => 'required|numeric',
-        'due_date' => 'required|date',
-        'status' => 'string|in:pending,paid,overdue',
-    ];
-
     protected $casts = [
         'due_date' => 'datetime',
     ];

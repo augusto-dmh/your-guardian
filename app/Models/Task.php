@@ -22,15 +22,6 @@ class Task extends Model
         'status',
     ];
 
-    public static $rules = [
-        'user_id' => 'exists:users,id',
-        'task_category_id' => 'exists:task_categories,id',
-        'title' => 'required|string|max:255',
-        'description' => 'nullable|string|max:65535',
-        'due_date' => 'required|date',
-        'status' => 'string|in:pending,completed,failed',
-    ];
-
     protected $attributes = [
         'status' => 'pending',
     ];
