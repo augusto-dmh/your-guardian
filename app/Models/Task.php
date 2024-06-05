@@ -14,6 +14,7 @@ class Task extends Model
     protected $table = 'tasks';
 
     protected $fillable = [
+        'user_id',
         'task_category_id',
         'title',
         'description',
@@ -22,6 +23,7 @@ class Task extends Model
     ];
 
     public static $rules = [
+        'user_id' => 'exists:users,id',
         'task_category_id' => 'exists:task_categories,id',
         'title' => 'required|string|max:255',
         'description' => 'nullable|string|max:65535',

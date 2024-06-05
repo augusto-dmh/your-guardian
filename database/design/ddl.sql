@@ -24,9 +24,9 @@ CREATE TABLE IF NOT EXISTS transactions (
     user_id BIGINT UNSIGNED ON DELETE CASCADE NOT NULL,
     bill_id BIGINT UNSIGNED ON DELETE CASCADE,
     transaction_category_id BIGINT UNSIGNED ON DELETE SET NULL,
-    amount DECIMAL(11, 2) DEFAULT 0.00 NOT NULL,
+    amount DECIMAL(11, 2) NOT NULL,
     type ENUM('income', 'expense') DEFAULT 'expense',
-    description TEXT,
+    description TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS bills (
     user_id BIGINT UNSIGNED ON DELETE CASCADE NOT NULL,
     title VARCHAR(255) NOT NULL,
     description TEXT,
-    amount DECIMAL(11, 2) DEFAULT 0.00,
+    amount DECIMAL(11, 2) NOT NULL,
     due_date DATE NOT NULL,
     status ENUM('pending', 'paid', 'overdue') DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
