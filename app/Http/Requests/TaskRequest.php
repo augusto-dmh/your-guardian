@@ -22,7 +22,7 @@ class TaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'task_category_id' => 'exists:task_categories,id',
+            'task_category_id' => 'nullable|exists:task_categories,id',
             'title' => 'required|string|max:255',
             'description' => 'nullable|string|max:65535',
             'due_date' => 'required|date',

@@ -24,7 +24,8 @@ class TransactionRequest extends FormRequest
         return [
             'user_id' => 'exists:users,id',
             'bill_id' => 'exists:bills,id',
-            'transaction_category_id' => 'exists:transaction_categories,id',
+            'transaction_category_id' =>
+                'nullable|exists:transaction_categories,id',
             'amount' => 'required|numeric',
             'type' => 'string|in:income,expense',
             'description' => 'required|string|max:65535',
