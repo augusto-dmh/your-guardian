@@ -26,7 +26,9 @@
                 </div>
                 <div class="form-group">
                     <label for="transaction_category_id">Category:</label>
-                    <select name="transaction_category_id" id="transaction_category_id"></select>
+                    <select name="transaction_category_id" id="transaction_category_id">
+                        <option value="">Select a category</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="description">Description:</label>

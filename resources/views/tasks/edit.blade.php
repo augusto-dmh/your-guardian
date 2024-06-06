@@ -25,6 +25,8 @@
                 <div class="form-group">
                     <label for="task_category_id">Category:</label>
                     <select name="task_category_id" id="task_category_id">
+                        <option value="">Select a category</option>
+
                         @foreach ($taskCategories as $taskCategory)
                             <option value="{{ $taskCategory->id }}"
                                 {{ old('task_category_id', $task->taskCategory?->id) === $taskCategory->id ? 'selected' : '' }}>
