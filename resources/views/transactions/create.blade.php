@@ -57,9 +57,16 @@
                 const categorySelect = document.getElementById('transaction_category_id');
                 const oldCategoryId = "{{ old('transaction_category_id') }}";
 
-                categorySelect.innerHTML = categories.map(function(category) {
-                    return `<option value="${category.id}" ${oldCategoryId == category.id ? 'selected' : ''}>${category.name}</option>`;
-                }).join('');
+                categories.forEach((category) => {
+                    const option = document.createElement('option');
+                    option.value = category.id;
+                    option.textContent = category.name;
+
+                    if (oldCategoryId == category.id) {
+                        option.selected = true;
+                    }
+                    categorySelect.appendChild(option);
+                });
 
                 loadingElement.classList.add('hidden');
                 overlayElement.style.display = 'none';
