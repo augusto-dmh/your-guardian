@@ -35,7 +35,7 @@
                     <select name="transaction_category_id" id="transaction_category_id">
                         @foreach ($transactionCategories as $transactionCategory)
                             <option value="{{ $transactionCategory->id }}"
-                                {{ old('transaction_category_id', $transaction->transactionCategory->id) == $transactionCategory->id ? 'selected' : '' }}>
+                                {{ old('transaction_category_id', $transaction->transactionCategory?->id) == $transactionCategory->id ? 'selected' : '' }}>
                                 {{ $transactionCategory->name }}
                             </option>
                         @endforeach

@@ -27,7 +27,7 @@
                     <select name="task_category_id" id="task_category_id">
                         @foreach ($taskCategories as $taskCategory)
                             <option value="{{ $taskCategory->id }}"
-                                {{ old('task_category_id', $task->taskCategory->task_category_id) === $taskCategory->id ? 'selected' : '' }}>
+                                {{ old('task_category_id', $task->taskCategory?->id) === $taskCategory->id ? 'selected' : '' }}>
                                 {{ ucFirst($taskCategory->name) }}</option>
                         @endforeach
                     </select>
