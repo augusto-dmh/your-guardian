@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Bill;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -23,6 +24,12 @@ class TestUserSeeder extends Seeder
         ]);
 
         Bill::factory()
+            ->count(10)
+            ->create([
+                'user_id' => $user->id,
+            ]);
+
+        Transaction::factory()
             ->count(10)
             ->create([
                 'user_id' => $user->id,
