@@ -1,5 +1,41 @@
 <x-layout>
     <h2>Transactions</h2>
+
+    <form method="GET" action="{{ route('bills.index') }}">
+        <div>
+            <h5>Sort by:</h5>
+            <div class="form-group">
+                <p>Amount:</p>
+                <div class="flex flex-row flex-nowrap items-center gap-2">
+                    <input type="checkbox" name="sortByAmount" id="sortByAmountAsc" value="asc"
+                        {{ request('sortByAmount') == 'asc' ? 'checked' : '' }}>
+                    <label for="sortByAmountAsc">Ascending</label>
+                </div>
+                <div class="flex flex-row flex-nowrap items-center gap-2">
+                    <input type="checkbox" name="sortByAmount" id="sortByAmountDesc" value="desc"
+                        {{ request('sortByAmount') == 'desc' ? 'checked' : '' }}>
+                    <label for="sortByAmountDesc">Descending</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p>Date:</p>
+                <div class="flex flex-row flex-nowrap items-center gap-2">
+                    <input type="checkbox" name="sortByDate" id="sortByDateAsc" value="asc"
+                        {{ request('sortByDate') == 'asc' ? 'checked' : '' }}>
+                    <label for="sortByDateAsc">Ascending</label>
+                </div>
+                <div class="flex flex-row flex-nowrap items-center gap-2">
+                    <input type="checkbox" name="sortByDate" id="sortByDateDesc" value="desc"
+                        {{ request('sortByDate') == 'desc' ? 'checked' : '' }}>
+                    <label for="sortByDateDesc">Descending</label>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit">Apply</button>
+    </form>
+
     <table>
         <thead>
             <tr>
@@ -12,7 +48,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (auth()->user()->transactions as $transaction)
+            @foreach ($transactions as $transaction)
                 <tr>
                     <td>{{ $transaction->amount }}</td>
                     <td>{{ $transaction->type }}</td>
@@ -34,5 +70,7 @@
             @endforeach
         </tbody>
     </table>
+
+    {{ $transactions->links() }}
 </x-layout>
 
