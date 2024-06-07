@@ -1,5 +1,41 @@
 <x-layout>
     <h2>Bills</h2>
+
+    <form method="GET" action="{{ route('bills.index') }}">
+        <div>
+            <h5>Sort by:</h5>
+            <div class="form-group">
+                <p>Amount:</p>
+                <div class="flex flex-row flex-nowrap items-center gap-2">
+                    <input type="checkbox" name="sortByAmount" id="sortByAmountAsc" value="asc"
+                        {{ request('sortByAmount') == 'asc' ? 'checked' : '' }}>
+                    <label for="sortByAmountAsc">Ascending</label>
+                </div>
+                <div class="flex flex-row flex-nowrap items-center gap-2">
+                    <input type="checkbox" name="sortByAmount" id="sortByAmountDesc" value="desc"
+                        {{ request('sortByAmount') == 'desc' ? 'checked' : '' }}>
+                    <label for="sortByAmountDesc">Descending</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p>Due Date:</p>
+                <div class="flex flex-row flex-nowrap items-center gap-2">
+                    <input type="checkbox" name="sortByDueDate" id="sortByDueDateAsc" value="asc"
+                        {{ request('sortByDueDate') == 'asc' ? 'checked' : '' }}>
+                    <label for="sortByDueDateAsc">Ascending</label>
+                </div>
+                <div class="flex flex-row flex-nowrap items-center gap-2">
+                    <input type="checkbox" name="sortByDueDate" id="sortByDueDateDesc" value="desc"
+                        {{ request('sortByDueDate') == 'desc' ? 'checked' : '' }}>
+                    <label for="sortByDueDateDesc">Descending</label>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit">Apply</button>
+    </form>
+
     <table>
         <thead>
             <tr>
@@ -34,4 +70,7 @@
             @endforeach
         </tbody>
     </table>
+
+    {{ $bills->links() }}
 </x-layout>
+
