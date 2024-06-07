@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\BillRequest;
-use App\Models\Bill;
 use Auth;
+use App\Models\Bill;
+use Illuminate\Http\Request;
+use App\QueryOptions\Sort\Amount;
+use App\Http\Requests\BillRequest;
+use App\QueryOptions\Sort\DueDate;
+use Illuminate\Support\Facades\Pipeline;
 
 class BillController extends Controller
 {
@@ -15,9 +19,14 @@ class BillController extends Controller
         return redirect()->back();
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $bills = Auth::user()->bills()->get();
+        $query = Auth::user()->bills()->getQuery();
+
+        $bills = Pipeline::send($query)
+            ->through([DueDate::class, Amount::class])
+            ->thenReturn()
+            ->paginate(10);
 
         return view('bills.index', compact('bills'));
     }
