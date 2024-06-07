@@ -13,7 +13,7 @@ class TransactionController extends Controller
     {
         $user = Auth::user();
 
-        $validatedData = $request->validate($request->rules());
+        $validatedData = $request->validated();
 
         $type = $request->type;
         $amount = $request->amount;
@@ -41,7 +41,7 @@ class TransactionController extends Controller
         TransactionRequest $request,
         Transaction $transaction
     ) {
-        $validatedData = $request->validate($request->rules());
+        $validatedData = $request->validated();
 
         $amount = $request->amount;
         $type = $request->type;

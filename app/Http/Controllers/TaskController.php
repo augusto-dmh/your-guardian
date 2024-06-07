@@ -11,7 +11,7 @@ class TaskController extends Controller
 {
     public function store(TaskRequest $request)
     {
-        $validatedData = $request->validate($request->rules());
+        $validatedData = $request->validated();
 
         Auth::user()->tasks()->create($validatedData);
 
@@ -32,7 +32,7 @@ class TaskController extends Controller
 
     public function update(TaskRequest $request, Task $task)
     {
-        $validatedData = $request->validate($request->rules());
+        $validatedData = $request->validated();
 
         $task->update($validatedData);
 
