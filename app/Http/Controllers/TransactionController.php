@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TransactionRequest;
 use App\Models\Transaction;
 use App\Models\TransactionCategory;
+use App\QueryOptions\Sort\Amount;
+use App\QueryOptions\Sort\Date;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Pipeline;
+use Request;
 
 class TransactionController extends Controller
 {
@@ -25,9 +29,16 @@ class TransactionController extends Controller
         return redirect()->back();
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return view('transactions.index');
+        $query = Auth::user()->transactions()->getQuery();
+
+        $transactions = Pipeline::send($query)
+            ->through([Amount::class, Date::class])
+            ->thenReturn()
+            ->paginate(10);
+
+        return view('transactions.index', compact('transactions'));
     }
 
     public function show(Transaction $transaction)
