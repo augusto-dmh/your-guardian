@@ -10,10 +10,10 @@ $user = auth()->user();
 
             <p><span>Balance:</span> ${{ $balance }}</p>
             <p><span>Next Bill Due:</span>
-                {{ $nextBillDueDate }}
+                {{ $nextPendingBillDueDate ?? 'none' }}
             </p>
             <p><span>Next Task Due:</span>
-                {{ $nextTaskDueDate }}
+                {{ $nextPendingTaskDueDate ?? 'none' }}
             </p>
             <p><span>Last Transaction:</span>
                 @if ($lastTransaction)

@@ -16,19 +16,31 @@ class WalletController extends Controller
         $balance = $user->balance;
         $full_name = $user->full_name;
         $lastTransaction = $user->transactions->last();
-        $nextBillDueDate = Cache::remember(
+        $nextPendingBillDueDate = Cache::remember(
             "user_{$userId}_next_bill_due",
             60,
             function () use ($user) {
-                $bill = $user->bills()->orderBy('due_date', 'asc')->first();
+                $bill = $user
+                    ->bills()
+                    ->where('due_date', '>=', now())
+                    ->where('status', '=', 'pending')
+                    ->orderBy('due_date', 'asc')
+                    ->first();
+
                 return $bill ? $bill->due_date->format('Y-m-d') : 'none';
             }
         );
-        $nextTaskDueDate = Cache::remember(
+        $nextPendingTaskDueDate = Cache::remember(
             "user_{$userId}_next_task_due",
             60,
             function () use ($user) {
-                $task = $user->tasks()->orderBy('due_date', 'asc')->first();
+                $task = $user
+                    ->tasks()
+                    ->where('due_date', '>=', now())
+                    ->where('status', '=', 'pending')
+                    ->orderBy('due_date', 'asc')
+                    ->first();
+
                 return $task ? $task->due_date->format('Y-m-d') : 'none';
             }
         );
@@ -39,8 +51,8 @@ class WalletController extends Controller
             compact(
                 'balance',
                 'full_name',
-                'nextBillDueDate',
-                'nextTaskDueDate',
+                'nextPendingBillDueDate',
+                'nextPendingTaskDueDate',
                 'lastTransaction'
             )
         );
