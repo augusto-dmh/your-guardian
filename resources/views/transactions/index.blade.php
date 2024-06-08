@@ -1,7 +1,7 @@
 <x-layout>
     <h2>Transactions</h2>
 
-    <form method="GET" action="{{ route('bills.index') }}">
+    <form method="GET" action="{{ route('transactions.index') }}">
         <div>
             <h5>Sort by:</h5>
             <div class="form-group">
@@ -29,6 +29,23 @@
                     <input type="checkbox" name="sortByDate" id="sortByDateDesc" value="desc"
                         {{ request('sortByDate') == 'desc' ? 'checked' : '' }}>
                     <label for="sortByDateDesc">Descending</label>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <h5>Filter by:</h5>
+            <div class="form-group">
+                <p>Type:</p>
+                <div class="flex flex-row flex-nowrap items-center gap-2">
+                    <input type="checkbox" name="filterByType" id="filterByTypeIncome" value="income"
+                        {{ request('filterByType') == 'income' ? 'checked' : '' }}>
+                    <label for="filterByTypeIncome">Income</label>
+                </div>
+                <div class="flex flex-row flex-nowrap items-center gap-2">
+                    <input type="checkbox" name="filterByType" id="filterByTypeIncome" value="expense"
+                        {{ request('filterByType') == 'expense' ? 'checked' : '' }}>
+                    <label for="filterByTypeIncome">Expense</label>
                 </div>
             </div>
         </div>
