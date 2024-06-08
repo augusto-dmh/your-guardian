@@ -6,6 +6,8 @@ use App\Http\Requests\TaskRequest;
 use Auth;
 use App\Models\Task;
 use App\Models\TaskCategory;
+use App\QueryOptions\Sort\DueDate;
+use Illuminate\Support\Facades\Pipeline;
 
 class TaskController extends Controller
 {
@@ -20,7 +22,12 @@ class TaskController extends Controller
 
     public function index()
     {
-        $tasks = Auth::user()->tasks()->get();
+        $query = Auth::user()->tasks()->getQuery();
+
+        $tasks = Pipeline::send($query)
+            ->through(DueDate::class)
+            ->thenReturn()
+            ->paginate(10);
 
         return view('tasks.index', compact('tasks'));
     }
