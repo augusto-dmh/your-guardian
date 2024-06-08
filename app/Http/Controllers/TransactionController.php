@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TransactionRequest;
+use Request;
 use App\Models\Transaction;
-use App\Models\TransactionCategory;
-use App\QueryOptions\Sort\Amount;
 use App\QueryOptions\Sort\Date;
+use App\QueryOptions\Filter\Type;
+use App\QueryOptions\Sort\Amount;
+use App\Models\TransactionCategory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Pipeline;
-use Request;
+use App\Http\Requests\TransactionRequest;
 
 class TransactionController extends Controller
 {
@@ -34,7 +35,7 @@ class TransactionController extends Controller
         $query = Auth::user()->transactions()->getQuery();
 
         $transactions = Pipeline::send($query)
-            ->through([Amount::class, Date::class])
+            ->through([Amount::class, Date::class, Type::class])
             ->thenReturn()
             ->paginate(10);
 

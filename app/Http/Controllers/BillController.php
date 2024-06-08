@@ -7,6 +7,7 @@ use App\Models\Bill;
 use Illuminate\Http\Request;
 use App\QueryOptions\Sort\Amount;
 use App\Http\Requests\BillRequest;
+use App\QueryOptions\Filter\Status;
 use App\QueryOptions\Sort\DueDate;
 use Illuminate\Support\Facades\Pipeline;
 
@@ -24,7 +25,7 @@ class BillController extends Controller
         $query = Auth::user()->bills()->getQuery();
 
         $bills = Pipeline::send($query)
-            ->through([DueDate::class, Amount::class])
+            ->through([DueDate::class, Amount::class, Status::class])
             ->thenReturn()
             ->paginate(10);
 

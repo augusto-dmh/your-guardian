@@ -31,6 +31,28 @@
                     <label for="sortByDueDateDesc">Descending</label>
                 </div>
             </div>
+
+            <div>
+                <h5>Filter by:</h5>
+                <div class="form-group">
+                    <p>Status:</p>
+                    <div class="flex flex-row flex-nowrap items-center gap-2">
+                        <input type="checkbox" name="filterByStatus[]" id="filterByStatusPending" value="pending"
+                            {{ is_array(request('filterByStatus')) && in_array('pending', request('filterByStatus')) ? 'checked' : '' }}>
+                        <label for="filterByStatusPending">Pending</label>
+                    </div>
+                    <div class="flex flex-row flex-nowrap items-center gap-2">
+                        <input type="checkbox" name="filterByStatus[]" id="filterByStatusPaid" value="paid"
+                            {{ is_array(request('filterByStatus')) && in_array('paid', request('filterByStatus')) ? 'checked' : '' }}>
+                        <label for="filterByStatusPaid">Paid</label>
+                    </div>
+                    <div class="flex flex-row flex-nowrap items-center gap-2">
+                        <input type="checkbox" name="filterByStatus[]" id="filterByStatusOverdue" value="overdue"
+                            {{ is_array(request('filterByStatus')) && in_array('overdue', request('filterByStatus')) ? 'checked' : '' }}>
+                        <label for="filterByStatusOverdue">Overdue</label>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <button type="submit">Apply</button>

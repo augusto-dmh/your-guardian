@@ -6,6 +6,7 @@ use App\Http\Requests\TaskRequest;
 use Auth;
 use App\Models\Task;
 use App\Models\TaskCategory;
+use App\QueryOptions\Filter\Status;
 use App\QueryOptions\Sort\DueDate;
 use Illuminate\Support\Facades\Pipeline;
 
@@ -25,7 +26,7 @@ class TaskController extends Controller
         $query = Auth::user()->tasks()->getQuery();
 
         $tasks = Pipeline::send($query)
-            ->through(DueDate::class)
+            ->through([DueDate::class, Status::class])
             ->thenReturn()
             ->paginate(10);
 
