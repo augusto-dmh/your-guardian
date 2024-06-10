@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\CacheHandlers\TaskCacheHandler;
 use App\Models\User;
 use App\Models\TaskCategory;
 use Illuminate\Support\Facades\Cache;
@@ -35,71 +36,16 @@ class Task extends Model
     {
         parent::boot();
 
-        self::creating(function ($task) {
-            if ($task->due_date->isFuture() && $task->status == 'pending') {
-                $nextPendingTaskDueDate = Cache::get(
-                    "user_{$task->user_id}_next_task_due"
-                );
-
-                if (
-                    !$nextPendingTaskDueDate ||
-                    $task->due_date->format('Y-m-d') < $nextPendingTaskDueDate
-                ) {
-                    Cache::put(
-                        "user_{$task->user_id}_next_task_due",
-                        $task->due_date->format('Y-m-d'),
-                        60
-                    );
-                }
-            }
+        self::created(function ($task) {
+            TaskCacheHandler::handleCreatedTask($task);
         });
 
         self::updated(function ($task) {
-            if ($task->due_date->isFuture() && $task->status == 'pending') {
-                $nextPendingTaskDueDate =
-                    Cache::get("user_{$task->user_id}_next_task_due") ??
-                    ($task->user
-                        ->tasks()
-                        ->where('due_date', '>=', now())
-                        ->where('status', '=', 'pending')
-                        ->orderBy('due_date', 'asc')
-                        ->first()
-                        ?->due_date->format('Y-m-d') ??
-                        'none');
-
-                $task->due_date->format('Y-m-d') < $nextPendingTaskDueDate
-                    ? Cache::put(
-                        "user_{$task->user_id}_next_task_due",
-                        $task->due_date->format('Y-m-d'),
-                        60
-                    )
-                    : Cache::add(
-                        "user_{$task->user_id}_next_task_due",
-                        $nextPendingTaskDueDate,
-                        60
-                    );
-            }
+            TaskCacheHandler::handleUpdatedTask($task);
         });
 
         self::deleted(function ($task) {
-            if (
-                $task->due_date->isFuture() &&
-                $task->status == 'pending' &&
-                Cache::get("user_{$task->user_id}_next_task_due") ==
-                    $task->due_date
-            ) {
-                Cache::put(
-                    "user_{$task->user_id}_next_task_due",
-                    $task->user
-                        ->tasks()
-                        ->where('due_date', '>=', now())
-                        ->where('status', '=', 'pending')
-                        ->orderBy('due_date', 'asc')
-                        ->first()
-                        ?->due_date->format('Y-m-d') ?? 'none',
-                    60
-                );
-            }
+            TaskCacheHandler::handleDeletedTask($task);
         });
     }
 
