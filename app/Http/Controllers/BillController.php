@@ -16,24 +16,7 @@ class BillController extends Controller
 {
     public function store(BillRequest $request)
     {
-        $bill = Auth::user()->bills()->create($request->validated());
-
-        if ($bill->due_date->isFuture() && $bill->status == 'pending') {
-            $nextPendingBillDueDate = Cache::get(
-                "user_{$bill->user_id}_next_bill_due"
-            );
-
-            if (
-                !$nextPendingBillDueDate ||
-                $bill->due_date->format('Y-m-d') < $nextPendingBillDueDate
-            ) {
-                Cache::put(
-                    "user_{$bill->user_id}_next_bill_due",
-                    $bill->due_date->format('Y-m-d'),
-                    60
-                );
-            }
-        }
+        Auth::user()->bills()->create($request->validated());
 
         return redirect()->back();
     }
@@ -59,56 +42,12 @@ class BillController extends Controller
     {
         $bill->update($request->validated());
 
-        if ($bill->due_date->isFuture() && $bill->status == 'pending') {
-            $nextPendingBillDueDate =
-                Cache::get("user_{$bill->user_id}_next_bill_due") ??
-                ($bill->user
-                    ->bills()
-                    ->where('due_date', '>=', now())
-                    ->where('status', '=', 'pending')
-                    ->orderBy('due_date', 'asc')
-                    ->first()
-                    ?->due_date->format('Y-m-d') ??
-                    'none');
-
-            $bill->due_date->format('Y-m-d') < $nextPendingBillDueDate
-                ? Cache::put(
-                    "user_{$bill->user_id}_next_bill_due",
-                    $bill->due_date->format('Y-m-d'),
-                    60
-                )
-                : Cache::add(
-                    "user_{$bill->user_id}_next_bill_due",
-                    $nextPendingBillDueDate,
-                    60
-                );
-        }
-
         return redirect()->back();
     }
 
     public function destroy(Bill $bill)
     {
         $bill->delete();
-
-        if (
-            $bill->due_date->isFuture() &&
-            $bill->status == 'pending' &&
-            Cache::get("user_{$bill->user_id}_next_bill_due") ==
-                $bill->due_date->format('Y-m-d')
-        ) {
-            Cache::put(
-                "user_{$bill->user_id}_next_bill_due",
-                $bill->user
-                    ->bills()
-                    ->where('due_date', '>=', now())
-                    ->where('status', '=', 'pending')
-                    ->orderBy('due_date', 'asc')
-                    ->first()
-                    ->due_date?->format('Y-m-d') ?? 'none',
-                60
-            );
-        }
 
         return redirect()->back();
     }
