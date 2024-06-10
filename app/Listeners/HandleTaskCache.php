@@ -1,13 +1,44 @@
 <?php
 
-namespace App\CacheHandlers;
+namespace App\Listeners;
 
+use App\Events\TaskCreated;
+use App\Events\TaskDeleted;
+use App\Events\EventInterface;
+use App\Events\TaskUpdated;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class TaskCacheHandler
+class HandleTaskCache
 {
-    public static function handleCreatedTask($task)
+    /**
+     * Create the event listener.
+     */
+    public function __construct()
     {
+        //
+    }
+
+    /**
+     * Handle the event.
+     */
+    public static function handle(TaskCreated|TaskUpdated|TaskDeleted $event)
+    {
+        $task = $event->getEntity();
+        if ($task->wasRecentlyCreated) {
+            self::handleCreatedTask($event);
+        } elseif ($task->wasChanged()) {
+            self::handleUpdatedTask($event);
+        } elseif (!$task->exists) {
+            self::handleDeletedTask($event);
+        }
+    }
+
+    private static function handleCreatedTask(TaskCreated $event)
+    {
+        $task = $event->getEntity();
+
         if ($task->due_date->isFuture() && $task->status == 'pending') {
             $nextPendingTaskDueDate = Cache::get(
                 "user_{$task->user_id}_next_task_due"
@@ -26,8 +57,10 @@ class TaskCacheHandler
         }
     }
 
-    public static function handleUpdatedTask($task)
+    private static function handleUpdatedTask(TaskUpdated $event)
     {
+        $task = $event->getEntity();
+
         if ($task->due_date->isFuture() && $task->status == 'pending') {
             $nextPendingTaskDueDate =
                 Cache::get("user_{$task->user_id}_next_task_due") ??
@@ -52,8 +85,10 @@ class TaskCacheHandler
         }
     }
 
-    public static function handleDeletedTask($task)
+    private static function handleDeletedTask(TaskDeleted $event)
     {
+        $task = $event->getEntity();
+
         if (
             $task->due_date->isFuture() &&
             $task->status == 'pending' &&

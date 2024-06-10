@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\BillCreated;
+use App\Events\BillDeleted;
+use App\Events\BillUpdated;
 use Auth;
 use App\Models\Bill;
 use Illuminate\Http\Request;
@@ -16,7 +19,9 @@ class BillController extends Controller
 {
     public function store(BillRequest $request)
     {
-        Auth::user()->bills()->create($request->validated());
+        $bill = Auth::user()->bills()->create($request->validated());
+
+        BillCreated::dispatch($bill);
 
         return redirect()->back();
     }
@@ -42,12 +47,16 @@ class BillController extends Controller
     {
         $bill->update($request->validated());
 
+        BillUpdated::dispatch($bill);
+
         return redirect()->back();
     }
 
     public function destroy(Bill $bill)
     {
         $bill->delete();
+
+        BillDeleted::dispatch($bill);
 
         return redirect()->back();
     }

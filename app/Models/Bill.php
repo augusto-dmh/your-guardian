@@ -32,23 +32,6 @@ class Bill extends Model
         'due_date' => 'datetime',
     ];
 
-    public static function boot()
-    {
-        parent::boot();
-
-        self::created(function ($bill) {
-            BillCacheHandler::handleCreatedBill($bill);
-        });
-
-        self::updated(function ($bill) {
-            BillCacheHandler::handleUpdatedBill($bill);
-        });
-
-        self::deleted(function ($bill) {
-            BillCacheHandler::handleDeletedBill($bill);
-        });
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);

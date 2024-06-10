@@ -32,23 +32,6 @@ class Task extends Model
         'due_date' => 'datetime',
     ];
 
-    public static function boot()
-    {
-        parent::boot();
-
-        self::created(function ($task) {
-            TaskCacheHandler::handleCreatedTask($task);
-        });
-
-        self::updated(function ($task) {
-            TaskCacheHandler::handleUpdatedTask($task);
-        });
-
-        self::deleted(function ($task) {
-            TaskCacheHandler::handleDeletedTask($task);
-        });
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
