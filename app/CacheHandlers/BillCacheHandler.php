@@ -15,11 +15,11 @@ class BillCacheHandler
 
             if (
                 !$nextPendingBillDueDate ||
-                $bill->due_date->format('Y-m-d') < $nextPendingBillDueDate
+                $bill->due_date < $nextPendingBillDueDate
             ) {
                 Cache::put(
                     "user_{$bill->user_id}_next_bill_due",
-                    $bill->due_date->format('Y-m-d'),
+                    $bill->due_date,
                     60
                 );
             }
@@ -31,19 +31,17 @@ class BillCacheHandler
         if ($bill->due_date->isFuture() && $bill->status == 'pending') {
             $nextPendingBillDueDate =
                 Cache::get("user_{$bill->user_id}_next_bill_due") ??
-                ($bill->user
+                $bill->user
                     ->bills()
                     ->where('due_date', '>=', now())
                     ->where('status', '=', 'pending')
                     ->orderBy('due_date', 'asc')
-                    ->first()
-                    ?->due_date->format('Y-m-d') ??
-                    'none');
+                    ->first()?->due_date;
 
-            $bill->due_date->format('Y-m-d') < $nextPendingBillDueDate
+            $bill->due_date < $nextPendingBillDueDate
                 ? Cache::put(
                     "user_{$bill->user_id}_next_bill_due",
-                    $bill->due_date->format('Y-m-d'),
+                    $bill->due_date,
                     60
                 )
                 : Cache::add(
@@ -68,8 +66,7 @@ class BillCacheHandler
                     ->where('due_date', '>=', now())
                     ->where('status', '=', 'pending')
                     ->orderBy('due_date', 'asc')
-                    ->first()
-                    ?->due_date->format('Y-m-d') ?? 'none',
+                    ->first()?->due_date,
                 60
             );
         }
