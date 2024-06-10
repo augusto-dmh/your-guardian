@@ -2,21 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TaskRequest;
 use Auth;
 use App\Models\Task;
 use App\Models\TaskCategory;
-use App\QueryOptions\Filter\Status;
+use App\Http\Requests\TaskRequest;
 use App\QueryOptions\Sort\DueDate;
+use App\QueryOptions\Filter\Status;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Pipeline;
 
 class TaskController extends Controller
 {
     public function store(TaskRequest $request)
     {
-        $validatedData = $request->validated();
+        $task = Auth::user()->tasks()->create($request->validated());
 
-        Auth::user()->tasks()->create($validatedData);
+        if ($task->due_date->isFuture() && $task->status == 'pending') {
+            $nextPendingTaskDueDate = Cache::get(
+                "user_{$task->user_id}_next_task_due"
+            );
+
+            if (
+                !$nextPendingTaskDueDate ||
+                $task->due_date->format('Y-m-d') < $nextPendingTaskDueDate
+            ) {
+                Cache::put(
+                    "user_{$task->user_id}_next_task_due",
+                    $task->due_date->format('Y-m-d'),
+                    60
+                );
+            }
+        }
 
         return redirect()->back();
     }
@@ -44,12 +60,55 @@ class TaskController extends Controller
 
         $task->update($validatedData);
 
+        if ($task->due_date->isFuture() && $task->status == 'pending') {
+            $nextPendingTaskDueDate =
+                Cache::get("user_{$task->user_id}_next_task_due") ??
+                ($task->user
+                    ->tasks()
+                    ->where('due_date', '>=', now())
+                    ->where('status', '=', 'pending')
+                    ->orderBy('due_date', 'asc')
+                    ->first()
+                    ?->due_date->format('Y-m-d') ??
+                    'none');
+
+            $task->due_date->format('Y-m-d') < $nextPendingTaskDueDate
+                ? Cache::put(
+                    "user_{$task->user_id}_next_task_due",
+                    $task->due_date->format('Y-m-d'),
+                    60
+                )
+                : Cache::add(
+                    "user_{$task->user_id}_next_task_due",
+                    $nextPendingTaskDueDate,
+                    60
+                );
+        }
+
         return redirect()->back();
     }
 
     public function destroy(Task $task)
     {
         $task->delete();
+
+        if (
+            $task->due_date->isFuture() &&
+            $task->status == 'pending' &&
+            Cache::get("user_{$task->user_id}_next_task_due") == $task->due_date
+        ) {
+            Cache::put(
+                "user_{$task->user_id}_next_task_due",
+                $task->user
+                    ->tasks()
+                    ->where('due_date', '>=', now())
+                    ->where('status', '=', 'pending')
+                    ->orderBy('due_date', 'asc')
+                    ->first()
+                    ?->due_date->format('Y-m-d') ?? 'none',
+                60
+            );
+        }
 
         return redirect()->back();
     }
