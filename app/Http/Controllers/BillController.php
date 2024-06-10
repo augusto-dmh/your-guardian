@@ -7,8 +7,9 @@ use App\Models\Bill;
 use Illuminate\Http\Request;
 use App\QueryOptions\Sort\Amount;
 use App\Http\Requests\BillRequest;
-use App\QueryOptions\Filter\Status;
 use App\QueryOptions\Sort\DueDate;
+use App\QueryOptions\Filter\Status;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Pipeline;
 
 class BillController extends Controller

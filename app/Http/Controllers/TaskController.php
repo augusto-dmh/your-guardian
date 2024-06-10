@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TaskRequest;
 use Auth;
 use App\Models\Task;
 use App\Models\TaskCategory;
-use App\QueryOptions\Filter\Status;
+use App\Http\Requests\TaskRequest;
 use App\QueryOptions\Sort\DueDate;
+use App\QueryOptions\Filter\Status;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Pipeline;
 
 class TaskController extends Controller
 {
     public function store(TaskRequest $request)
     {
-        $validatedData = $request->validated();
-
-        Auth::user()->tasks()->create($validatedData);
+        $task = Auth::user()->tasks()->create($request->validated());
 
         return redirect()->back();
     }
