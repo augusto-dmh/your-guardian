@@ -27,7 +27,7 @@ class WalletController extends Controller
                     ->orderBy('due_date', 'asc')
                     ->first()?->due_date;
 
-                return $queriedNextPendingBillDueDate ?? 'none';
+                return $queriedNextPendingBillDueDate;
             }
         );
         $nextPendingTaskDueDate = Cache::remember(
@@ -41,7 +41,7 @@ class WalletController extends Controller
                     ->orderBy('due_date', 'asc')
                     ->first()?->due_date;
 
-                return $queriedNextPendingTaskDueDate ?? 'none';
+                return $queriedNextPendingTaskDueDate;
             }
         );
 
