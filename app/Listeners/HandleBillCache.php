@@ -61,6 +61,7 @@ class HandleBillCache
     private static function handleUpdatedBill(BillUpdated $event)
     {
         $bill = $event->getEntity();
+        $bill->refresh();
 
         if ($bill->due_date->isFuture() && $bill->status == 'pending') {
             $nextPendingBillDueDate =
