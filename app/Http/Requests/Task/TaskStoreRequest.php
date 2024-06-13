@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Task;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TransactionRequest extends FormRequest
+class TaskStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,13 +22,10 @@ class TransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'exists:users,id',
-            'bill_id' => 'exists:bills,id',
-            'transaction_category_id' =>
-                'nullable|exists:transaction_categories,id',
-            'amount' => 'required|numeric',
-            'type' => 'string|in:income,expense',
-            'description' => 'required|string|max:65535',
+            'task_category_id' => 'nullable|exists:task_categories,id',
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string|max:65535',
+            'due_date' => 'required|date',
         ];
     }
 }

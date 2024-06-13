@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Transaction\TransactionStoreRequest;
+use App\Http\Requests\Transaction\TransactionUpdateRequest;
 use Request;
 use App\Models\Transaction;
 use App\QueryOptions\Sort\Date;
@@ -10,11 +12,10 @@ use App\QueryOptions\Sort\Amount;
 use App\Models\TransactionCategory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Pipeline;
-use App\Http\Requests\TransactionRequest;
 
 class TransactionController extends Controller
 {
-    public function store(TransactionRequest $request)
+    public function store(TransactionStoreRequest $request)
     {
         $user = Auth::user();
 
@@ -50,7 +51,7 @@ class TransactionController extends Controller
     }
 
     public function update(
-        TransactionRequest $request,
+        TransactionUpdateRequest $request,
         Transaction $transaction
     ) {
         $validatedData = $request->validated();
