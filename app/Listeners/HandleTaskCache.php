@@ -25,12 +25,11 @@ class HandleTaskCache
      */
     public static function handle(TaskCreated|TaskUpdated|TaskDeleted $event)
     {
-        $task = $event->getEntity();
-        if ($task->wasRecentlyCreated) {
+        if ($event instanceof TaskCreated) {
             self::handleCreatedTask($event);
-        } elseif ($task->wasChanged()) {
+        } elseif ($event instanceof TaskUpdated) {
             self::handleUpdatedTask($event);
-        } elseif (!$task->exists) {
+        } elseif ($event instanceof TaskDeleted) {
             self::handleDeletedTask($event);
         }
     }
