@@ -59,6 +59,7 @@ class HandleTaskCache
     private static function handleUpdatedTask(TaskUpdated $event)
     {
         $task = $event->getEntity();
+        $task->refresh();
 
         if ($task->due_date->isFuture() && $task->status == 'pending') {
             $nextPendingTaskDueDate =
