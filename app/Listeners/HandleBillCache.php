@@ -25,13 +25,11 @@ class HandleBillCache
      */
     public static function handle(BillCreated|BillUpdated|BillDeleted $event)
     {
-        $bill = $event->getEntity();
-
-        if ($bill->wasRecentlyCreated) {
+        if ($event instanceof BillCreated) {
             self::handleCreatedBill($event);
-        } elseif ($bill->wasChanged()) {
+        } elseif ($event instanceof BillUpdated) {
             self::handleUpdatedBill($event);
-        } elseif (!$bill->exists) {
+        } elseif ($event instanceof BillDeleted) {
             self::handleDeletedBill($event);
         }
     }
