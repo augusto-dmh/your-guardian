@@ -56,7 +56,7 @@ class User extends Authenticatable
 
     public function getBalanceAttribute()
     {
-        $balance = $this->transactions->sum('amount');
+        $balance = $this->transactions()->sum('amount');
         return number_format($balance, 2);
     }
 
