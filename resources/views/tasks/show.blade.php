@@ -13,7 +13,7 @@
         <tr>
             <td>{{ $task->title }}</td>
             <td>{{ $task->description }}</td>
-            <td>{{ $task->taskCategory?->name ?? 'none' }}</td>
+            <td>{{ $task->taskCategory()->name ?? 'none' }}</td>
             <td>{{ $task->due_date->format('m-d-Y') }}</td>
             <td>{{ $task->status }}</td>
         </tr>

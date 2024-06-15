@@ -12,7 +12,7 @@
         <tr>
             <td>{{ $transaction->amount }}</td>
             <td>{{ $transaction->type }}</td>
-            <td>{{ $transaction->transactionCategory?->name ?? 'none' }}</td>
+            <td>{{ $transaction->transactionCategory()->name ?? 'none' }}</td>
             <td>{{ $transaction->created_at->format('m-d-Y') }}</td>
         </tr>
     </tbody>

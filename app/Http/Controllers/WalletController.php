@@ -15,7 +15,7 @@ class WalletController extends Controller
 
         $balance = $user->balance;
         $full_name = $user->full_name;
-        $lastTransaction = $user->transactions->last();
+        $lastTransaction = $user->transactions()->latest('created_at')->first();
         $nextPendingBillDueDate = Cache::remember(
             "user_{$userId}_next_bill_due",
             60,
