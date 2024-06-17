@@ -1,0 +1,21 @@
+{
+    "$schema": "./vendor/phpbench/phpbench/phpbench.schema.json",
+    "runner.bootstrap": "vendor/autoload.php",
+    "runner.path": "tests/Benchmark",
+    "report.generators": {
+        "consumation_of_time_avg": {
+            "extends": "aggregate",
+            "title": "The Avarage Consumation of Time in Avarage",
+            "description": "How long it takes to consume time in avarage \n(considering the @Revs and @Iterations amount defined in each benchmark test).",
+            "cols": [
+                "benchmark",
+                "subject",
+                "mode",
+                "revs",
+                "its",
+                "rstdev",
+                "stdev"
+            ]
+        }
+    }
+}
