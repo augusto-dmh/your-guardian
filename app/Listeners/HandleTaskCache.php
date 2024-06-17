@@ -71,7 +71,7 @@ class HandleTaskCache
                     ->orderBy('due_date', 'asc')
                     ->first()?->due_date;
 
-            $task->due_date < $nextPendingTaskDueDate
+            $task->due_date <= $nextPendingTaskDueDate
                 ? Cache::put(
                     "user_{$task->user_id}_next_task_due",
                     $task->due_date,

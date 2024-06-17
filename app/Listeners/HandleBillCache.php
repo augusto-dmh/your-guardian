@@ -71,7 +71,7 @@ class HandleBillCache
                     ->orderBy('due_date', 'asc')
                     ->first()?->due_date;
 
-            $bill->due_date < $nextPendingBillDueDate
+            $bill->due_date <= $nextPendingBillDueDate
                 ? Cache::put(
                     "user_{$bill->user_id}_next_bill_due",
                     $bill->due_date,
