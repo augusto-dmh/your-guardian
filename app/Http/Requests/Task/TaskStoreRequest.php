@@ -26,6 +26,7 @@ class TaskStoreRequest extends FormRequest
             'title' => 'required|string|max:255',
             'description' => 'nullable|string|max:65535',
             'due_date' => 'required|date',
+            'status' => 'string|in:pending,completed,failed',
         ];
     }
 }
