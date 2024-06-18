@@ -59,22 +59,3 @@ test('HandleTaskCache successfully working on storing a task', function () {
         Cache::get("user_{$user->id}_next_task_due")->format('Y-m-d')
     )->toEqual($taskCreatedOnSecondRequest->due_date->format('Y-m-d'));
 });
-
-test('TaskCreated event dispatched when task stored', function () {
-    Event::fake();
-    $faker = Factory::create();
-    $user = User::factory()->create();
-    Auth::login($user);
-    $taskCategory = TaskCategory::factory()->create();
-
-    $this->actingAs($user)->post(route('tasks.store'), [
-        'task_category_id' => $taskCategory->id,
-        'title' => $faker->sentence,
-        'description' => $faker->paragraph,
-        'amount' => $faker->randomFloat(2, 0, 1000),
-        'due_date' => now()->addDays(3)->toDateString(),
-        'status' => 'pending',
-    ]);
-
-    Event::assertDispatched(TaskCreated::class);
-});

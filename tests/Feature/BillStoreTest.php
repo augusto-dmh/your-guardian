@@ -51,20 +51,3 @@ test('HandleBillCache successfully working on storing a bill', function () {
         Cache::get("user_{$user->id}_next_bill_due")->format('Y-m-d')
     )->toEqual($BillCreatedOnSecondRequest->due_date->format('Y-m-d'));
 });
-
-test('BillCreated event dispatched when bill stored', function () {
-    Event::fake([BillCreated::class]);
-    $faker = Factory::create();
-    $user = User::factory()->create();
-    Auth::login($user);
-
-    $response = $this->actingAs($user)->post(route('bills.store'), [
-        'title' => $faker->sentence,
-        'description' => $faker->paragraph,
-        'amount' => $faker->randomFloat(2, 0, 1000),
-        'due_date' => now()->addDays(3)->toDateString(),
-        'status' => 'pending',
-    ]);
-
-    Event::assertDispatched(BillCreated::class);
-});

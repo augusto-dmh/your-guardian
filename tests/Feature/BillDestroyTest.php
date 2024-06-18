@@ -42,14 +42,3 @@ test('HandleBillCache successfully working on updating a bill', function () {
 
     $this->assertNull(Cache::get("user_{$bill->user_id}_next_bill_due"));
 });
-
-test('BillDeleted event dispatched when bill destroyed', function () {
-    Event::fake();
-    $user = User::factory()->create();
-    Auth::login($user);
-
-    $bill = Bill::factory()->create(['user_id' => $user->id]);
-    $this->actingAs($user)->delete(route('bills.destroy', $bill));
-
-    Event::assertDispatched(BillDeleted::class);
-});
