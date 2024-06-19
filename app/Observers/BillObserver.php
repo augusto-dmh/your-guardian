@@ -1,43 +1,14 @@
 <?php
 
-namespace App\Listeners;
+namespace App\Observers;
 
-use App\Events\BillCreated;
-use App\Events\BillDeleted;
-use App\Events\BillUpdated;
-use App\Events\EventInterface;
+use App\Models\Bill;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
-class HandleBillCache
+class BillObserver
 {
-    /**
-     * Create the event listener.
-     */
-    public function __construct()
+    public function created(Bill $bill): void
     {
-        //
-    }
-
-    /**
-     * Handle the event.
-     */
-    public static function handle(BillCreated|BillUpdated|BillDeleted $event)
-    {
-        if ($event instanceof BillCreated) {
-            self::handleCreatedBill($event);
-        } elseif ($event instanceof BillUpdated) {
-            self::handleUpdatedBill($event);
-        } elseif ($event instanceof BillDeleted) {
-            self::handleDeletedBill($event);
-        }
-    }
-
-    private static function handleCreatedBill(BillCreated $event)
-    {
-        $bill = $event->getEntity();
-
         if ($bill->due_date->isFuture() && $bill->status == 'pending') {
             $nextPendingBillDueDate = Cache::get(
                 "user_{$bill->user_id}_next_bill_due"
@@ -56,9 +27,8 @@ class HandleBillCache
         }
     }
 
-    private static function handleUpdatedBill(BillUpdated $event)
+    public function updated(Bill $bill): void
     {
-        $bill = $event->getEntity();
         $bill->refresh();
 
         if ($bill->due_date->isFuture() && $bill->status == 'pending') {
@@ -84,11 +54,8 @@ class HandleBillCache
                 );
         }
     }
-
-    private static function handleDeletedBill(BillDeleted $event)
+    public function deleted(Bill $bill): void
     {
-        $bill = $event->getEntity();
-
         if (
             $bill->due_date->isFuture() &&
             $bill->status == 'pending' &&

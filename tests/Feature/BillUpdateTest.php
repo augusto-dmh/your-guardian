@@ -48,22 +48,3 @@ test('HandleBillCache successfully working on updating a bill', function () {
             $bill->due_date->format('Y-m-d')
     );
 });
-
-test('BillUpdated event dispatched when bill updated', function () {
-    Event::fake();
-    $user = User::factory()->create();
-    Auth::login($user);
-
-    $bill = Bill::factory()->create([
-        'user_id' => $user->id,
-        'status' => 'pending',
-        'due_date' => now()->addDays(2)->toDateString(),
-    ]);
-    $newDueDate = now()->addDays(3)->format('Y-m-d');
-    $response = $this->actingAs($user)->put(route('bills.update', $bill), [
-        'due_date' => $newDueDate,
-    ]);
-    $bill->refresh();
-
-    Event::assertDispatched(BillUpdated::class);
-});

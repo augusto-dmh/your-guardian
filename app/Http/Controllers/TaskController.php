@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\TaskCreated;
-use App\Events\TaskDeleted;
-use App\Events\TaskUpdated;
 use App\Http\Requests\Task\TaskStoreRequest;
 use App\Http\Requests\Task\TaskUpdateRequest;
 use Auth;
@@ -12,7 +9,6 @@ use App\Models\Task;
 use App\Models\TaskCategory;
 use App\QueryOptions\Sort\DueDate;
 use App\QueryOptions\Filter\Status;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Pipeline;
 
 class TaskController extends Controller
@@ -20,8 +16,6 @@ class TaskController extends Controller
     public function store(TaskStoreRequest $request)
     {
         $task = Auth::user()->tasks()->create($request->validated());
-
-        TaskCreated::dispatch($task);
 
         return redirect()->back();
     }
@@ -49,16 +43,12 @@ class TaskController extends Controller
 
         $task->update($validatedData);
 
-        TaskUpdated::dispatch($task);
-
         return redirect()->back();
     }
 
     public function destroy(Task $task)
     {
         $task->delete();
-
-        TaskDeleted::dispatch($task);
 
         return redirect()->back();
     }
