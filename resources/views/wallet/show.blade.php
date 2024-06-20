@@ -19,7 +19,7 @@ $user = auth()->user();
                 @if ($lastTransaction)
                     Amount: ${{ $lastTransaction->amount }} |
                     Type: {{ $lastTransaction->type }} |
-                    Category: {{ $lastTransaction->transactionCategory()->name ?? 'none' }} |
+                    Category: {{ $lastTransaction->transactionCategory?->name ?? 'none' }} |
                     Description: {{ Str::limit($lastTransaction->description, 5, '...') ?? 'none' }}
                 @else
                     None

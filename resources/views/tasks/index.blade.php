@@ -59,7 +59,7 @@
         <tbody>
             @foreach ($tasks as $task)
                 <tr>
-                    <td>{{ $task->taskCategory()->name ?? 'none' }}</td>
+                    <td>{{ $task->taskCategory?->name ?? 'none' }}</td>
                     <td>{{ $task->status }}</td>
                     <td><a href="{{ route('tasks.show', $task) }}">{{ $task->title }}</a></td>
                     <td>{{ Str::limit($task->description, 20, '...') }}</td>
