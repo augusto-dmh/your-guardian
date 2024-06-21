@@ -4,7 +4,11 @@
     <h2 class="absolute top-0 left-1/2 transform -translate-x-1/2 hidden" id="loading">Loading...</h2>
 
     <div class="form-wrapper">
-        <x-your-guardian-logo-1 />
+        <div class="flex justify-center">
+            <a href="{{ route('dashboard') }}">
+                <x-application-logo class="w-32 h-32" />
+            </a>
+        </div>
 
         <form action="{{ route('transactions.update', $transaction) }}" method="post" class="form-main">
             @csrf

@@ -1,6 +1,10 @@
 <x-layout>
     <div class="form-wrapper">
-        <x-your-guardian-logo-1 />
+        <div class="flex justify-center">
+            <a href="{{ route('dashboard') }}">
+                <x-application-logo class="w-32 h-32" />
+            </a>
+        </div>
 
         <form action="{{ route('bills.store') }}" method="post" class="form-main">
             @csrf
@@ -30,3 +34,4 @@
         </form>
     </div>
 </x-layout>
+

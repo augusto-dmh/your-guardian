@@ -12,11 +12,6 @@
     gap: 0.5rem;
 }
 
-.form-wrapper .logo-v1 {
-    width: 10rem;
-    height: 10rem;
-}
-
 .form-wrapper {
     display: flex;
     flex-flow: column wrap;
