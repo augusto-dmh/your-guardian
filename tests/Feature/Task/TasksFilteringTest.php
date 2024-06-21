@@ -26,10 +26,7 @@ test('tasks.index screen filters tasks correctly', function () {
 
     $response = $this->actingAs($user)->get(
         route('tasks.index', [
-            'filterByStatus' => $faker->randomElement([
-                'pending',
-                ['pending', 'completed'],
-            ]),
+            'filterByStatus' => $faker->randomElement(['pending', 'completed']),
         ])
     );
 
@@ -53,4 +50,3 @@ test('tasks.index screen filters tasks correctly', function () {
     });
 });
 
-// feature/sorting-tests-on-bills-tasks-transactions - to be done

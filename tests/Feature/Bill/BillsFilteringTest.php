@@ -23,10 +23,7 @@ test('bills.index screen filters bills correctly', function () {
 
     $response = $this->actingAs($user)->get(
         route('bills.index', [
-            'filterByStatus' => $faker->randomElement([
-                'pending',
-                ['pending', 'paid'],
-            ]),
+            'filterByStatus' => $faker->randomElement(['pending', 'paid']),
         ])
     );
 
