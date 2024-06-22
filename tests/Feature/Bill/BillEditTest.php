@@ -1,20 +1,36 @@
 <?php
 
+namespace Tests\Feature;
+
+use Tests\TestCase;
 use App\Models\Bill;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Faker\Factory as Faker;
 
-test('Bill edit view successfully showed', function () {
-    $user = User::factory()->create();
-    Auth::login($user);
-    $bill = Bill::factory()->create(['user_id' => $user->id]);
+class BillEditTest extends TestCase
+{
+    use RefreshDatabase;
 
-    $response = $this->actingAs($user)->get(
-        route('bills.edit', compact('bill'))
-    );
+    protected $faker;
 
-    $response->assertStatus(200);
-    $response->assertViewIs('bills.edit');
-    $response->assertViewHas('bill', $bill);
-    $response->assertSee('form');
-});
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->faker = Faker::create();
+    }
+
+    public function testBillEditViewSuccessfullyShowed()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $bill = Bill::factory()->create(['user_id' => $user->id]);
+
+        $response = $this->get(route('bills.edit', ['bill' => $bill]));
+
+        $response->assertStatus(200);
+        $response->assertViewIs('bills.edit');
+        $response->assertViewHas('bill', $bill);
+        $response->assertSee('form');
+    }
+}
