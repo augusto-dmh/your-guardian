@@ -1,51 +1,70 @@
 <?php
 
+namespace Tests\Feature;
+
+use Tests\TestCase;
 use Faker\Factory;
 use App\Models\User;
 use App\Models\Transaction;
 use App\Models\TransactionCategory;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 
-test('transactions.index screen filters transactions correctly', function () {
-    $faker = Factory::create();
+class TransactionFilteringTest extends TestCase
+{
+    use RefreshDatabase;
 
-    $user = User::factory()->create();
-    Auth::login($user);
+    protected $faker;
+    protected $user;
 
-    $transactionCategory = TransactionCategory::factory()->create();
-    $includedTransactions = Transaction::factory(5)->create([
-        'user_id' => $user->id,
-        'transaction_category_id' => $transactionCategory->id,
-        'type' => 'income',
-    ]);
-    $excludedTransactions = Transaction::factory(5)->create([
-        'user_id' => $user->id,
-        'transaction_category_id' => $transactionCategory->id,
-        'type' => 'expense',
-    ]);
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->faker = Factory::create();
+        $this->user = User::factory()->create();
+        Auth::login($this->user);
+    }
 
-    $response = $this->actingAs($user)->get(
-        route('transactions.index', [
-            'filterByType' => 'income',
-        ])
-    );
+    public function testTransactionsIndexScreenFiltersTransactionsCorrectly()
+    {
+        $transactionCategory = TransactionCategory::factory()->create();
+        $includedTransactions = Transaction::factory()
+            ->count(5)
+            ->create([
+                'user_id' => $this->user->id,
+                'transaction_category_id' => $transactionCategory->id,
+                'type' => 'income',
+            ]);
+        $excludedTransactions = Transaction::factory()
+            ->count(5)
+            ->create([
+                'user_id' => $this->user->id,
+                'transaction_category_id' => $transactionCategory->id,
+                'type' => 'expense',
+            ]);
 
-    $response->assertViewHas('transactions', function ($viewTransactions) use (
-        $includedTransactions,
-        $excludedTransactions
-    ) {
-        foreach ($includedTransactions as $transaction) {
-            if (!$viewTransactions->contains($transaction)) {
-                return false;
+        $response = $this->actingAs($this->user)->get(
+            route('transactions.index', [
+                'filterByType' => 'income',
+            ])
+        );
+
+        $response->assertViewHas('transactions', function (
+            $viewTransactions
+        ) use ($includedTransactions, $excludedTransactions) {
+            foreach ($includedTransactions as $transaction) {
+                if (!$viewTransactions->contains($transaction)) {
+                    return false;
+                }
             }
-        }
 
-        foreach ($excludedTransactions as $transaction) {
-            if ($viewTransactions->contains($transaction)) {
-                return false;
+            foreach ($excludedTransactions as $transaction) {
+                if ($viewTransactions->contains($transaction)) {
+                    return false;
+                }
             }
-        }
 
-        return true;
-    });
-});
+            return true;
+        });
+    }
+}

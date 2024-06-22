@@ -1,15 +1,33 @@
 <?php
 
+namespace Tests\Feature;
+
+use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Faker\Factory as Faker;
 
-test('Bill create view successfully showed', function () {
-    $user = User::factory()->create();
-    Auth::login($user);
+class BillCreateTest extends TestCase
+{
+    use RefreshDatabase;
 
-    $response = $this->actingAs($user)->get(route('bills.create'));
+    protected $faker;
 
-    $response->assertStatus(200);
-    $response->assertViewIs('bills.create');
-    $response->assertSee('form');
-});
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->faker = Faker::create();
+    }
+
+    public function testBillCreateViewSuccessfullyShowed()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $response = $this->get(route('bills.create'));
+
+        $response->assertStatus(200);
+        $response->assertViewIs('bills.create');
+        $response->assertSee('form');
+    }
+}

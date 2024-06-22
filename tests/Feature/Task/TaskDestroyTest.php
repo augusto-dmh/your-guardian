@@ -1,33 +1,52 @@
 <?php
+namespace Tests\Feature;
 
-use App\Http\Requests\Task\TaskStoreRequest;
-use Faker\Factory;
+use Tests\TestCase;
 use App\Models\Task;
 use App\Models\TaskCategory;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Event;
+use Faker\Factory;
 
-test('HandleTaskCache successfully working on updating a task', function () {
-    $user = User::factory()->create();
-    Auth::login($user);
-    $taskCategory = TaskCategory::factory()->create();
-    $taskStoreData = Task::factory()->make([
-        'user_id' => $user->id,
-        'task_category_id' => $taskCategory->id,
-    ]);
+class TaskDestroyTest extends TestCase
+{
+    use RefreshDatabase;
 
-    $response1 = $this->actingAs($user)->post(
-        route('tasks.store'),
-        $taskStoreData->toArray()
-    );
-    $task = Task::first();
-    $response2 = $this->actingAs($user)->delete(route('tasks.destroy', $task));
+    protected $faker;
+    protected $user;
 
-    $response1->assertStatus(302);
-    $response2->assertStatus(302);
-    $this->assertDatabaseMissing('tasks', ['id' => $task->id]);
-    $this->assertNull(Cache::get("user_{$task->user_id}_next_task_due"));
-});
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->faker = Factory::create();
+        $this->user = User::factory()->create();
+        Auth::login($this->user);
+    }
+
+    public function testHandleTaskCacheSuccessfullyWorkingOnDeletingATask()
+    {
+        $taskCategory = TaskCategory::factory()->create();
+        $taskStoreData = Task::factory()
+            ->make([
+                'user_id' => $this->user->id,
+                'task_category_id' => $taskCategory->id,
+            ])
+            ->toArray();
+
+        $response1 = $this->actingAs($this->user)->post(
+            route('tasks.store'),
+            $taskStoreData
+        );
+        $task = Task::firstOrFail();
+        $response2 = $this->actingAs($this->user)->delete(
+            route('tasks.destroy', $task)
+        );
+
+        $response1->assertStatus(302);
+        $response2->assertStatus(302);
+        $this->assertDatabaseMissing('tasks', ['id' => $task->id]);
+        $this->assertNull(Cache::get("user_{$task->user_id}_next_task_due"));
+    }
+}
