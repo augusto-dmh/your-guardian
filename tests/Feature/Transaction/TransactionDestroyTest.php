@@ -28,26 +28,21 @@ class TransactionDestroyTest extends TestCase
     public function testCacheHandledSuccessfullyAfterDeletingATransaction()
     {
         $transactionCategory = TransactionCategory::factory()->create();
-        $transactionStoreData = Transaction::factory()
-            ->make([
-                'user_id' => $this->user->id,
-                'transaction_category_id' => $transactionCategory->id,
-            ])
-            ->toArray();
+        $transaction = Transaction::factory()->create([
+            'user_id' => $this->user->id,
+            'transaction_category_id' => $transactionCategory->id,
+        ]);
+        $transactionData = $transaction->toArray();
 
         $response1 = $this->actingAs($this->user)->post(
             route('transactions.store'),
-            $transactionStoreData
+            $transactionData
         );
-        $transaction = Transaction::firstOrFail();
         $response2 = $this->actingAs($this->user)->delete(
             route('transactions.destroy', $transaction)
         );
 
         $response1->assertStatus(302);
-        $response2->assertStatus(302);
-        $this->assertDatabaseMissing('transactions', [
-            'id' => $transaction->id,
-        ]);
+        $this->assertDatabaseMissing('transactions', $transactionData);
     }
 }

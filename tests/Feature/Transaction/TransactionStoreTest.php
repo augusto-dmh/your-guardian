@@ -2,14 +2,15 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use Faker\Factory;
-use App\Models\User;
+use Tests\TestCase;
 use App\Models\Bill;
+use App\Models\User;
 use App\Models\Transaction;
+use Illuminate\Http\Request;
 use App\Models\TransactionCategory;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TransactionStoreTest extends TestCase
 {
@@ -30,24 +31,21 @@ class TransactionStoreTest extends TestCase
     {
         $bill = Bill::factory()->create(['user_id' => $this->user->id]);
         $transactionCategory = TransactionCategory::factory()->create();
+        $transactionData = [
+            'user_id' => $this->user->id,
+            'bill_id' => $bill->id,
+            'transaction_category_id' => $transactionCategory->id,
+            'amount' => $this->faker->randomFloat(2, 0, 1000),
+            'description' => $this->faker->paragraph,
+            'type' => 'expense',
+        ];
 
         $response = $this->actingAs($this->user)->post(
             route('transactions.store'),
-            [
-                'user_id' => $this->user->id,
-                'bill_id' => $bill->id,
-                'transaction_category_id' => $transactionCategory->id,
-                'amount' => $this->faker->randomFloat(2, 0, 1000),
-                'description' => $this->faker->paragraph,
-                'type' => 'expense',
-            ]
+            $transactionData
         );
 
-        $transaction = Transaction::latest()->first();
-
         $response->assertStatus(302);
-        $this->assertDatabaseHas('transactions', [
-            'id' => $transaction->id,
-        ]);
+        $this->assertDatabaseHas('transactions', $transactionData);
     }
 }

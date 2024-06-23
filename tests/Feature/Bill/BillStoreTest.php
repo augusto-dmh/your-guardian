@@ -18,19 +18,21 @@ class BillStoreTest extends TestCase
         $faker = Factory::create();
         $user = User::factory()->create();
         Auth::login($user);
-
-        $response = $this->actingAs($user)->post(route('bills.store'), [
+        $billData = [
             'title' => $faker->sentence,
             'description' => $faker->paragraph,
             'amount' => $faker->randomFloat(2, 0, 1000),
             'due_date' => now()->addDays(3)->toDateString(),
             'status' => 'pending',
-        ]);
+        ];
+
+        $response = $this->actingAs($user)->post(
+            route('bills.store'),
+            $billData
+        );
 
         $response->assertStatus(302); // redirected
-        $this->assertDatabaseHas('bills', [
-            'user_id' => $user->id,
-        ]);
+        $this->assertDatabaseHas('bills', $billData);
     }
 
     public function testHandleBillCacheSuccessfullyWorkingOnStoringABill()

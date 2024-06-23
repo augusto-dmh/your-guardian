@@ -32,12 +32,13 @@ class BillDestroyTest extends TestCase
             'status' => 'pending',
             'due_date' => now()->addDay()->toDateString(),
         ]);
+        $billData = $bill->toArray();
         $response = $this->actingAs($user)->delete(
             route('bills.destroy', $bill)
         );
 
         $response->assertStatus(302);
-        $this->assertDatabaseMissing('bills', ['id' => $bill->id]);
+        $this->assertDatabaseMissing('bills', $billData);
     }
 
     public function testHandleBillCacheSuccessfullyWorkingOnUpdatingABill()

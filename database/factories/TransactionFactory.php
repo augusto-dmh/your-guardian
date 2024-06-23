@@ -24,8 +24,6 @@ class TransactionFactory extends Factory
             'amount' => $this->faker->randomFloat(2, 0, 10000),
             'type' => $this->faker->randomElement(['income', 'expense']),
             'description' => $this->faker->text(),
-            'created_at' => $this->faker->date(),
-            'updated_at' => $this->faker->date(),
         ];
     }
 }
