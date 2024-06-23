@@ -30,8 +30,6 @@ class TransactionCategoryFactory extends Factory
                 'income',
                 'expense',
             ]),
-            'created_at' => now(),
-            'updated_at' => now(),
         ];
     }
 }

@@ -27,8 +27,6 @@ class TaskFactory extends Factory
                 'completed',
                 'failed',
             ]),
-            'created_at' => $this->faker->date,
-            'updated_at' => $this->faker->date,
         ];
     }
 }
