@@ -28,18 +28,16 @@ class TaskDestroyTest extends TestCase
     public function testHandleTaskCacheSuccessfullyWorkingOnDeletingATask()
     {
         $taskCategory = TaskCategory::factory()->create();
-        $taskStoreData = Task::factory()
-            ->make([
-                'user_id' => $this->user->id,
-                'task_category_id' => $taskCategory->id,
-            ])
-            ->toArray();
+        $task = Task::factory()->create([
+            'user_id' => $this->user->id,
+            'task_category_id' => $taskCategory->id,
+        ]);
+        $taskData = $task->toArray();
 
         $response1 = $this->actingAs($this->user)->post(
             route('tasks.store'),
-            $taskStoreData
+            $taskData
         );
-        $task = Task::firstOrFail();
         $response2 = $this->actingAs($this->user)->delete(
             route('tasks.destroy', $task)
         );

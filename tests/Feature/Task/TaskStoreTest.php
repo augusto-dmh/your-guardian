@@ -28,21 +28,21 @@ class TaskStoreTest extends TestCase
     public function testTaskSuccessfullyStored()
     {
         $taskCategory = TaskCategory::factory()->create();
-
-        $response = $this->actingAs($this->user)->post(route('tasks.store'), [
+        $taskData = [
             'task_category_id' => $taskCategory->id,
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
             'due_date' => now()->addDays(3)->toDateString(),
             'status' => 'pending',
-        ]);
+        ];
 
-        $task = Task::latest()->first();
+        $response = $this->actingAs($this->user)->post(
+            route('tasks.store'),
+            $taskData
+        );
 
         $response->assertStatus(302);
-        $this->assertDatabaseHas('tasks', [
-            'id' => $task->id,
-        ]);
+        $this->assertDatabaseHas('tasks', $taskData);
     }
 
     public function testHandleTaskCacheSuccessfullyWorkingOnStoringATask()
