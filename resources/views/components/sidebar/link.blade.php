@@ -6,8 +6,8 @@
 
 @php
     $isActiveClasses = $isActive
-        ? 'text-white bg-purple-500 shadow-lg hover:bg-purple-600'
-        : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100 dark:hover:text-gray-300 dark:hover:bg-dark-eval-2';
+        ? 'text-white bg-[#e4aa70] shadow-lg hover:bg-[#fac189]'
+        : 'text-[#e4aa70] hover:text-gray-700 hover:bg-[#ffedd5] dark:hover:text-[#fac189] dark:hover:bg-dark-eval-2';
 
     $classes =
         'flex-shrink-0 flex items-center gap-2 p-2 transition-colors rounded-md overflow-hidden ' . $isActiveClasses;
@@ -31,10 +31,10 @@
 
         <span x-show="isSidebarOpen || isSidebarHovered" aria-hidden="true" class="relative block ml-auto w-6 h-6">
             <span :class="open ? '-rotate-45' : 'rotate-45'"
-                class="absolute right-[9px] bg-gray-400 mt-[-5px] h-2 w-[2px] top-1/2 transition-all duration-200"></span>
+                class="absolute right-[9px] bg-[#e4aa70] mt-[-5px] h-2 w-[2px] top-1/2 transition-all duration-200"></span>
 
             <span :class="open ? 'rotate-45' : '-rotate-45'"
-                class="absolute left-[9px] bg-gray-400 mt-[-5px] h-2 w-[2px] top-1/2 transition-all duration-200"></span>
+                class="absolute left-[9px] bg-[#e4aa70] mt-[-5px] h-2 w-[2px] top-1/2 transition-all duration-200"></span>
         </span>
     </button>
 @else
@@ -50,3 +50,4 @@
         </span>
     </a>
 @endif
+
