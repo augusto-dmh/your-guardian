@@ -19,10 +19,10 @@ module.exports = {
 
             colors: {
                 dark: {
-                    'eval-0': '#151823',
-                    'eval-1': '#222738',
-                    'eval-2': '#2A2F42',
-                    'eval-3': '#2C3142',
+                    'eval-0': '#131B21',
+                    'eval-1': '#1C272F',
+                    'eval-2': '#2A343C',
+                    'eval-3': '#0369a1',
                 },
             },
         },

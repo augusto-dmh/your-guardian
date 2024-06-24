@@ -16,30 +16,30 @@
 
     switch ($variant) {
         case 'primary':
-            $variantClasses = 'bg-purple-500 text-white hover:bg-purple-600 focus:ring-purple-500';
+            $variantClasses = 'bg-[#e4aa70] text-[#ffedd5] hover:bg-[#e4aa70] focus:ring-[#e4aa70]';
             break;
         case 'secondary':
             $variantClasses =
-                'bg-white text-gray-500 hover:bg-gray-100 focus:ring-purple-500 dark:text-gray-400 dark:bg-dark-eval-1 dark:hover:bg-dark-eval-2 dark:hover:text-gray-200';
+                'bg-white text-[#e4aa70] hover:bg-[#ffedd5] focus:ring-[#e4aa70] dark:text-[#e4aa70] dark:bg-dark-eval-1 dark:hover:bg-dark-eval-2 dark:hover:text-[#fac189]';
             break;
         case 'success':
-            $variantClasses = 'bg-green-500 text-white hover:bg-green-600 focus:ring-green-500';
+            $variantClasses = 'bg-green-400 text-[#ffedd5] hover:bg-green-600 focus:ring-green-400';
             break;
         case 'danger':
-            $variantClasses = 'bg-red-500 text-white hover:bg-red-600 focus:ring-red-500';
+            $variantClasses = 'bg-red-400 text-[#ffedd5] hover:bg-red-600 focus:ring-red-400';
             break;
         case 'warning':
-            $variantClasses = 'bg-yellow-500 text-white hover:bg-yellow-600 focus:ring-yellow-500';
+            $variantClasses = 'bg-yellow-400 text-[#ffedd5] hover:bg-yellow-600 focus:ring-yellow-400';
             break;
         case 'info':
-            $variantClasses = 'bg-cyan-500 text-white hover:bg-cyan-600 focus:ring-cyan-500';
+            $variantClasses = 'bg-cyan-400 text-[#ffedd5] hover:bg-cyan-600 focus:ring-cyan-400';
             break;
         case 'black':
             $variantClasses =
-                'bg-black text-gray-300 hover:text-white hover:bg-gray-800 focus:ring-black dark:hover:bg-dark-eval-3';
+                'bg-black text-gray-300 hover:text-[#ffedd5] hover:bg-gray-800 focus:ring-black dark:hover:bg-dark-eval-3';
             break;
         default:
-            $variantClasses = 'bg-purple-500 text-white hover:bg-purple-600 focus:ring-purple-500';
+            $variantClasses = 'bg-[#e4aa70] text-[#ffedd5] hover:bg-[#e4aa70] focus:ring-[#e4aa70]';
     }
 
     switch ($size) {
@@ -80,3 +80,4 @@
         @endif
     </button>
 @endif
+
