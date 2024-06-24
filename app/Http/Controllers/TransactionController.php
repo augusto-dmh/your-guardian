@@ -21,10 +21,10 @@ class TransactionController extends Controller
 
         $validatedData = $request->validated();
 
-        $type = $request->type;
-        $amount = $request->amount;
+        $validatedData['amount'] = abs($validatedData['amount']);
 
-        $type === 'expense' && ($amount = -$amount);
+        $validatedData['type'] === 'expense' &&
+            ($validatedData['amount'] = -$validatedData['amount']);
 
         $user->transactions()->create($validatedData);
 
@@ -56,14 +56,10 @@ class TransactionController extends Controller
     ) {
         $validatedData = $request->validated();
 
-        $amount = $request->amount;
-        $type = $request->type;
+        $validatedData['amount'] = abs($validatedData['amount']);
 
-        $amount =
-            ($type === 'expense' && $amount > 0) ||
-            ($type === 'income' && $amount < 0)
-                ? -$amount
-                : $amount;
+        $validatedData['type'] === 'expense' &&
+            ($validatedData['amount'] = -$validatedData['amount']);
 
         $transaction->update($validatedData);
 
