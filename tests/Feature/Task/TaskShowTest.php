@@ -1,23 +1,43 @@
 <?php
 
+namespace Tests\Feature;
+
+use Tests\TestCase;
 use App\Models\Task;
 use App\Models\TaskCategory;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
+use Faker\Factory as Faker;
 
-test('task successfully showed', function () {
-    $user = User::factory()->create();
-    $taskCategory = TaskCategory::factory()->create();
-    $task = Task::factory()->create([
-        'user_id' => $user->id,
-        'task_category_id' => $taskCategory,
-    ]);
-    Auth::login($user);
+class TaskShowTest extends TestCase
+{
+    use RefreshDatabase;
 
-    $response = $this->actingAs($user)->get(
-        route('tasks.show', compact('task'))
-    );
+    protected $faker;
+    protected $user;
 
-    $response->assertStatus(200);
-    $response->assertViewHas('task', $task);
-});
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->faker = Faker::create();
+        $this->user = User::factory()->create();
+        Auth::login($this->user);
+    }
+
+    public function testTaskSuccessfullyShowed()
+    {
+        $taskCategory = TaskCategory::factory()->create();
+        $task = Task::factory()->create([
+            'user_id' => $this->user->id,
+            'task_category_id' => $taskCategory->id,
+        ]);
+
+        $response = $this->actingAs($this->user)->get(
+            route('tasks.show', ['task' => $task->id])
+        );
+
+        $response->assertStatus(200);
+        $response->assertViewHas('task', $task);
+    }
+}

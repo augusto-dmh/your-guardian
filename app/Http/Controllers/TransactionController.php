@@ -21,11 +21,6 @@ class TransactionController extends Controller
 
         $validatedData = $request->validated();
 
-        $type = $request->type;
-        $amount = $request->amount;
-
-        $type === 'expense' && ($amount = -$amount);
-
         $user->transactions()->create($validatedData);
 
         return redirect()->back();
@@ -55,15 +50,6 @@ class TransactionController extends Controller
         Transaction $transaction
     ) {
         $validatedData = $request->validated();
-
-        $amount = $request->amount;
-        $type = $request->type;
-
-        $amount =
-            ($type === 'expense' && $amount > 0) ||
-            ($type === 'income' && $amount < 0)
-                ? -$amount
-                : $amount;
 
         $transaction->update($validatedData);
 

@@ -1,44 +1,62 @@
 <?php
 
-use Faker\Factory;
+namespace Tests\Feature;
+
+use Tests\TestCase;
 use App\Models\User;
-use App\Events\BillDeleted;
-use App\Listeners\HandleBillCache;
 use App\Models\Bill;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Http;
+use Faker\Factory as Faker;
 
-test('Bill successfully destroyed', function () {
-    $user = User::factory()->create();
-    Auth::login($user);
+class BillDestroyTest extends TestCase
+{
+    use RefreshDatabase;
 
-    $bill = Bill::factory()->create([
-        'user_id' => $user->id,
-        'status' => 'pending',
-        'due_date' => now()->addDay()->toDateString(),
-    ]);
-    $response = $this->actingAs($user)->delete(route('bills.destroy', $bill));
+    private $faker;
 
-    $response->assertStatus(302);
-    $this->assertDatabaseMissing('bills', ['id' => $bill->id]);
-});
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->faker = Faker::create();
+    }
 
-test('HandleBillCache successfully working on updating a bill', function () {
-    $faker = Factory::create();
-    $user = User::factory()->create();
-    Auth::login($user);
+    public function testBillSuccessfullyDestroyed()
+    {
+        $user = User::factory()->create();
+        Auth::login($user);
 
-    $this->actingAs($user)->post(route('bills.store'), [
-        'title' => $faker->sentence,
-        'description' => $faker->paragraph,
-        'amount' => $faker->randomFloat(2, 0, 1000),
-        'due_date' => now()->addDays()->toDateString(),
-        'status' => 'pending',
-    ]);
-    $bill = Bill::latest()->first();
-    $this->actingAs($user)->delete(route('bills.destroy', $bill));
+        $bill = Bill::factory()->create([
+            'user_id' => $user->id,
+            'status' => 'pending',
+            'due_date' => now()->addDay()->toDateString(),
+        ]);
+        $billData = $bill->toArray();
+        $response = $this->actingAs($user)->delete(
+            route('bills.destroy', $bill)
+        );
 
-    $this->assertNull(Cache::get("user_{$bill->user_id}_next_bill_due"));
-});
+        $response->assertStatus(302);
+        $this->assertDatabaseMissing('bills', $billData);
+    }
+
+    public function testHandleBillCacheSuccessfullyWorkingOnUpdatingABill()
+    {
+        $user = User::factory()->create();
+        Auth::login($user);
+
+        $billData = [
+            'title' => $this->faker->sentence,
+            'description' => $this->faker->paragraph,
+            'amount' => $this->faker->randomFloat(2, 0, 1000),
+            'due_date' => now()->addDays()->toDateString(),
+            'status' => 'pending',
+        ];
+        $this->actingAs($user)->post(route('bills.store'), $billData);
+        $bill = Bill::latest()->first();
+        $this->actingAs($user)->delete(route('bills.destroy', $bill));
+
+        $this->assertNull(Cache::get("user_{$bill->user_id}_next_bill_due"));
+    }
+}
