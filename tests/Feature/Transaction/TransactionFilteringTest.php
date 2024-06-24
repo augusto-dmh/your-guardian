@@ -27,19 +27,22 @@ class TransactionFilteringTest extends TestCase
 
     public function testTransactionsIndexScreenFiltersTransactionsCorrectly()
     {
-        $transactionCategory = TransactionCategory::factory()->create();
         $includedTransactions = Transaction::factory()
             ->count(5)
             ->create([
                 'user_id' => $this->user->id,
-                'transaction_category_id' => $transactionCategory->id,
+                'transaction_category_id' => TransactionCategory::factory()->create(
+                    ['transaction_type' => 'income']
+                )->id,
                 'type' => 'income',
             ]);
         $excludedTransactions = Transaction::factory()
             ->count(5)
             ->create([
                 'user_id' => $this->user->id,
-                'transaction_category_id' => $transactionCategory->id,
+                'transaction_category_id' => TransactionCategory::factory()->create(
+                    ['transaction_type' => 'expense']
+                )->id,
                 'type' => 'expense',
             ]);
 
