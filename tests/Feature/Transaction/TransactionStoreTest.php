@@ -43,6 +43,11 @@ class TransactionStoreTest extends TestCase
             'description' => $this->faker->paragraph,
             'type' => $type,
         ];
+        $expectedData = Arr::except($transactionData, ['amount']);
+        $expectedData['amount'] =
+            $transactionData['type'] === 'income'
+                ? abs($transactionData['amount'])
+                : -1 * abs($transactionData['amount']);
 
         $response = $this->actingAs($this->user)->post(
             route('transactions.store'),
@@ -50,6 +55,6 @@ class TransactionStoreTest extends TestCase
         );
 
         $response->assertStatus(302);
-        $this->assertDatabaseHas('transactions', $transactionData);
+        $this->assertDatabaseHas('transactions', $expectedData);
     }
 }
