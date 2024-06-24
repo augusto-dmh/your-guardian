@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\TransactionCategory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Arr;
 
 class TransactionStoreTest extends TestCase
 {
@@ -30,14 +31,17 @@ class TransactionStoreTest extends TestCase
     public function testTransactionSuccessfullyStored()
     {
         $bill = Bill::factory()->create(['user_id' => $this->user->id]);
-        $transactionCategory = TransactionCategory::factory()->create();
+        $type = $this->faker->randomElement(['income', 'expense']);
+        $transactionCategory = TransactionCategory::factory()->create([
+            'transaction_type' => $type,
+        ]);
         $transactionData = [
             'user_id' => $this->user->id,
             'bill_id' => $bill->id,
             'transaction_category_id' => $transactionCategory->id,
             'amount' => $this->faker->randomFloat(2, 0, 1000),
             'description' => $this->faker->paragraph,
-            'type' => 'expense',
+            'type' => $type,
         ];
 
         $response = $this->actingAs($this->user)->post(
