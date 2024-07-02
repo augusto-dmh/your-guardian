@@ -26,6 +26,10 @@ class BillFactory extends Factory
                 'paid',
                 'overdue',
             ]),
+            'paid_at' => $this->faker->randomElement([
+                null,
+                $this->faker->date(),
+            ]),
         ];
     }
 }

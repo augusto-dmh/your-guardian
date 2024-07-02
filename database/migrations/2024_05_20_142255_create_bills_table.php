@@ -18,6 +18,7 @@ return new class extends Migration {
                 ->enum('status', ['pending', 'paid', 'overdue'])
                 ->default('pending');
             $table->timestamps();
+            $table->date('paid_at')->nullable();
 
             $table
                 ->foreign('user_id', 'fk_bills_user_id')

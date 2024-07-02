@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS bills (
     amount DECIMAL(11, 2) NOT NULL,
     due_date DATE NOT NULL,
     status ENUM('pending', 'paid', 'overdue') DEFAULT 'pending',
+    paid_at DATE NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );

@@ -34,6 +34,7 @@ entity Bill {
     amount DECIMAL(11, 2)
     due_date DATE
     status ENUM('pending', 'paid', 'overdue')
+    paid_at DATE
     created_at DATE
     updated_at DATE
     --
