@@ -33,6 +33,7 @@ class Bill extends Model
 
     protected $casts = [
         'due_date' => 'date:Y-m-d',
+        'paid_at' => 'date:Y-m-d',
     ];
 
     public function user()
