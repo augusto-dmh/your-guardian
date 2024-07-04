@@ -38,24 +38,13 @@
     </div>
 
     <div style="width: 75%; margin: auto;">
-        <canvas id="dataChart"></canvas>
+        {!! $chart->container() !!}
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {!! $chart->script() !!}
 
     <script>
-        const ctx = document.getElementById('dataChart').getContext('2d');
-        let dataChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: @json($labels),
-                datasets: [{
-                    label: @json($datasetLabel),
-                    data: @json($data),
-                }]
-            }
-        });
-
         function updateChart() {
             const dataType = document.getElementById('data-type').value;
             const interval = {
@@ -73,10 +62,10 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    dataChart.data.labels = data.labels;
-                    dataChart.data.datasets[0].data = data.data;
-                    dataChart.data.datasets[0].label = data.datasetLabel;
-                    dataChart.update();
+                    window.{{ $chart->id }}.data.labels = data.labels;
+                    window.{{ $chart->id }}.data.datasets[0].data = data.data;
+                    window.{{ $chart->id }}.data.datasets[0].label = data.label;
+                    window.{{ $chart->id }}.update();
                 });
         }
 

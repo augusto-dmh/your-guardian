@@ -16,8 +16,8 @@ class BillChartController extends Controller
 
         return response()->json([
             'labels' => $chart->labels,
-            'datasetLabel' => $chart->datasetLabel,
-            'data' => $chart->data,
+            'label' => $chart->datasets[0]->name,
+            'data' => $chart->datasets[0]->values,
         ]);
     }
 

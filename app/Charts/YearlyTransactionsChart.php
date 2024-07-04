@@ -8,7 +8,7 @@ use ConsoleTVs\Charts\Classes\Chartjs\Chart;
 
 class YearlyTransactionsChart extends Chart
 {
-    public $datasetLabel;
+    public $label;
     public $labels;
     public $data;
     public $user;
@@ -37,14 +37,15 @@ class YearlyTransactionsChart extends Chart
             ->orderBy('year')
             ->get();
 
-        $this->datasetLabel = 'Total paid on transactions';
-        $this->labels = $transactions->pluck('year');
-        $this->data = $transactions->pluck('total_amount_paid');
-        // $this->labels($transactions->pluck('year'));
-        // $this->dataset(
-        //     'Yearly transactions',
-        //     'line',
-        //     $transactions->pluck('total_amount_paid')
-        // );
+        $this->labels($transactions->pluck('year'));
+        $this->dataset(
+            'Total paid on transactions',
+            'line',
+            $transactions->pluck('total_amount_paid')
+        );
+        $this->options([
+            'backgroundColor' => '#FAC189',
+            'borderColor' => '#FAC189',
+        ]);
     }
 }

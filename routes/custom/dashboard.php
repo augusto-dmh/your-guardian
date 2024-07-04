@@ -10,11 +10,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         $chart = new YearlyTransactionsChart('1');
         $chart->buildChart();
 
-        return view('dashboard', [
-            'labels' => $chart->labels,
-            'datasetLabel' => $chart->datasetLabel,
-            'data' => $chart->data,
-        ]);
+        return view('dashboard', compact('chart'));
     })->name('dashboard');
 
     Route::post('/api/charts/transactions', [

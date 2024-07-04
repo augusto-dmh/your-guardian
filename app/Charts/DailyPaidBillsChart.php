@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class DailyPaidBillsChart extends Chart
 {
-    public $datasetLabel;
+    public $label;
     public $labels;
     public $data;
     public $user;
@@ -34,10 +34,11 @@ class DailyPaidBillsChart extends Chart
             ->orderBy('paid_at')
             ->get();
 
-        $this->datasetLabel = 'Bills paid';
-        $this->labels = $bills->pluck('paid_at');
-        $this->data = $bills->pluck('count_paid');
-        // $this->labels($bills->pluck('paid_at'));
-        // $this->dataset('Daily paid bills', 'line', $bills->pluck('count_paid'));
+        $this->labels($bills->pluck('paid_at'));
+        $this->dataset('Daily paid bills', 'line', $bills->pluck('count_paid'));
+        $this->options([
+            'backgroundColor' => '#FAC189',
+            'borderColor' => '#FAC189',
+        ]);
     }
 }

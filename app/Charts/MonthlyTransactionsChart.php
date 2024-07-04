@@ -8,7 +8,7 @@ use Auth;
 
 class MonthlyTransactionsChart extends Chart
 {
-    public $datasetLabel;
+    public $label;
     public $labels;
     public $data;
     public $user;
@@ -37,14 +37,15 @@ class MonthlyTransactionsChart extends Chart
             ->orderBy('year')
             ->get();
 
-        $this->datasetLabel = 'Total paid on transactions';
-        $this->labels = $transactions->pluck('year');
-        $this->data = $transactions->pluck('total_amount_paid');
-        // $this->labels($transactions->pluck('year'));
-        // $this->dataset(
-        //     'Monthly transactions',
-        //     'line',
-        //     $transactions->pluck('total_amount_paid')
-        // );
+        $this->labels($transactions->pluck('year'));
+        $this->dataset(
+            'Monthly transactions',
+            'line',
+            $transactions->pluck('total_amount_paid')
+        );
+        $this->options([
+            'backgroundColor' => '#FAC189',
+            'borderColor' => '#FAC189',
+        ]);
     }
 }
