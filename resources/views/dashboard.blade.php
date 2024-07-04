@@ -72,6 +72,14 @@
         document.getElementById('data-type').addEventListener('change', updateChart);
         document.getElementById('interval-type').addEventListener('change', updateChart);
         document.getElementById('interval-length').addEventListener('change', updateChart);
+        document.querySelector('.transactions-total-paid-btn').addEventListener('click', () => {
+            document.getElementById('data-type').selectedIndex = 0;
+            updateChart();
+        });
+        document.querySelector('.bills-n-of-paid-btn').addEventListener('click', () => {
+            document.getElementById('data-type').selectedIndex = 1;
+            updateChart();
+        });
     </script>
 </x-app-layout>
 
