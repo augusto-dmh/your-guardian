@@ -8,7 +8,7 @@ use ConsoleTVs\Charts\Classes\Chartjs\Chart;
 
 class MonthlyPaidBillsChart extends Chart
 {
-    public $datasetLabel;
+    public $label;
     public $labels;
     public $data;
     public $user;
@@ -37,14 +37,15 @@ class MonthlyPaidBillsChart extends Chart
             ->orderBy('month')
             ->get();
 
-        $this->datasetLabel = 'Bills paid';
-        $this->labels = $bills->pluck('month');
-        $this->data = $bills->pluck('count_paid');
-        // $this->labels($bills->pluck('month'));
-        // $this->dataset(
-        //     'Monthly paid bills',
-        //     'line',
-        //     $bills->pluck('count_paid')
-        // );
+        $this->labels($bills->pluck('month'));
+        $this->dataset(
+            'Monthly paid bills',
+            'line',
+            $bills->pluck('count_paid')
+        );
+        $this->options([
+            'backgroundColor' => '#FAC189',
+            'borderColor' => '#FAC189',
+        ]);
     }
 }

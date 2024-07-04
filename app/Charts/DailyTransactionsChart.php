@@ -7,7 +7,7 @@ use ConsoleTVs\Charts\Classes\Chartjs\Chart;
 
 class DailyTransactionsChart extends Chart
 {
-    public $datasetLabel;
+    public $label;
     public $labels;
     public $data;
     public $user;
@@ -36,14 +36,15 @@ class DailyTransactionsChart extends Chart
             ->orderBy('year')
             ->get();
 
-        // $this->labels($transactions->pluck('year'));
-        // $this->dataset(
-        //     'Daily paid bills',
-        //     'line',
-        //     $transactions->pluck('total_amount_paid')
-        // );
-        $this->datasetLabel = 'Total paid on transactions';
-        $this->labels = $transactions->pluck('year');
-        $this->data = $transactions->pluck('total_amount_paid');
+        $this->labels($transactions->pluck('year'));
+        $this->dataset(
+            'Daily paid bills',
+            'line',
+            $transactions->pluck('total_amount_paid')
+        );
+        $this->options([
+            'backgroundColor' => '#FAC189',
+            'borderColor' => '#FAC189',
+        ]);
     }
 }

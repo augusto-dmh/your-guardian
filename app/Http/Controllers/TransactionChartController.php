@@ -12,12 +12,15 @@ class TransactionChartController extends Controller
 {
     public function getTransactions(Request $request)
     {
-        $chart = $this->getChartByRange($request['type'], $request['length']);
+        $chart = $this->getChartByRange(
+            $request->input('type', 'yearly'),
+            $request->input('length', '1')
+        );
 
         return response()->json([
             'labels' => $chart->labels,
-            'datasetLabel' => $chart->datasetLabel,
-            'data' => $chart->data,
+            'label' => $chart->datasets[0]->name,
+            'data' => $chart->datasets[0]->values,
         ]);
     }
 

@@ -8,7 +8,7 @@ use ConsoleTVs\Charts\Classes\Chartjs\Chart;
 
 class YearlyPaidBillsChart extends Chart
 {
-    public $datasetLabel;
+    public $label;
     public $labels;
     public $data;
     public $user;
@@ -35,14 +35,11 @@ class YearlyPaidBillsChart extends Chart
             ->orderBy('year')
             ->get();
 
-        $this->datasetLabel = 'Bills paid';
-        $this->labels = $bills->pluck('year');
-        $this->data = $bills->pluck('count_paid');
-        // $this->labels($bills->pluck('year'));
-        // $this->dataset(
-        //     'Yearly paid bills',
-        //     'line',
-        //     $bills->pluck('count_paid')
-        // );
+        $this->labels($bills->pluck('year'));
+        $this->dataset('Bills paid', 'line', $bills->pluck('count_paid'));
+        $this->options([
+            'backgroundColor' => '#FAC189',
+            'borderColor' => '#FAC189',
+        ]);
     }
 }
