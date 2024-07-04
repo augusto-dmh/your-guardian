@@ -16,9 +16,7 @@
                 <x-heroicon-s-switch-horizontal class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
             </x-slot>
 
-            <x-sidebar.sublink title="Text button" href="{{ route('buttons.text') }}" :active="request()->routeIs('buttons.text')" />
-            <x-sidebar.sublink title="Icon button" href="{{ route('buttons.icon') }}" :active="request()->routeIs('buttons.icon')" />
-            <x-sidebar.sublink title="Text with icon" href="{{ route('buttons.text-icon') }}" :active="request()->routeIs('buttons.text-icon')" />
+            <x-sidebar.button class="transactions-total-paid-btn" title="Total paid" :active="request()->routeIs('buttons.text')" />
         </x-sidebar.dropdown>
 
         <x-sidebar.dropdown title="Bills" :active="Str::startsWith(request()->route()->uri(), 'buttons')">
@@ -26,12 +24,12 @@
                 <x-heroicon-o-document-text class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
             </x-slot>
 
-            <x-sidebar.sublink title="Text button" href="{{ route('buttons.text') }}" :active="request()->routeIs('buttons.text')" />
-            <x-sidebar.sublink title="Icon button" href="{{ route('buttons.icon') }}" :active="request()->routeIs('buttons.icon')" />
-            <x-sidebar.sublink title="Text with icon" href="{{ route('buttons.text-icon') }}" :active="request()->routeIs('buttons.text-icon')" />
+            <x-sidebar.button class="bills-n-of-paid-btn" title="Nº of paid" :active="request()->routeIs('buttons.text')" />
         </x-sidebar.dropdown>
 
     </x-sidebar.dropdown>
+
+    <script></script>
 
     <div x-transition x-show="isSidebarOpen || isSidebarHovered" class="text-sm text-gray-500">
         Your things
