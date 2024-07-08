@@ -35,13 +35,26 @@
         Your things
     </div>
 
-    @php
-        $links = array_fill(0, 20, '');
-    @endphp
-
-    @foreach ($links as $index => $link)
-        <x-sidebar.link title="Dummy link {{ $index + 1 }}" href="#" />
-    @endforeach
+    <x-sidebar.link title="Wallet" href="{{ route('wallet.show') }}">
+        <x-slot:icon>
+            <x-heroicon-o-cash class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
+        </x-slot:icon>
+    </x-sidebar.link>
+    <x-sidebar.link title="Bills" href="{{ route('bills.index') }}">
+        <x-slot:icon>
+            <x-heroicon-o-document-text class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
+        </x-slot:icon>
+    </x-sidebar.link>
+    <x-sidebar.link title="Transactions" href="{{ route('transactions.index') }}">
+        <x-slot:icon>
+            <x-heroicon-o-switch-horizontal class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
+        </x-slot:icon>
+    </x-sidebar.link>
+    <x-sidebar.link title="Tasks" href="{{ route('tasks.index') }}">
+        <x-slot:icon>
+            <x-heroicon-o-clipboard-list class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
+        </x-slot:icon>
+    </x-sidebar.link>
 
 </x-perfect-scrollbar>
 
