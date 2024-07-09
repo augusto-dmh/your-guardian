@@ -35,11 +35,6 @@
         Your things
     </div>
 
-    <x-sidebar.link title="Wallet" href="{{ route('wallet.show') }}">
-        <x-slot:icon>
-            <x-heroicon-o-cash class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
-        </x-slot:icon>
-    </x-sidebar.link>
     <x-sidebar.link title="Bills" href="{{ route('bills.index') }}">
         <x-slot:icon>
             <x-heroicon-o-document-text class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
@@ -57,4 +52,3 @@
     </x-sidebar.link>
 
 </x-perfect-scrollbar>
-
