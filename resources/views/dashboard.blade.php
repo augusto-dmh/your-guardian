@@ -41,6 +41,8 @@
         {!! $chart->container() !!}
     </div>
 
+    <x-wallet class="flex-1" />
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     {!! $chart->script() !!}
 
@@ -82,4 +84,3 @@
         });
     </script>
 </x-app-layout>
-
