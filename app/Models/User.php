@@ -60,6 +60,29 @@ class User extends Authenticatable
         return number_format($balance, 2);
     }
 
+    public function getLastTransaction()
+    {
+        return $this->transactions()->latest('created_at')->first();
+    }
+
+    public function getNextPendingBillDueDate()
+    {
+        return $this->bills()
+            ->where('due_date', '>=', now())
+            ->where('status', '=', 'pending')
+            ->orderBy('due_date', 'asc')
+            ->first()?->due_date;
+    }
+
+    public function getNextPendingTaskDueDate()
+    {
+        return $this->tasks()
+            ->where('due_date', '>=', now())
+            ->where('status', '=', 'pending')
+            ->orderBy('due_date', 'asc')
+            ->first()?->due_date;
+    }
+
     public function sendPasswordResetNotification($token): void
     {
         $this->notify(new ResetPasswordNotification($token));
