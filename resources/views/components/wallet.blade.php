@@ -3,7 +3,7 @@
 @endphp
 
 <div
-    {{ $attributes->merge(['class' => 'flex flex-col gap-2 shadow-custom p-5 rounded-md [&>p]:text-primary-txt [&>p>span]:text-tertiary-txt']) }}>
+    {{ $attributes->merge(['class' => 'flex flex-col gap-2 shadow-out p-5 rounded-md [&>p]:text-primary-txt [&>p>span]:text-tertiary-txt']) }}>
     <h3 class="inline-block text-xl font-bold text-secondary-txt">{{ $user->full_name }}</h3>
 
     <p>

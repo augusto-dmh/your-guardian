@@ -34,7 +34,10 @@ module.exports = {
             },
 
             boxShadow: {
-                custom: 'rgb(250, 193, 137, 0.1) 3px 3px 3px 3px inset, rgb(250, 193, 137) 5px 5px, rgb(250, 193, 137, 0.3) 10px 10px, rgb(250, 193, 137, 0.2) 15px 15px, rgb(250, 193, 137, 0.1) 20px 20px, rgb(250, 193, 137, 0.05) 25px 25px',
+                out: 'rgb(250, 193, 137, 0.1) 3px 3px 3px 3px inset, rgb(250, 193, 137) 5px 5px, rgb(250, 193, 137, 0.3) 10px 10px, rgb(250, 193, 137, 0.2) 15px 15px, rgb(250, 193, 137, 0.1) 20px 20px, rgb(250, 193, 137, 0.05) 25px 25px',
+                inner: 'rgb(228, 170, 112, 0.5) -2px -3px 66px -30px inset',
+                innerHover:
+                    'rgb(228, 170, 112, 0.8) -2px -3px 66px -30px inset',
             },
         },
     },
