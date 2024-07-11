@@ -60,12 +60,12 @@ class User extends Authenticatable
         return number_format($balance, 2);
     }
 
-    public function getLastTransaction()
+    public function getLastTransactionAttribute()
     {
         return $this->transactions()->latest('created_at')->first();
     }
 
-    public function getNextPendingBillDueDate()
+    public function getNextPendingBillDueDateAttribute()
     {
         return $this->bills()
             ->where('due_date', '>=', now())
@@ -74,7 +74,7 @@ class User extends Authenticatable
             ->first()?->due_date;
     }
 
-    public function getNextPendingTaskDueDate()
+    public function getNextPendingTaskDueDateAttribute()
     {
         return $this->tasks()
             ->where('due_date', '>=', now())

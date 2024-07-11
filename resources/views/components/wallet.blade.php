@@ -3,7 +3,7 @@
 @endphp
 
 <div
-    {{ $attributes->merge(['class' => 'flex flex-col gap-2 shadow-custom p-5 rounded-md [&>p]:text-primary-txt [&>p>span]:text-tertiary-txt']) }}>
+    {{ $attributes->merge(['class' => 'flex flex-col gap-2 shadow-out p-5 rounded-md [&>p]:text-primary-txt [&>p>span]:text-tertiary-txt']) }}>
     <h3 class="inline-block text-xl font-bold text-secondary-txt">{{ $user->full_name }}</h3>
 
     <p>
@@ -21,7 +21,7 @@
         @if ($user->lastTransaction)
             Amount: ${{ $user->lastTransaction->amount }} |
             Type: {{ $user->lastTransaction->type }} |
-            Category: {{ $user->lastTransaction->transactionCategory?->name ?? 'none' }} |
+            Category: {{ Str::limit($user->lastTransaction->transactionCategory?->name, 10, '...') ?? 'none' }} |
             Description: {{ Str::limit($user->lastTransaction->description, 5, '...') ?? 'none' }}
         @else
             None
