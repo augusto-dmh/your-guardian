@@ -7,3 +7,11 @@
 .dark .ps__rail-x {
     background-color: transparent !important;
 }
+
+.dashboard-grid-container label {
+    @apply text-tertiary-txt;
+}
+
+.dashboard-grid-container select {
+    @apply bg-secondary-bg border-quinary-bg;
+}

@@ -11,38 +11,50 @@
         {{ __("You're logged in!") }}
     </div>
 
-    <div class="mb-4">
-        <label for="data-type">Select interval type:</label>
-        <select id="data-type" name="data-type">
-            <option value="transactions" selected>Transactions</option>
-            <option value="bills">Bills</option>
-        </select>
+    <div class="flex flex-row items-center min-w-0 gap-6 p-4">
+        <div class="flex-1 dashboard-grid-container">
+            <div class="flex flex-row justify-between text-center">
+                <div class="mb-4">
+                    <label for="data-type" class="block">Select interval type</label>
+                    <select id="data-type" name="data-type"
+                        class="focus:outline-none focus:ring-2 focus:ring-quinary-bg max-w-38">
+                        <option value="transactions" selected>Transactions</option>
+                        <option value="bills">Bills</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="interval-type" class="block">Select interval length</label>
+                    <select id="interval-type" name="interval-type"
+                        class="focus:outline-none focus:ring-2 focus:ring-quinary-bg max-w-38">
+                        <option value="year" selected>Yearly</option>
+                        <option value="month">Monthly</option>
+                        <option value="day">Daily</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="interval-length" class="block">Select Data Range Limit</label>
+                    <select id="interval-length" name="interval-length"
+                        class="focus:outline-none focus:ring-2 focus:ring-quinary-bg max-w-38">
+                        <option value="1" selected>One year</option>
+                        <option value="5">Five Years</option>
+                        <option value="10">Ten Years</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="shadow-inner">
+                {!! $chart->container() !!}
+            </div>
+        </div>
+
+        <div class="flex flex-col flex-1 min-w-0 gap-8">
+            <x-wallet />
+            <x-latest-transactions />
+        </div>
     </div>
 
-    <div class="mb-4">
-        <label for="interval-type">Select interval length:</label>
-        <select id="interval-type" name="interval-type">
-            <option value="year" selected>Yearly</option>
-            <option value="month">Monthly</option>
-            <option value="day">Daily</option>
-        </select>
-    </div>
-
-    <div class="mb-4">
-        <label for="interval-length">Select Data Range Limit:</label>
-        <select id="interval-length" name="interval-length">
-            <option value="1" selected>One year</option>
-            <option value="5">Five Years</option>
-            <option value="10">Ten Years</option>
-        </select>
-    </div>
-
-    <div style="width: 75%; margin: auto;">
-        {!! $chart->container() !!}
-    </div>
-
-    <x-wallet class="flex-1" />
-    <x-latest-transactions class="flex-1" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     {!! $chart->script() !!}
 
