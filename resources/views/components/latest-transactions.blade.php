@@ -17,7 +17,7 @@
     <div class="flex flex-col mt-6">
         <div class="overflow-x-auto rounded-lg">
             <div class="align-middle">
-                <div class="overflow-hidden shadow sm:rounded-lg">
+                <div class="shadow sm:rounded-lg">
                     <table class="w-full divide-y divide-gray-200 ">
                         <thead class="bg-secondary-bg">
                             <tr>
@@ -43,11 +43,11 @@
                                         {{ $transaction->amount }}
                                     </td>
                                     <td class="p-3 text-sm font-normal whitespace-nowrap">
-                                        {{ Str::limit($transaction->description, 10, '...') }}
+                                        {{ Str::limit($transaction?->description, 10, '...') }}
                                     </td>
                                     </td>
                                     <td class="p-3 text-sm font-normal whitespace-nowrap">
-                                        {{ $transaction->transactionCategory->name }}
+                                        {{ Str::limit($transaction->transactionCategory?->name, 10, '...') }}
                                     </td>
                                     <td class="p-3 text-sm font-normal whitespace-nowrap">
                                         {{ $transaction->created_at->format('Y-m-d') }}

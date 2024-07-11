@@ -21,7 +21,7 @@
         @if ($user->lastTransaction)
             Amount: ${{ $user->lastTransaction->amount }} |
             Type: {{ $user->lastTransaction->type }} |
-            Category: {{ $user->lastTransaction->transactionCategory?->name ?? 'none' }} |
+            Category: {{ Str::limit($user->lastTransaction->transactionCategory?->name, 10, '...') ?? 'none' }} |
             Description: {{ Str::limit($user->lastTransaction->description, 5, '...') ?? 'none' }}
         @else
             None
