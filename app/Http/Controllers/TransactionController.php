@@ -19,9 +19,21 @@ class TransactionController extends Controller
     {
         $user = Auth::user();
 
-        $validatedData = $request->validated();
+        $isTransactionValid = TransactionCategory::query()
+            ->where('id', '=', $request['transaction_category_id'])
+            ->where('transaction_type', '=', $request['type'])
+            ->exists();
 
-        $user->transactions()->create($validatedData);
+        if (!$isTransactionValid) {
+            return redirect()
+                ->back()
+                ->withErrors([
+                    'transaction_category' =>
+                    'Invalid transaction category or type.',
+                ]);
+        }
+
+        $validatedData = $request->validated();
 
         return redirect()->back();
     }
@@ -49,6 +61,20 @@ class TransactionController extends Controller
         TransactionUpdateRequest $request,
         Transaction $transaction
     ) {
+        $isTransactionValid = TransactionCategory::query()
+            ->where('id', '=', $request['transaction_category_id'])
+            ->where('transaction_type', '=', $request['type'])
+            ->exists();
+
+        if (!$isTransactionValid) {
+            return redirect()
+                ->back()
+                ->withErrors([
+                    'transaction_category' =>
+                    'Invalid transaction category or type.',
+                ]);
+        }
+
         $validatedData = $request->validated();
 
         $transaction->update($validatedData);
