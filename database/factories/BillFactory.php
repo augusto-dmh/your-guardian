@@ -16,20 +16,21 @@ class BillFactory extends Factory
      */
     public function definition(): array
     {
+        $status = $this->faker->randomElement([
+            'pending',
+            'paid',
+            'overdue',
+        ]);
+        $due_date = $this->faker->date();
+        $paidAt = $status !== 'paid' ? null : $this->faker->date(max: $due_date);
+
         return [
             'title' => $this->faker->word,
             'description' => $this->faker->sentence,
             'amount' => $this->faker->randomFloat(2, 0, 10000),
-            'due_date' => $this->faker->date(),
-            'status' => $this->faker->randomElement([
-                'pending',
-                'paid',
-                'overdue',
-            ]),
-            'paid_at' => $this->faker->randomElement([
-                null,
-                $this->faker->date(),
-            ]),
+            'due_date' => $due_date,
+            'status' => $status,
+            'paid_at' => $paidAt,
         ];
     }
 }

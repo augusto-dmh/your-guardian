@@ -16,6 +16,10 @@ class BillController extends Controller
 {
     public function store(BillStoreRequest $request)
     {
+        if ($request['status'] === 'paid') {
+            $request->validated()->paid_at = now();
+        }
+
         $bill = Auth::user()->bills()->create($request->validated());
 
         return redirect()->back();
@@ -40,6 +44,10 @@ class BillController extends Controller
 
     public function update(BillUpdateRequest $request, Bill $bill)
     {
+        if ($request['status'] === 'paid' && $bill->status !== 'paid') {
+            $bill->paid_at = now();
+        }
+
         $bill->update($request->validated());
 
         return redirect()->back();
