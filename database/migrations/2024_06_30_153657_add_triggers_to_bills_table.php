@@ -31,6 +31,8 @@ class AddTriggersToBillsTable extends Migration
                 IF NEW.status = "paid" AND OLD.status <> "paid"
                     SET NEW.paid_at = NOW();
                 END IF;
+            END;
+        ');
 
                 IF NEW.status != "paid" AND NEW.paid_at <> OLD.paid_at THEN
                     SIGNAL SQLSTATE "45000" SET MESSAGE_TEXT = "Cannot directly update paid_at unless status changes to paid";
