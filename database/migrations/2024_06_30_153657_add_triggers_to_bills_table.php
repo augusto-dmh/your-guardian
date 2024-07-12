@@ -34,8 +34,17 @@ class AddTriggersToBillsTable extends Migration
             END;
         ');
 
+        DB::unprepared('
+            CREATE TRIGGER restrict_paid_at_update
+            BEFORE UPDATE ON bills
+            FOR EACH ROW
+            BEGIN
                 IF NEW.status != "paid" AND NEW.paid_at <> OLD.paid_at THEN
-                    SIGNAL SQLSTATE "45000" SET MESSAGE_TEXT = "Cannot directly update paid_at unless status changes to paid";
+                    SIGNAL SQLSTATE "45000" SET MESSAGE_TEXT = "Cannot directly update paid_at unless status changes to or is already paid";
+                END IF;
+
+                IF NEW.paid_at > NOW() THEN
+                    SIGNAL SQLSTATE "45000" SET MESSAGE_TEXT = "Cannot set paid_at with a date that hasn\'t come yet.";
                 END IF;
             END;
         ');
