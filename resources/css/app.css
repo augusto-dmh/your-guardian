@@ -15,3 +15,16 @@
 .dashboard-grid-container select {
     @apply bg-secondary-bg border-quinary-bg;
 }
+
+body {
+    @apply bg-primary-bg;
+}
+
+select,
+button {
+    @apply rounded-md;
+}
+
+input[type='checkbox'] {
+    @apply rounded-sm;
+}

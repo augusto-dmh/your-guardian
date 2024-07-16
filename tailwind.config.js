@@ -30,7 +30,7 @@ module.exports = {
                 'quinary-bg': '#e4aa70',
                 'primary-txt': '#ffffff',
                 'secondary-txt': '#fac189',
-                'tertiary-txt': '#e4aa70',
+                'tertiary-txt': '#daa067',
             },
 
             boxShadow: {
@@ -38,6 +38,10 @@ module.exports = {
                 inner: 'rgb(228, 170, 112, 0.5) -2px -3px 66px -30px inset',
                 innerHover:
                     'rgb(228, 170, 112, 0.8) -2px -3px 66px -30px inset',
+            },
+
+            borderColor: {
+                primary: '#fac189',
             },
         },
     },
