@@ -5,7 +5,7 @@
     --quinary-bg-color: #e4aa70;
     --primary-txt-color: #ffffff;
     --secondary-txt-color: #fac189;
-    --tertiary-txt-color: #e4aa70;
+    --tertiary-txt-color: #daa067;
 }
 
 .form-group {
@@ -36,9 +36,6 @@ input,
 textarea,
 select {
     background-color: rgba(255, 255, 255, 0.1) !important;
-    border-radius: 0.25rem !important;
-    border: none;
-    /* border: #e4aa70 0.025rem solid !important; */
     width: 100%;
 }
 
