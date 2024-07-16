@@ -1,98 +1,139 @@
-<x-layout>
-    <h2>Bills</h2>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="text-4xl font-bold text-secondary-txt">{{ __('Bills') }}</h2>
+    </x-slot>
 
     <form method="GET" action="{{ route('bills.index') }}">
-        <div>
-            <h5>Sort by:</h5>
-            <div class="form-group">
-                <p>Amount:</p>
-                <div class="flex flex-row flex-nowrap items-center gap-2">
-                    <input type="checkbox" name="sortByAmount" id="sortByAmountAsc" value="asc"
-                        {{ request('sortByAmount') == 'asc' ? 'checked' : '' }}>
-                    <label for="sortByAmountAsc">Ascending</label>
-                </div>
-                <div class="flex flex-row flex-nowrap items-center gap-2">
-                    <input type="checkbox" name="sortByAmount" id="sortByAmountDesc" value="desc"
-                        {{ request('sortByAmount') == 'desc' ? 'checked' : '' }}>
-                    <label for="sortByAmountDesc">Descending</label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <p>Due Date:</p>
-                <div class="flex flex-row flex-nowrap items-center gap-2">
-                    <input type="checkbox" name="sortByDueDate" id="sortByDueDateAsc" value="asc"
-                        {{ request('sortByDueDate') == 'asc' ? 'checked' : '' }}>
-                    <label for="sortByDueDateAsc">Ascending</label>
-                </div>
-                <div class="flex flex-row flex-nowrap items-center gap-2">
-                    <input type="checkbox" name="sortByDueDate" id="sortByDueDateDesc" value="desc"
-                        {{ request('sortByDueDate') == 'desc' ? 'checked' : '' }}>
-                    <label for="sortByDueDateDesc">Descending</label>
-                </div>
-            </div>
-
-            <div>
-                <h5>Filter by:</h5>
+        <div class="flex items-center gap-8 pb-6 m-auto">
+            <div class="flex items-center gap-4">
+                <h5 class="font-semibold text-primary-txt">Sort by:</h5>
                 <div class="form-group">
-                    <p>Status:</p>
-                    <div class="flex flex-row flex-nowrap items-center gap-2">
-                        <input type="checkbox" name="filterByStatus[]" id="filterByStatusPending" value="pending"
-                            {{ is_array(request('filterByStatus')) && in_array('pending', request('filterByStatus')) ? 'checked' : '' }}>
-                        <label for="filterByStatusPending">Pending</label>
-                    </div>
-                    <div class="flex flex-row flex-nowrap items-center gap-2">
-                        <input type="checkbox" name="filterByStatus[]" id="filterByStatusPaid" value="paid"
-                            {{ is_array(request('filterByStatus')) && in_array('paid', request('filterByStatus')) ? 'checked' : '' }}>
-                        <label for="filterByStatusPaid">Paid</label>
-                    </div>
-                    <div class="flex flex-row flex-nowrap items-center gap-2">
-                        <input type="checkbox" name="filterByStatus[]" id="filterByStatusOverdue" value="overdue"
-                            {{ is_array(request('filterByStatus')) && in_array('overdue', request('filterByStatus')) ? 'checked' : '' }}>
-                        <label for="filterByStatusOverdue">Overdue</label>
+                    <p class="mb-1 text-secondary-txt">Amount</p>
+                    <select name="sortByAmount"
+                        class="font-thin border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg">
+                        <option class="font-thin" value="asc"
+                            {{ request('sortByAmount') == 'asc' ? 'selected' : '' }}>Ascending
+                        </option>
+                        <option class="font-thin" value="desc"
+                            {{ request('sortByAmount') == 'desc' ? 'selected' : '' }}>Descending
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <p class="mb-1 text-secondary-txt">Due Date</p>
+                    <select name="sortByDueDate"
+                        class="font-thin border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg">
+                        <option class="font-thin" value="asc"
+                            {{ request('sortByDueDate') == 'asc' ? 'selected' : '' }}>Ascending
+                        </option>
+                        <option class="font-thin" value="desc"
+                            {{ request('sortByDueDate') == 'desc' ? 'selected' : '' }}>Descending
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="flex gap-8">
+                <div class="flex items-center gap-4">
+                    <h5 class="font-semibold text-primary-txt">Filter by:</h5>
+                    <div class="form-group">
+                        <p class="mb-1 text-secondary-txt">Status</p>
+                        <div class="flex flex-col">
+                            <label
+                                class="inline-flex items-center cursor-pointer text-tertiary-txt hover:text-secondary-txt">
+                                <input type="checkbox" name="filterByStatus[]" value="pending"
+                                    class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
+                                    {{ is_array(request('filterByStatus')) && in_array('pending', request('filterByStatus')) ? 'checked' : '' }}>
+                                <span class="ml-2 font-thin">Pending</span>
+                            </label>
+                            <label
+                                class="inline-flex items-center cursor-pointer text-tertiary-txt hover:text-secondary-txt">
+                                <input type="checkbox" name="filterByStatus[]" value="paid"
+                                    class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
+                                    {{ is_array(request('filterByStatus')) && in_array('paid', request('filterByStatus')) ? 'checked' : '' }}>
+                                <span class="ml-2 font-light">Paid</span>
+                            </label>
+                            <label
+                                class="inline-flex items-center cursor-pointer text-tertiary-txt hover:text-secondary-txt">
+                                <input type="checkbox" name="filterByStatus[]" value="overdue"
+                                    class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
+                                    {{ is_array(request('filterByStatus')) && in_array('overdue', request('filterByStatus')) ? 'checked' : '' }}>
+                                <span class="ml-2 font-light">Overdue</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <button type="submit">Apply</button>
+            <button type="submit"
+                class="px-4 py-1 shadow-inner text-tertiary-txt hover:shadow-innerHover hover:text-secondary-txt">Apply</button>
+        </div>
     </form>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Bill Amount</th>
-                <th>Bill Title</th>
-                <th>Bill Description</th>
-                <th>Bill Due Date</th>
-                <th>Bill Status</th>
-                <th>Delete</th>
-                <th>Edit</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($bills as $bill)
+    <div class="w-full overflow-x-auto rounded-lg">
+        <table class="w-full divide-y divide-gray-200">
+            <thead class="bg-secondary-bg">
                 <tr>
-                    <td>{{ $bill->amount }}</td>
-                    <td>{{ $bill->title }}</td>
-                    <td>{{ Str::limit($bill->description, 20, '...') }}</td>
-                    <td>{{ $bill->due_date }}</td>
-                    <td>{{ $bill->status }}</td>
-                    <td>
-                        <form action="{{ route('bills.destroy', $bill) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <input type="submit" value="Delete">
-                        </form>
-                    </td>
-                    <td>
-                        <a href="{{ route('bills.edit', $bill) }}">Edit</a>
-                    </td>
+                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">Bill
+                        Amount
+                    </th>
+                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">Bill
+                        Title
+                    </th>
+                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">Bill
+                        Description
+                    </th>
+                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">Bill Due
+                        Date
+                    </th>
+                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">Bill
+                        Status
+                    </th>
+                    <th class="p-3 text-xs font-medium tracking-wider text-center uppercase text-primary-txt">
+                        Actions
+                    </th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody class="bg-tertiary-bg">
+                @foreach ($bills as $bill)
+                    <tr
+                        class="{{ $loop->iteration % 2 == 0 ? 'text-tertiary-txt bg-secondary-bg' : 'text-secondary-txt bg-tertiary-bg' }}">
+                        <td class="p-3 font-semibold whitespace-nowrap">{{ $bill->amount }}</td>
+                        <td class="p-3 font-normal whitespace-nowrap">{{ $bill->title }}</td>
+                        <td class="p-3 font-normal whitespace-nowrap">
+                            {{ Str::limit($bill->description, 20, '...') }}</td>
+                        <td class="p-3 font-normal whitespace-nowrap">
+                            {{ $bill->due_date->format('Y-m-d') }}</td>
+                        <td class="p-3 font-normal whitespace-nowrap">{{ $bill->status }}</td>
+                        <td class="flex items-center justify-center p-3 font-normal whitespace-nowrap">
+                            <form action="{{ route('bills.destroy', $bill) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="rounded-full cursor-pointer hover:shadow-inner text-tertiary-txt hover:text-secondary-txt">
+                                    <svg class="w-8 h-8 p-1 rounded-full hover:text-secondary-txt" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                        </path>
+                                    </svg>
+                                </button>
+                            </form>
+                            <a href="{{ route('bills.edit', $bill) }}"
+                                class="rounded-full text-tertiary-txt hover:shadow-inner hover:text-secondary-txt">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 p-1 hover:text-secondary-txt"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L12 21H7v-5L16.732 3.196a2.5 2.5 0 01-1.5-.964z" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 
     {{ $bills->links() }}
-</x-layout>
-
+</x-app-layout>
