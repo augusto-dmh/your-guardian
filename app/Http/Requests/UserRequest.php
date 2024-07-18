@@ -26,6 +26,7 @@ class UserRequest extends FormRequest
             'last_name' => 'required|string|max:255',
             'birthdate' => 'required|date',
             'email' => 'required|string|lowercase|email|max:255|unique:users',
+            'language_preference' => 'in:en,pt_BR',
             'password' => 'bail|required|confirmed|min:8',
         ];
     }
