@@ -50,8 +50,11 @@
                 @foreach ($locales as $localeCode => $locale)
                     @php
                         $isActive = $currentLocale === $localeCode;
+                        $cssClasses = $isActive
+                            ? 'text-tertiary-txt dark:hover:text-secondary-txt'
+                            : 'text-gray-700 dark:text-gray-400 dark:hover:text-gray-200';
                     @endphp
-                    <x-dropdown-link :href="route('locale', ['locale' => $localeCode])">
+                    <x-dropdown-link :href="route('locale', ['locale' => $localeCode])" :class="$cssClasses">
                         {{ $locale['flag'] }} {{ $locale['name'] }}
                     </x-dropdown-link>
                 @endforeach
@@ -76,7 +79,7 @@
 
             <x-slot name="content">
                 <!-- Profile -->
-                <x-dropdown-link :href="route('profile.edit')">
+                <x-dropdown-link :href="route('profile.edit')" class="text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
                     {{ __('Profile') }}
                 </x-dropdown-link>
 
@@ -84,7 +87,8 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
-                    <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
+                    <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();"
+                        class="text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
                         {{ __('Log Out') }}
                     </x-dropdown-link>
                 </form>
