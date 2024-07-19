@@ -6,29 +6,29 @@
     <form method="GET" action="{{ route('bills.index') }}">
         <div class="flex items-center gap-8 pb-6 m-auto">
             <div class="flex items-center gap-4">
-                <h5 class="font-semibold text-primary-txt">Sort by:</h5>
+                <h5 class="font-semibold text-primary-txt">{{ __('Sort by') }}:</h5>
                 <div class="form-group">
-                    <p class="mb-1 text-secondary-txt">Amount</p>
+                    <p class="mb-1 text-secondary-txt">{{ __('Amount') }}</p>
                     <select name="sortByAmount"
                         class="font-thin border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg">
                         <option class="font-thin" value="asc"
-                            {{ request('sortByAmount') == 'asc' ? 'selected' : '' }}>Ascending
+                            {{ request('sortByAmount') == 'asc' ? 'selected' : '' }}>{{ __('Ascending') }}
                         </option>
                         <option class="font-thin" value="desc"
-                            {{ request('sortByAmount') == 'desc' ? 'selected' : '' }}>Descending
+                            {{ request('sortByAmount') == 'desc' ? 'selected' : '' }}>{{ __('Descending') }}
                         </option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <p class="mb-1 text-secondary-txt">Due Date</p>
+                    <p class="mb-1 text-secondary-txt">{{ __('Due Date') }}</p>
                     <select name="sortByDueDate"
                         class="font-thin border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg">
                         <option class="font-thin" value="asc"
-                            {{ request('sortByDueDate') == 'asc' ? 'selected' : '' }}>Ascending
+                            {{ request('sortByDueDate') == 'asc' ? 'selected' : '' }}>{{ __('Ascending') }}
                         </option>
                         <option class="font-thin" value="desc"
-                            {{ request('sortByDueDate') == 'desc' ? 'selected' : '' }}>Descending
+                            {{ request('sortByDueDate') == 'desc' ? 'selected' : '' }}>{{ __('Descending') }}
                         </option>
                     </select>
                 </div>
@@ -36,30 +36,16 @@
 
             <div class="flex gap-8">
                 <div class="flex items-center gap-4">
-                    <h5 class="font-semibold text-primary-txt">Filter by:</h5>
+                    <h5 class="font-semibold text-primary-txt">{{ __('Filter by') }}:</h5>
                     <div class="form-group">
-                        <p class="mb-1 text-secondary-txt">Status</p>
+                        <p class="mb-1 text-secondary-txt">{{ __('Status') }}</p>
                         <div class="flex flex-col">
                             <label
                                 class="inline-flex items-center cursor-pointer text-tertiary-txt hover:text-secondary-txt">
                                 <input type="checkbox" name="filterByStatus[]" value="pending"
                                     class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
                                     {{ is_array(request('filterByStatus')) && in_array('pending', request('filterByStatus')) ? 'checked' : '' }}>
-                                <span class="ml-2 font-thin">Pending</span>
-                            </label>
-                            <label
-                                class="inline-flex items-center cursor-pointer text-tertiary-txt hover:text-secondary-txt">
-                                <input type="checkbox" name="filterByStatus[]" value="paid"
-                                    class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
-                                    {{ is_array(request('filterByStatus')) && in_array('paid', request('filterByStatus')) ? 'checked' : '' }}>
-                                <span class="ml-2 font-light">Paid</span>
-                            </label>
-                            <label
-                                class="inline-flex items-center cursor-pointer text-tertiary-txt hover:text-secondary-txt">
-                                <input type="checkbox" name="filterByStatus[]" value="overdue"
-                                    class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
-                                    {{ is_array(request('filterByStatus')) && in_array('overdue', request('filterByStatus')) ? 'checked' : '' }}>
-                                <span class="ml-2 font-light">Overdue</span>
+                                <span class="ml-2 font-thin">{{ __('Pending') }}</span>
                             </label>
                         </div>
                     </div>

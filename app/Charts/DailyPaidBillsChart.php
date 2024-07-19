@@ -35,7 +35,11 @@ class DailyPaidBillsChart extends Chart
             ->get();
 
         $this->labels($bills->pluck('paid_at'));
-        $this->dataset('Daily paid bills', 'line', $bills->pluck('count_paid'));
+        $this->dataset(
+            __('Nº of paid bills (daily)'),
+            'line',
+            $bills->pluck('count_paid')
+        );
         $this->options([
             'backgroundColor' => '#FAC189',
             'borderColor' => '#FAC189',

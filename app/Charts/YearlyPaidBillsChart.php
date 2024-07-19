@@ -36,7 +36,11 @@ class YearlyPaidBillsChart extends Chart
             ->get();
 
         $this->labels($bills->pluck('year'));
-        $this->dataset('Bills paid', 'line', $bills->pluck('count_paid'));
+        $this->dataset(
+            __('Nº of paid bills (yearly)'),
+            'line',
+            $bills->pluck('count_paid')
+        );
         $this->options([
             'backgroundColor' => '#FAC189',
             'borderColor' => '#FAC189',

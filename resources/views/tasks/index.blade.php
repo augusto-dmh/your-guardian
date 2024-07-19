@@ -1,37 +1,37 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-4xl font-bold text-secondary-txt">Tasks</h2>
+        <h2 class="text-4xl font-bold text-secondary-txt">{{ __('Tasks') }}</h2>
     </x-slot>
 
     <form method="GET" action="{{ route('tasks.index') }}">
         <div class="flex items-center gap-8 pb-6 m-auto">
             <div class="flex items-center gap-4">
-                <h5 class="font-semibold text-primary-txt">Sort by:</h5>
+                <h5 class="font-semibold text-primary-txt">{{ __('Sort by:') }}</h5>
                 <div class="form-group">
-                    <p class="mb-1 text-secondary-txt">Due date:</p>
+                    <p class="mb-1 text-secondary-txt">{{ __('Due date:') }}</p>
                     <select name="sortByDueDate"
-                        class="font-thin border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg">>
+                        class="font-thin border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg">
                         <option id="sortByDueDateAsc" value="asc"
                             class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
-                            {{ request('sortByDueDate') == 'asc' ? 'selected' : '' }}>Ascending</option>
+                            {{ request('sortByDueDate') == 'asc' ? 'selected' : '' }}>{{ __('Ascending') }}</option>
                         <option name="sortByDueDate" id="sortByDueDateDesc" value="desc"
                             class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
-                            {{ request('sortByDueDate') == 'desc' ? 'selected' : '' }}>Descending</option>
+                            {{ request('sortByDueDate') == 'desc' ? 'selected' : '' }}>{{ __('Descending') }}</option>
                     </select>
                 </div>
             </div>
 
             <div class="flex items-center gap-4">
-                <h5 class="font-semibold text-primary-txt">Filter by:</h5>
+                <h5 class="font-semibold text-primary-txt">{{ __('Filter by:') }}</h5>
                 <div class="form-group">
-                    <p class="mb-1 text-secondary-txt">Status:</p>
+                    <p class="mb-1 text-secondary-txt">{{ __('Status:') }}</p>
                     <div class="flex flex-col">
                         <label
                             class="inline-flex items-center cursor-pointer text-tertiary-txt hover:text-secondary-txt">
                             <input type="checkbox" name="filterByStatus[]" id="filterByStatusPending" value="pending"
                                 class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
                                 {{ is_array(request('filterByStatus')) && in_array('pending', request('filterByStatus')) ? 'checked' : '' }}>
-                            <span class="ml-2 font-thin">Pending</span>
+                            <span class="ml-2 font-thin">{{ __('Pending') }}</span>
                         </label>
                         <label
                             class="inline-flex items-center cursor-pointer text-tertiary-txt hover:text-secondary-txt">
@@ -39,21 +39,21 @@
                                 value="completed"
                                 class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
                                 {{ is_array(request('filterByStatus')) && in_array('completed', request('filterByStatus')) ? 'checked' : '' }}>
-                            <span class="ml-2 font-thin">Completed</span>
+                            <span class="ml-2 font-thin">{{ __('Completed') }}</span>
                         </label>
                         <label
                             class="inline-flex items-center cursor-pointer text-tertiary-txt hover:text-secondary-txt">
                             <input type="checkbox" name="filterByStatus[]" id="filterByStatusFailed" value="failed"
                                 class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
                                 {{ is_array(request('filterByStatus')) && in_array('failed', request('filterByStatus')) ? 'checked' : '' }}>
-                            <span class="ml-2 font-thin">Failed</span>
+                            <span class="ml-2 font-thin">{{ __('Failed') }}</span>
                         </label>
                     </div>
                 </div>
             </div>
 
             <button type="submit"
-                class="px-4 py-1 shadow-inner text-tertiary-txt hover:shadow-innerHover hover:text-secondary-txt">Apply</button>
+                class="px-4 py-1 shadow-inner text-tertiary-txt hover:shadow-innerHover hover:text-secondary-txt">{{ __('Apply') }}</button>
         </div>
     </form>
 
@@ -61,22 +61,25 @@
         <table class="w-full divide-y divide-gray-200">
             <thead class="bg-secondary-bg">
                 <tr>
-                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">Category
-                    </th>
-                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">Status</th>
-                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">Title</th>
-                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">Description
-                    </th>
-                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">Due Date
-                    </th>
-                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">Actions</th>
+                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">
+                        {{ __('Category') }}</th>
+                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">
+                        {{ __('Status') }}</th>
+                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">
+                        {{ __('Title') }}</th>
+                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">
+                        {{ __('Description') }}</th>
+                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">
+                        {{ __('Due Date') }}</th>
+                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">
+                        {{ __('Actions') }}</th>
                 </tr>
             </thead>
             <tbody class="bg-tertiary-bg">
                 @foreach ($tasks as $task)
                     <tr
                         class="{{ $loop->iteration % 2 == 0 ? 'text-tertiary-txt bg-secondary-bg' : 'text-secondary-txt bg-tertiary-bg' }}">
-                        <td class="p-3 text-sm text-tertiary-txt">{{ $task->taskCategory?->name ?? 'none' }}</td>
+                        <td class="p-3 text-sm text-tertiary-txt">{{ $task->taskCategory?->name ?? __('none') }}</td>
                         <td class="p-3 text-sm text-tertiary-txt">{{ $task->status }}</td>
                         <td class="p-3 text-sm text-tertiary-txt"><a href="{{ route('tasks.show', $task) }}"
                                 class="text-tertiary-txt hover:text-secondary-txt">{{ $task->title }}</a></td>
