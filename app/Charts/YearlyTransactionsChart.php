@@ -39,7 +39,7 @@ class YearlyTransactionsChart extends Chart
 
         $this->labels($transactions->pluck('year'));
         $this->dataset(
-            'Total paid on transactions',
+            __('$ paid on transactions (yearly)'),
             'line',
             $transactions->pluck('total_amount_paid')
         );

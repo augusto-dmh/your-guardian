@@ -39,7 +39,7 @@ class MonthlyTransactionsChart extends Chart
 
         $this->labels($transactions->pluck('year'));
         $this->dataset(
-            'Monthly transactions',
+            __('$ paid on transactions (monthly)'),
             'line',
             $transactions->pluck('total_amount_paid')
         );

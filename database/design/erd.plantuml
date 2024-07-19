@@ -6,6 +6,7 @@ entity User {
     lastName VARCHAR(255)
     birthdate DATE
     email VARCHAR(255) <<UK>>
+    language_preference ENUM('en', 'pt_BR')
     password VARCHAR(255)
     isAdmin BOOLEAN
     created_at DATE

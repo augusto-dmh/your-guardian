@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->boolean('is_admin')->default(false);
             $table->date('birthdate');
             $table->string('email')->unique();
+            $table->enum('language_preference', ['en', 'pt_BR'])->default('en');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

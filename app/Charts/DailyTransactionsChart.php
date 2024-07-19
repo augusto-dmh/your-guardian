@@ -38,7 +38,7 @@ class DailyTransactionsChart extends Chart
 
         $this->labels($transactions->pluck('year'));
         $this->dataset(
-            'Daily paid bills',
+            __('$ paid on transactions (daily)'),
             'line',
             $transactions->pluck('total_amount_paid')
         );

@@ -39,7 +39,7 @@ class MonthlyPaidBillsChart extends Chart
 
         $this->labels($bills->pluck('month'));
         $this->dataset(
-            'Monthly paid bills',
+            __('Nº of paid bills (monthly)'),
             'line',
             $bills->pluck('count_paid')
         );

@@ -7,24 +7,26 @@
     <h3 class="inline-block text-xl font-bold text-secondary-txt">{{ $user->full_name }}</h3>
 
     <p>
-        <span>Balance:</span> ${{ $user->balance }}
+        <span>{{ __('Balance:') }}</span> ${{ $user->balance }}
     </p>
     <p>
-        <span>Next Bill Due:</span>
-        {{ $user->nextPendingBillDueDate?->format('Y-m-d') ?? 'none' }}
+        <span>{{ __('Next Bill Due:') }}</span>
+        {{ $user->nextPendingBillDueDate?->format('Y-m-d') ?? __('not available') }}
     </p>
     <p>
-        <span>Next Task Due:</span>
-        {{ $user->nextPendingTaskDueDate?->format('Y-m-d') ?? 'none' }}
+        <span>{{ __('Next Task Due:') }}</span>
+        {{ $user->nextPendingTaskDueDate?->format('Y-m-d') ?? __('not available') }}
     </p>
-    <p><span>Last Transaction:</span>
+    <p><span>{{ __('Last Transaction:') }}</span>
         @if ($user->lastTransaction)
-            Amount: ${{ $user->lastTransaction->amount }} |
-            Type: {{ $user->lastTransaction->type }} |
-            Category: {{ Str::limit($user->lastTransaction->transactionCategory?->name, 10, '...') ?? 'none' }} |
-            Description: {{ Str::limit($user->lastTransaction->description, 5, '...') ?? 'none' }}
+            {{ __('Amount:') }} ${{ $user->lastTransaction->amount }} |
+            {{ __('Type:') }} {{ $user->lastTransaction->type }} |
+            {{ __('Category:') }}
+            {{ Str::limit($user->lastTransaction->transactionCategory?->name, 10, '...') ?? __('not available') }} |
+            {{ __('Description:') }}
+            {{ Str::limit($user->lastTransaction->description, 5, '...') ?? __('not available') }}
         @else
-            None
+            {{ __('not available') }}
         @endif
     </p>
 </div>

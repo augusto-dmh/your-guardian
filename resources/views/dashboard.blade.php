@@ -15,31 +15,31 @@
         <div class="flex-1 dashboard-grid-container">
             <div class="flex flex-row justify-between text-center">
                 <div class="mb-4">
-                    <label for="data-type" class="block">Select interval type</label>
+                    <label for="data-type" class="block">{{ __('Data Type') }}</label>
                     <select id="data-type" name="data-type"
                         class="focus:outline-none focus:ring-2 focus:ring-quinary-bg max-w-38">
-                        <option value="transactions" selected>Transactions</option>
-                        <option value="bills">Bills</option>
+                        <option value="transactions" selected>{{ __('Transactions') }}</option>
+                        <option value="bills">{{ __('Bills') }}</option>
                     </select>
                 </div>
 
                 <div class="mb-4">
-                    <label for="interval-type" class="block">Select interval length</label>
+                    <label for="interval-type" class="block">{{ __('Interval Type') }}</label>
                     <select id="interval-type" name="interval-type"
                         class="focus:outline-none focus:ring-2 focus:ring-quinary-bg max-w-38">
-                        <option value="year" selected>Yearly</option>
-                        <option value="month">Monthly</option>
-                        <option value="day">Daily</option>
+                        <option value="year" selected>{{ __('Yearly') }}</option>
+                        <option value="month">{{ __('Monthly') }}</option>
+                        <option value="day">{{ __('Daily') }}</option>
                     </select>
                 </div>
 
                 <div class="mb-4">
-                    <label for="interval-length" class="block">Select Data Range Limit</label>
+                    <label for="interval-length" class="block">{{ __('Interval Length') }}</label>
                     <select id="interval-length" name="interval-length"
                         class="focus:outline-none focus:ring-2 focus:ring-quinary-bg max-w-38">
-                        <option value="1" selected>One year</option>
-                        <option value="5">Five Years</option>
-                        <option value="10">Ten Years</option>
+                        <option value="1" selected>{{ __('One year') }}</option>
+                        <option value="5">{{ __('Five Years') }}</option>
+                        <option value="10">{{ __('Ten Years') }}</option>
                     </select>
                 </div>
             </div>

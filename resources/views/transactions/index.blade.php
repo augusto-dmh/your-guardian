@@ -1,58 +1,54 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-4xl font-bold text-secondary-txt">Transactions</h2>
+        <h2 class="text-4xl font-bold text-secondary-txt">{{ __('Transactions') }}</h2>
     </x-slot>
 
     <form method="GET" action="{{ route('transactions.index') }}">
         <div class="flex items-center gap-8 pb-6 m-auto">
             <div class="flex items-center gap-4">
-                <h5 class="font-semibold text-primary-txt">Sort by:</h5>
+                <h5 class="font-semibold text-primary-txt">{{ __('Sort by:') }}</h5>
                 <div class="form-group">
-                    <p class="mb-1 text-secondary-txt">Amount</p>
+                    <p class="mb-1 text-secondary-txt">{{ __('Amount') }}</p>
                     <select name="sortByAmount"
                         class="font-thin border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg">
                         <option class="font-thin" value="asc"
-                            {{ request('sortByAmount') == 'asc' ? 'selected' : '' }}>Ascending
-                        </option>
+                            {{ request('sortByAmount') == 'asc' ? 'selected' : '' }}>{{ __('Ascending') }}</option>
                         <option class="font-thin" value="desc"
-                            {{ request('sortByAmount') == 'desc' ? 'selected' : '' }}>Descending
-                        </option>
+                            {{ request('sortByAmount') == 'desc' ? 'selected' : '' }}>{{ __('Descending') }}</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <p class="mb-1 text-secondary-txt">Date</p>
+                    <p class="mb-1 text-secondary-txt">{{ __('Date') }}</p>
                     <select name="sortByDate"
                         class="font-thin border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg">
                         <option class="font-thin" value="asc" {{ request('sortByDate') == 'asc' ? 'selected' : '' }}>
-                            Ascending
-                        </option>
+                            {{ __('Ascending') }}</option>
                         <option class="font-thin" value="desc"
-                            {{ request('sortByDate') == 'desc' ? 'selected' : '' }}>Descending
-                        </option>
+                            {{ request('sortByDate') == 'desc' ? 'selected' : '' }}>{{ __('Descending') }}</option>
                     </select>
                 </div>
             </div>
 
             <div class="flex gap-8">
                 <div class="flex items-center gap-4">
-                    <h5 class="font-semibold text-primary-txt">Filter by:</h5>
+                    <h5 class="font-semibold text-primary-txt">{{ __('Filter by:') }}</h5>
                     <div class="form-group">
-                        <p class="mb-1 text-secondary-txt">Type</p>
+                        <p class="mb-1 text-secondary-txt">{{ __('Type') }}</p>
                         <div class="flex flex-col">
                             <label
                                 class="inline-flex items-center cursor-pointer text-tertiary-txt hover:text-secondary-txt">
                                 <input type="checkbox" name="filterByType" value="income"
                                     class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
                                     {{ request('filterByType') == 'income' ? 'checked' : '' }}>
-                                <span class="ml-2 font-thin">Income</span>
+                                <span class="ml-2 font-thin">{{ __('Income') }}</span>
                             </label>
                             <label
                                 class="inline-flex items-center cursor-pointer text-tertiary-txt hover:text-secondary-txt">
                                 <input type="checkbox" name="filterByType" value="expense"
                                     class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
                                     {{ request('filterByType') == 'expense' ? 'checked' : '' }}>
-                                <span class="ml-2 font-light">Expense</span>
+                                <span class="ml-2 font-light">{{ __('Expense') }}</span>
                             </label>
                         </div>
                     </div>
@@ -60,7 +56,7 @@
             </div>
 
             <button type="submit"
-                class="px-4 py-1 shadow-inner text-tertiary-txt hover:shadow-innerHover hover:text-secondary-txt">Apply</button>
+                class="px-4 py-1 shadow-inner text-tertiary-txt hover:shadow-innerHover hover:text-secondary-txt">{{ __('Apply') }}</button>
         </div>
     </form>
 
@@ -68,15 +64,18 @@
         <table class="w-full divide-y divide-gray-200">
             <thead class="bg-secondary-bg">
                 <tr>
-                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">Amount</th>
-                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">Type</th>
-                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">Category
-                    </th>
-                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">Description
-                    </th>
-                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">Date</th>
-                    <th class="p-3 text-xs font-medium tracking-wider text-center uppercase text-primary-txt">Action
-                    </th>
+                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">
+                        {{ __('Amount') }}</th>
+                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">
+                        {{ __('Type') }}</th>
+                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">
+                        {{ __('Category') }}</th>
+                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">
+                        {{ __('Description') }}</th>
+                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">
+                        {{ __('Date') }}</th>
+                    <th class="p-3 text-xs font-medium tracking-wider text-center uppercase text-primary-txt">
+                        {{ __('Action') }}</th>
                 </tr>
             </thead>
             <tbody class="bg-tertiary-bg">
@@ -86,7 +85,7 @@
                         <td class="p-3 font-semibold whitespace-nowrap">{{ $transaction->amount }}</td>
                         <td class="p-3 font-normal whitespace-nowrap">{{ $transaction->type }}</td>
                         <td class="p-3 font-normal whitespace-nowrap">
-                            {{ $transaction->transactionCategory?->name ?? 'none' }}</td>
+                            {{ $transaction->transactionCategory?->name ?? __('none') }}</td>
                         <td class="p-3 font-normal whitespace-nowrap">
                             {{ Str::limit($transaction->description, 20, '...') }}</td>
                         <td class="p-3 font-normal whitespace-nowrap">{{ $transaction->created_at->format('m-d-Y') }}

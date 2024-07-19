@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS users (
     last_name VARCHAR(255) NOT NULL,
     birthdate DATE NOT NULL,
     email VARCHAR(255) NOT NULL,
+    language_preference ENUM('en', 'pt_BR') DEFAULT 'en',
     password VARCHAR(255) NOT NULL,
     is_admin BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
