@@ -24,3 +24,9 @@ Homestead.yaml
 Homestead.json
 /.vagrant
 .phpunit.result.cache
+
+.dockerignore
+fly-deploy.yml
+.fly
+Dockerfile
+fly.toml
