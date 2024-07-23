@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
 
@@ -22,6 +25,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        RateLimiter::for('global', function (Request $request) {
+            return Limit::perMinute(60);
+        });
+
         VerifyEmail::toMailUsing(function (object $notifiable, string $url) {
             return (new MailMessage())
                 ->from('app.yourguardian@gmail.com', 'YourGuardian')
