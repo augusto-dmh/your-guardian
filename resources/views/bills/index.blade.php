@@ -100,7 +100,7 @@
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit"
-                                    class="rounded-full cursor-pointer hover:shadow-inner text-tertiary-txt hover:text-secondary-txt">
+                                    class="block rounded-full cursor-pointer hover:shadow-inner text-tertiary-txt hover:text-secondary-txt">
                                     <svg class="w-8 h-8 p-1 rounded-full hover:text-secondary-txt" fill="none"
                                         stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -110,11 +110,19 @@
                                 </button>
                             </form>
                             <a href="{{ route('bills.edit', $bill) }}"
-                                class="rounded-full text-tertiary-txt hover:shadow-inner hover:text-secondary-txt">
+                                class="block rounded-full text-tertiary-txt hover:shadow-inner hover:text-secondary-txt">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 p-1 hover:text-secondary-txt"
                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L12 21H7v-5L16.732 3.196a2.5 2.5 0 01-1.5-.964z" />
+                                </svg>
+                            </a>
+                            <a href="{{ route('bills.show', $bill) }}"
+                                class="block rounded-full text-tertiary-txt hover:shadow-inner hover:text-secondary-txt">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 p-1 hover:text-secondary-txt"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 6a9.77 9.77 0 018.7 5.47c.2.38.2.82 0 1.2A9.77 9.77 0 0112 18a9.77 9.77 0 01-8.7-5.47 1.23 1.23 0 010-1.2A9.77 9.77 0 0112 6zm0 4a2 2 0 100 4 2 2 0 000-4z" />
                                 </svg>
                             </a>
                         </td>
