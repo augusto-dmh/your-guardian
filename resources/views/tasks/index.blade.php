@@ -82,13 +82,13 @@
                 @foreach ($tasks as $task)
                     <tr
                         class="{{ $loop->iteration % 2 == 0 ? 'text-tertiary-txt bg-secondary-bg' : 'text-secondary-txt bg-tertiary-bg' }}">
-                        <td class="p-3 text-sm text-tertiary-txt">{{ $task->taskCategory?->name ?? __('none') }}</td>
-                        <td class="p-3 text-sm text-tertiary-txt">{{ $task->status }}</td>
-                        <td class="p-3 text-sm text-tertiary-txt"><a href="{{ route('tasks.show', $task) }}"
-                                class="text-tertiary-txt hover:text-secondary-txt">{{ $task->title }}</a></td>
-                        <td class="p-3 text-sm text-tertiary-txt">{{ Str::limit($task->description, 20, '...') }}</td>
-                        <td class="p-3 text-sm text-tertiary-txt">{{ $task->due_date->format('m-d-Y') }}</td>
-                        <td class="flex items-center justify-center p-3 font-normal whitespace-nowrap">
+                        <td class="p-3">{{ $task->taskCategory?->name ?? __('none') }}</td>
+                        <td class="p-3">{{ $task->status }}</td>
+                        <td class="p-3"><a href="{{ route('tasks.show', $task) }}"
+                                class=hover:text-secondary-txt">{{ $task->title }}</a></td>
+                        <td class="p-3">{{ Str::limit($task->description, 20, '...') }}</td>
+                        <td class="p-3">{{ $task->due_date->format('m-d-Y') }}</td>
+                        <td class="flex items-center justify-center p-3 whitespace-nowrap">
                             <form action="{{ route('tasks.destroy', ['task' => $task]) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
