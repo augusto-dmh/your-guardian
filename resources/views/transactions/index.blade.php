@@ -1,10 +1,13 @@
 <x-app-layout>
+    <a type="button" href="{{ route('transactions.create') }}"
+        class="inline-block px-4 py-1 rounded-md shadow-inner text-tertiary-txt hover:shadow-innerHover hover:text-secondary-txt">{{ __('Create') }}</a>
+
     <x-slot name="header">
         <h2 class="text-4xl font-bold text-secondary-txt">{{ __('Transactions') }}</h2>
     </x-slot>
 
     <form method="GET" action="{{ route('transactions.index') }}">
-        <div class="flex items-center gap-8 pb-6 m-auto">
+        <div class="flex items-center gap-8 py-6 m-auto">
             <div class="flex items-center gap-4">
                 <h5 class="font-semibold text-primary-txt">{{ __('Sort by:') }}</h5>
                 <div class="form-group">
@@ -22,7 +25,8 @@
                     <p class="mb-1 text-secondary-txt">{{ __('Date') }}</p>
                     <select name="sortByDate"
                         class="font-thin border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg">
-                        <option class="font-thin" value="asc" {{ request('sortByDate') == 'asc' ? 'selected' : '' }}>
+                        <option class="font-thin" value="asc"
+                            {{ request('sortByDate') == 'asc' ? 'selected' : '' }}>
                             {{ __('Ascending') }}</option>
                         <option class="font-thin" value="desc"
                             {{ request('sortByDate') == 'desc' ? 'selected' : '' }}>{{ __('Descending') }}</option>
@@ -96,7 +100,7 @@
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit"
-                                    class="rounded-full cursor-pointer hover:shadow-inner text-tertiary-txt hover:text-secondary-txt">
+                                    class="block rounded-full cursor-pointer hover:shadow-inner text-tertiary-txt hover:text-secondary-txt">
                                     <svg class="w-8 h-8 p-1 rounded-full hover:text-secondary-txt" fill="none"
                                         stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -106,11 +110,19 @@
                                 </button>
                             </form>
                             <a href="{{ route('transactions.edit', ['transaction' => $transaction]) }}"
-                                class="rounded-full text-tertiary-txt hover:shadow-inner hover:text-secondary-txt">
+                                class="block rounded-full text-tertiary-txt hover:shadow-inner hover:text-secondary-txt">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 p-1 hover:text-secondary-txt"
                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L12 21H7v-5L16.732 3.196a2.5 2.5 0 01-1.5-.964z" />
+                                </svg>
+                            </a>
+                            <a href="{{ route('transactions.show', $transaction) }}"
+                                class="block rounded-full text-tertiary-txt hover:shadow-inner hover:text-secondary-txt">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 p-1 hover:text-secondary-txt"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 6a9.77 9.77 0 018.7 5.47c.2.38.2.82 0 1.2A9.77 9.77 0 0112 18a9.77 9.77 0 01-8.7-5.47 1.23 1.23 0 010-1.2A9.77 9.77 0 0112 6zm0 4a2 2 0 100 4 2 2 0 000-4z" />
                                 </svg>
                             </a>
                         </td>
