@@ -64,23 +64,23 @@
         <table class="w-full divide-y divide-gray-200">
             <thead class="bg-secondary-bg">
                 <tr>
-                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">Bill
-                        Amount
+                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">
+                        {{ __('Amount') }}
                     </th>
-                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">Bill
-                        Title
+                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">
+                        {{ __('Title') }}
                     </th>
-                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">Bill
-                        Description
+                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">
+                        {{ __('Description') }}
                     </th>
-                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">Bill Due
-                        Date
+                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">
+                        {{ __('Date') }}
                     </th>
-                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">Bill
-                        Status
+                    <th class="p-3 text-xs font-medium tracking-wider text-left uppercase text-primary-txt">
+                        {{ __('Status') }}
                     </th>
                     <th class="p-3 text-xs font-medium tracking-wider text-center uppercase text-primary-txt">
-                        Actions
+                        {{ __('Actions') }}
                     </th>
                 </tr>
             </thead>
