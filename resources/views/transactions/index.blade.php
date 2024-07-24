@@ -1,10 +1,13 @@
 <x-app-layout>
+    <a type="button" href="{{ route('transactions.create') }}"
+        class="inline-block px-4 py-1 rounded-md shadow-inner text-tertiary-txt hover:shadow-innerHover hover:text-secondary-txt">{{ __('Create') }}</a>
+
     <x-slot name="header">
         <h2 class="text-4xl font-bold text-secondary-txt">{{ __('Transactions') }}</h2>
     </x-slot>
 
     <form method="GET" action="{{ route('transactions.index') }}">
-        <div class="flex items-center gap-8 pb-6 m-auto">
+        <div class="flex items-center gap-8 py-6 m-auto">
             <div class="flex items-center gap-4">
                 <h5 class="font-semibold text-primary-txt">{{ __('Sort by:') }}</h5>
                 <div class="form-group">
@@ -22,7 +25,8 @@
                     <p class="mb-1 text-secondary-txt">{{ __('Date') }}</p>
                     <select name="sortByDate"
                         class="font-thin border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg">
-                        <option class="font-thin" value="asc" {{ request('sortByDate') == 'asc' ? 'selected' : '' }}>
+                        <option class="font-thin" value="asc"
+                            {{ request('sortByDate') == 'asc' ? 'selected' : '' }}>
                             {{ __('Ascending') }}</option>
                         <option class="font-thin" value="desc"
                             {{ request('sortByDate') == 'desc' ? 'selected' : '' }}>{{ __('Descending') }}</option>

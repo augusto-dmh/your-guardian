@@ -1,10 +1,13 @@
 <x-app-layout>
+    <a type="button" href="{{ route('tasks.create') }}"
+        class="inline-block px-4 py-1 rounded-md shadow-inner text-tertiary-txt hover:shadow-innerHover hover:text-secondary-txt">{{ __('Create') }}</a>
+
     <x-slot name="header">
         <h2 class="text-4xl font-bold text-secondary-txt">{{ __('Tasks') }}</h2>
     </x-slot>
 
     <form method="GET" action="{{ route('tasks.index') }}">
-        <div class="flex items-center gap-8 pb-6 m-auto">
+        <div class="flex items-center gap-8 py-6 m-auto">
             <div class="flex items-center gap-4">
                 <h5 class="font-semibold text-primary-txt">{{ __('Sort by:') }}</h5>
                 <div class="form-group">
