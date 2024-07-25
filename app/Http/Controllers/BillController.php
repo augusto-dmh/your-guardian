@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Bill\BillStoreRequest;
-use App\Http\Requests\Bill\BillUpdateRequest;
 use Auth;
 use App\Models\Bill;
 use Illuminate\Http\Request;
 use App\QueryOptions\Sort\Amount;
 use App\QueryOptions\Sort\DueDate;
 use App\QueryOptions\Filter\Status;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Pipeline;
+use App\Http\Requests\Bill\BillStoreRequest;
+use App\Http\Requests\Bill\BillUpdateRequest;
 
 class BillController extends Controller
 {
@@ -39,11 +40,15 @@ class BillController extends Controller
 
     public function show(Bill $bill)
     {
+        Gate::authorize('view', $bill);
+
         return view('bills.show', compact('bill'));
     }
 
     public function update(BillUpdateRequest $request, Bill $bill)
     {
+        Gate::authorize('update', $bill);
+
         if ($request['status'] === 'paid' && $bill->status !== 'paid') {
             $bill->paid_at = now();
         }
@@ -55,6 +60,8 @@ class BillController extends Controller
 
     public function destroy(Bill $bill)
     {
+        Gate::authorize('delete', $bill);
+
         $bill->delete();
 
         return redirect()->back();
