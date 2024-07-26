@@ -7,11 +7,7 @@
         </div>
     </x-slot>
 
-    <div class="p-6 overflow-hidden bg-white rounded-md shadow-md dark:bg-dark-eval-1">
-        {{ __("You're logged in!") }}
-    </div>
-
-    <div class="flex flex-row items-center min-w-0 gap-6 p-4">
+    <div class="flex flex-row min-w-0 gap-6 p-4">
         <div class="flex-1 dashboard-grid-container">
             <div class="flex flex-row justify-between text-center">
                 <div class="mb-4">
@@ -44,14 +40,21 @@
                 </div>
             </div>
 
-            <div class="shadow-inner">
+            <div class="relative shadow-inner">
+                @if (!Auth::user()->has_transactions_or_paid_bills)
+                    <div class="absolute inset-0 z-10 flex items-center justify-center">
+                        <p class="text-5xl text-center select-none text-tertiary-bg">
+                            {{ __('Waiting data...') }}
+                        </p>
+                    </div>
+                @endif
                 {!! $chart->container() !!}
             </div>
         </div>
 
         <div class="flex flex-col flex-1 min-w-0 gap-8">
-            <x-wallet />
-            <x-latest-transactions />
+            <x-wallet class="flex-1" />
+            <x-latest-transactions class="flex-1" />
         </div>
     </div>
 

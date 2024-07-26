@@ -2,11 +2,12 @@
     $user = auth()->user();
     $transactions = $user->transactions()->latest()->take(5)->with('transactionCategory')->get();
 @endphp
-
-<div class="flex flex-col mt-6">
-    <div class="overflow-x-auto rounded-lg">
-        <div class="align-middle">
-            <div class="shadow sm:rounded-lg">
+<div
+    {{ $attributes->merge(['class' => 'relative flex flex-col gap-2 shadow-out p-5 rounded-md [&>p]:text-primary-txt [&>p>span]:text-tertiary-txt']) }}>
+    <h3 class="inline-block mb-1 text-xl font-bold text-secondary-txt">{{ __('Latest Transactions') }}</h3>
+    <div class="shadow sm:rounded-lg">
+        @if ($transactions->isNotEmpty())
+            <div class="overflow-x-auto rounded-lg">
                 <table class="w-full divide-y divide-gray-200 ">
                     <thead class="bg-secondary-bg">
                         <tr>
@@ -45,6 +46,12 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+        @else
+            <div class="absolute inset-0 z-10 flex items-center justify-center">
+                <p class="text-4xl text-center select-none text-tertiary-bg">
+                    {{ __('Waiting transactions...') }}
+                </p>
+            </div>
+        @endif
     </div>
 </div>
