@@ -1,7 +1,7 @@
 <x-layout>
-    <div id="overlay" class="hidden fixed inset-0 z-10 cursor-pointer"></div>
+    <div id="overlay" class="fixed inset-0 z-10 hidden cursor-pointer"></div>
 
-    <h2 class="absolute top-0 left-1/2 transform -translate-x-1/2 hidden" id="loading">Loading...</h2>
+    <h2 class="absolute top-0 hidden transform -translate-x-1/2 left-1/2" id="loading">{{ __('Loading...') }}</h2>
 
     <div class="form-wrapper">
         <div class="flex justify-center">
@@ -15,27 +15,29 @@
 
             <fieldset>
                 <div class="form-group">
-                    <label for="amount">Amount:</label>
-                    <input type="text" name="amount" placeholder="Amount" value="{{ old('amount') }}">
+                    <label for="amount">{{ __('Amount:') }}</label>
+                    <input type="text" name="amount" value="{{ old('amount') }}">
                     @error('amount')
                         <p>{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="type">Type:</label>
+                    <label for="type">{{ __('Type:') }}</label>
                     <select id="type" name="type">
-                        <option value="income" {{ old('type') === 'income' ? 'selected' : '' }}>Income</option>
-                        <option value="expense" {{ old('type') === 'expense' ? 'selected' : '' }}>Expense</option>
+                        <option value="income" {{ old('type') === 'income' ? 'selected' : '' }}>{{ __('Income') }}
+                        </option>
+                        <option value="expense" {{ old('type') === 'expense' ? 'selected' : '' }}>{{ __('Expense') }}
+                        </option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="transaction_category_id">Category:</label>
+                    <label for="transaction_category_id">{{ __('Category:') }}:</label>
                     <select name="transaction_category_id" id="transaction_category_id">
-                        <option value="">Select a category</option>
+                        <option value="">{{ __('Select a category') }}</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="description">Description:</label>
+                    <label for="description">{{ __('Description:') }}</label>
                     <textarea id="description" name="description" rows="4" cols="50">{{ old('description') }}</textarea>
                     @error('description')
                         <p>{{ $message }}</p>
@@ -44,7 +46,7 @@
             </fieldset>
 
             <div class="form-group">
-                <button>Create transaction</button>
+                <button>{{ __('Create transaction') }}</button>
             </div>
         </form>
 
@@ -80,4 +82,3 @@
         </script>
     </div>
 </x-layout>
-

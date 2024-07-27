@@ -11,27 +11,26 @@
 
             <fieldset>
                 <div class="form-group">
-                    <label for="title">Title:</label>
-                    <input type="text" name="title" placeholder="Title">
+                    <label for="title">{{ __('Title') }}:</label>
+                    <input type="text" name="title">
                 </div>
                 <div class="form-group">
-                    <label for="amount">Amount:</label>
-                    <input type="text" name="amount" placeholder="Amount">
+                    <label for="amount">{{ __('Amount') }}:</label>
+                    <input type="text" name="amount">
                 </div>
                 <div class="form-group">
-                    <label for="due_date">Due date:</label>
+                    <label for="due_date">{{ __('Due date') }}:</label>
                     <input type="date" name="due_date" id="due_date">
                 </div>
                 <div class="form-group">
-                    <label for="description">Description:</label>
+                    <label for="description">{{ __('Description') }}:</label>
                     <textarea id="description" name="description" rows="4" cols="50"></textarea>
                 </div>
             </fieldset>
 
             <div class="form-group">
-                <button>Create Bill</button>
+                <button>{{ __('Create Bill') }}</button>
             </div>
         </form>
     </div>
 </x-layout>
-

@@ -11,43 +11,48 @@
 
             <fieldset>
                 <div class="form-group">
-                    <label for="title">Title:</label>
-                    <input type="text" name="title" placeholder="Title" value="{{ old('title') }}">
+                    <label for="title">{{ __('Title') }}:</label>
+                    <input type="text" name="title" value="{{ old('title') }}">
                     @error('title')
                         <p>{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="due_date">Due date:</label>
+                    <label for="due_date">{{ __('Due date') }}:</label>
                     <input type="date" name="due_date" id="due_date" value="{{ old('due_date') }}">
                     @error('due_date')
                         <p>{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="task_category_id">Category</label>
+                    <label for="task_category_id">{{ __('Category') }}</label>
                     <select name="task_category_id" id="category">
-                        <option value="">Select a category</option>
+                        <option value="">{{ __('Select a category') }}</option>
 
                         @foreach ($taskCategories as $taskCategory)
                             <option value="{{ $taskCategory->id }}"
                                 {{ old('task_category_id') === $taskCategory->id ? 'selected' : '' }}>
-                                {{ ucFirst($taskCategory->name) }}
+                                {{ ucfirst($taskCategory->name) }}
                             </option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="status">Status:</label>
+                    <label for="status">{{ __('Status') }}:</label>
                     <select name="status" id="status">
-                        <option value="pending" {{ old('status') === 'pending' ? 'selected' : '' }}>Pending</option>
-                        <option value="completed" {{ old('status') === 'completed' ? 'selected' : '' }}>Completed
+                        <option value="pending" {{ old('status') === 'pending' ? 'selected' : '' }}>
+                            {{ __('Pending') }}
                         </option>
-                        <option value="failed" {{ old('status') === 'failed' ? 'selected' : '' }}>Failed</option>
+                        <option value="completed" {{ old('status') === 'completed' ? 'selected' : '' }}>
+                            {{ __('Completed') }}
+                        </option>
+                        <option value="failed" {{ old('status') === 'failed' ? 'selected' : '' }}>
+                            {{ __('Failed') }}
+                        </option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="description">Description:</label>
+                    <label for="description">{{ __('Description') }}:</label>
                     <textarea id="description" name="description" rows="4" cols="50">{{ old('description') }}</textarea>
                     @error('description')
                         <p>{{ $message }}</p>
@@ -56,9 +61,8 @@
             </fieldset>
 
             <div class="form-group">
-                <button>Create Task</button>
+                <button>{{ __('Create Task') }}</button>
             </div>
         </form>
     </div>
 </x-layout>
-
