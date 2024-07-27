@@ -61,6 +61,13 @@ class User extends Authenticatable
         return number_format($balance, 2);
     }
 
+    public function getHasTransactionsOrPaidBillsAttribute()
+    {
+        return $this->transactions()->count() > 0 ||
+            $this->bills()->where('paid_at', '!=', null)->count() > 0 ||
+            $this->tasks()->count() > 0;
+    }
+
     public function getLastTransactionAttribute()
     {
         return $this->transactions()->latest('created_at')->first();

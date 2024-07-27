@@ -200,5 +200,18 @@
     "Nº of paid bills (monthly)": "Nº de contas pagas (mensalmente)",
     "$ paid on transactions (monthly)": "R$ pago em transações (mensalmente)",
     "Nº of paid bills (yearly)": "Nº de contas pagas (anualmente)",
-    "$ paid on transactions (yearly)": "R$ pago em transações (anualmente)"
+    "$ paid on transactions (yearly)": "R$ pago em transações (anualmente)",
+    "Latest Transactions": "Últimas Transações",
+    "Waiting transactions...": "Aguardando transações...",
+    "Waiting data...": "Aguardando dados...",
+    "Create transaction": "Criar transação",
+    "Select a category": "Selecione uma categoria",
+    "Title": "Título",
+    "Due date": "Data de vencimento",
+    "Create Bill": "Criar Conta",
+    "Create Task": "Criar tarefa",
+    "Your guardian will be with you - and your finances, in a good sense.": "Seu guardião estará com você - e suas finanças, no bom sentido.",
+    "Waiting bills...": "Aguardando contas...",
+    "Waiting tasks...": "Aguardando tarefas...",
+    "Welcome": "Saudações"
 }
