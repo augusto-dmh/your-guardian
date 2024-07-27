@@ -30,6 +30,13 @@
         <x-navbar />
         <div
             class="flex flex-col items-center justify-center flex-grow mt-2 text-gray-900 bg-gray-100 dark:bg-dark-eval-0 dark:text-gray-200">
+            @if (Auth::user()?->created_at && now()->diffInMinutes(Auth::user()->created_at, true) <= 10)
+                <div class="px-4 py-2 text-2xl rounded-md text-tertiary-txt" role="alert">
+                    {{ __('Hi') }} {{ Auth::user()->first_name }}! Wanna know first a bit <a
+                        class="shadow-inner text-secondary-txt hover:underline" href="/">about
+                        us</a>?
+                </div>
+            @endif
             <div class="flex flex-col items-center justify-center flex-grow px-6">
                 <header class="flex items-center p-4 mb-8 text-center sm:p-6">
                     <h2 class="flex-1 font-bold text-9xl text-secondary-txt">{{ __('Welcome') }}</h2>
