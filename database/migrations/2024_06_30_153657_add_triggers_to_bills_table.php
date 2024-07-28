@@ -28,7 +28,7 @@ class AddTriggersToBillsTable extends Migration
             BEFORE UPDATE ON bills
             FOR EACH ROW
             BEGIN
-                IF NEW.status = "paid" AND OLD.status <> "paid"
+                IF NEW.status = "paid" AND OLD.status <> "paid" THEN
                     SET NEW.paid_at = NOW();
                 END IF;
             END;
