@@ -73,4 +73,22 @@ class BillObserver
             );
         }
     }
+
+    public function creating(Bill $bill): void
+    {
+        if ($bill->status === 'paid') {
+            $bill->paid_at = now();
+        }
+    }
+
+    public function updating(Bill $bill): void
+    {
+        if (
+            $bill->isDirty('status') &&
+            $bill->status === 'paid' &&
+            $bill->getOriginal('status') !== 'paid'
+        ) {
+            $bill->paid_at = now();
+        }
+    }
 }
