@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Requests\Task;
+namespace App\Http\Requests\Bill;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class TaskUpdateRequest extends FormRequest
+class BillDeleteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return Auth::user()->can('update', $this->route('task'));
+        return Auth::user()->can('delete', $this->route('bill'));
     }
 
     /**
@@ -23,10 +23,7 @@ class TaskUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'task_category_id' => 'nullable|exists:task_categories,id',
-            'title' => 'string|max:255',
-            'description' => 'nullable|string|max:65535',
-            'due_date' => 'date',
-        ];
+                //
+            ];
     }
 }
