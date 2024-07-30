@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Bill;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class BillUpdateRequest extends FormRequest
@@ -11,7 +12,7 @@ class BillUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return Auth::user()->can('update', $this->route('bill'));
     }
 
     /**

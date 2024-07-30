@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Task\TaskDeleteRequest;
+use App\Http\Requests\Task\TaskShowRequest;
 use Auth;
 use App\Models\Task;
 use App\Models\TaskCategory;
@@ -12,6 +14,9 @@ use Illuminate\Support\Facades\Pipeline;
 use App\Http\Requests\Task\TaskStoreRequest;
 use App\Http\Requests\Task\TaskUpdateRequest;
 
+/**
+ * @see \App\Observers\TaskObserver
+ */
 class TaskController extends Controller
 {
     public function store(TaskStoreRequest $request)
@@ -33,17 +38,13 @@ class TaskController extends Controller
         return view('tasks.index', compact('tasks'));
     }
 
-    public function show(Task $task)
+    public function show(TaskShowRequest $request, Task $task)
     {
-        Gate::authorize('view', $task);
-
         return view('tasks.show', compact('task'));
     }
 
     public function update(TaskUpdateRequest $request, Task $task)
     {
-        Gate::authorize('update', $task);
-
         $validatedData = $request->validated();
 
         $task->update($validatedData);
@@ -51,10 +52,8 @@ class TaskController extends Controller
         return redirect()->back();
     }
 
-    public function destroy(Task $task)
+    public function destroy(TaskDeleteRequest $request, Task $task)
     {
-        Gate::authorize('delete', $task);
-
         $task->delete();
 
         return redirect()->back();

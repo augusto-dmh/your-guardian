@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests\Transaction;
 
+use App\Models\Transaction;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TransactionUpdateRequest extends FormRequest
@@ -11,7 +14,7 @@ class TransactionUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return Auth::user()->can('update', $this->route('transaction'));
     }
 
     /**
@@ -24,8 +27,13 @@ class TransactionUpdateRequest extends FormRequest
         return [
             'user_id' => 'exists:users,id',
             'bill_id' => 'exists:bills,id',
-            'transaction_category_id' =>
-                'nullable|exists:transaction_categories,id',
+            'transaction_category_id' => [
+                'required',
+                Rule::exists('transaction_categories', 'id')->where(
+                    'transaction_type',
+                    $this->type
+                ),
+            ],
             'amount' => 'numeric',
             'type' => 'string|in:income,expense',
             'description' => 'string|max:65535',

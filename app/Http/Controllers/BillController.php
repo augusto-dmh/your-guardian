@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Bill\BillDeleteRequest;
+use App\Http\Requests\Bill\BillShowRequest;
 use Auth;
 use App\Models\Bill;
 use Illuminate\Http\Request;
@@ -13,14 +15,13 @@ use Illuminate\Support\Facades\Pipeline;
 use App\Http\Requests\Bill\BillStoreRequest;
 use App\Http\Requests\Bill\BillUpdateRequest;
 
+/**
+ * @see \App\Observers\BillObserver
+ */
 class BillController extends Controller
 {
     public function store(BillStoreRequest $request)
     {
-        if ($request['status'] === 'paid') {
-            $request->validated()->paid_at = now();
-        }
-
         $bill = Auth::user()->bills()->create($request->validated());
 
         return redirect()->back();
@@ -38,30 +39,20 @@ class BillController extends Controller
         return view('bills.index', compact('bills'));
     }
 
-    public function show(Bill $bill)
+    public function show(BillShowRequest $request, Bill $bill)
     {
-        Gate::authorize('view', $bill);
-
         return view('bills.show', compact('bill'));
     }
 
     public function update(BillUpdateRequest $request, Bill $bill)
     {
-        Gate::authorize('update', $bill);
-
-        if ($request['status'] === 'paid' && $bill->status !== 'paid') {
-            $bill->paid_at = now();
-        }
-
         $bill->update($request->validated());
 
         return redirect()->back();
     }
 
-    public function destroy(Bill $bill)
+    public function destroy(BillDeleteRequest $request, Bill $bill)
     {
-        Gate::authorize('delete', $bill);
-
         $bill->delete();
 
         return redirect()->back();
