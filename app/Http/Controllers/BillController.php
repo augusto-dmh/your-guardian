@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Pipeline;
 use App\Http\Requests\Bill\BillStoreRequest;
 use App\Http\Requests\Bill\BillUpdateRequest;
 
+/**
+ * @see \App\Observers\BillObserver
+ */
 class BillController extends Controller
 {
     public function store(BillStoreRequest $request)

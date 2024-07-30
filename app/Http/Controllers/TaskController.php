@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Pipeline;
 use App\Http\Requests\Task\TaskStoreRequest;
 use App\Http\Requests\Task\TaskUpdateRequest;
 
+/**
+ * @see \App\Observers\TaskObserver
+ */
 class TaskController extends Controller
 {
     public function store(TaskStoreRequest $request)
