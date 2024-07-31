@@ -49,7 +49,7 @@
                 </header>
 
                 <!-- Page Content -->
-                <main class="px-4 sm:px-6 flex-1">
+                <main class="relative flex-1 px-4 sm:px-6">
                     {{ $slot }}
                 </main>
 
