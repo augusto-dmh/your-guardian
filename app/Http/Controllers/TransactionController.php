@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Transaction\TransactionDeleteRequest;
-use App\Http\Requests\Transaction\TransactionShowRequest;
 use Request;
 use App\Models\Transaction;
 use App\QueryOptions\Sort\Date;
 use App\QueryOptions\Filter\Type;
 use App\QueryOptions\Sort\Amount;
 use App\Models\TransactionCategory;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Pipeline;
+use App\Http\Requests\Transaction\TransactionShowRequest;
 use App\Http\Requests\Transaction\TransactionStoreRequest;
+use App\Http\Requests\Transaction\TransactionDeleteRequest;
 use App\Http\Requests\Transaction\TransactionUpdateRequest;
 
 class TransactionController extends Controller
@@ -61,6 +63,9 @@ class TransactionController extends Controller
     ) {
         $transaction->delete();
 
+        if (preg_match('/\/transactions\/\d+$/', URL::previous())) {
+            return redirect()->route('transactions.index');
+        }
         return redirect()->back();
     }
 
