@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Task\TaskDeleteRequest;
-use App\Http\Requests\Task\TaskShowRequest;
 use Auth;
 use App\Models\Task;
 use App\Models\TaskCategory;
 use App\QueryOptions\Sort\DueDate;
 use App\QueryOptions\Filter\Status;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Pipeline;
+use App\Http\Requests\Task\TaskShowRequest;
 use App\Http\Requests\Task\TaskStoreRequest;
+use App\Http\Requests\Task\TaskDeleteRequest;
 use App\Http\Requests\Task\TaskUpdateRequest;
 
 /**
@@ -56,6 +57,9 @@ class TaskController extends Controller
     {
         $task->delete();
 
+        if (preg_match('/\/tasks\/\d+$/', URL::previous())) {
+            return redirect()->route('tasks.index');
+        }
         return redirect()->back();
     }
 

@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Bill\BillDeleteRequest;
-use App\Http\Requests\Bill\BillShowRequest;
 use Auth;
 use App\Models\Bill;
 use Illuminate\Http\Request;
 use App\QueryOptions\Sort\Amount;
 use App\QueryOptions\Sort\DueDate;
 use App\QueryOptions\Filter\Status;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Pipeline;
+use App\Http\Requests\Bill\BillShowRequest;
 use App\Http\Requests\Bill\BillStoreRequest;
+use App\Http\Requests\Bill\BillDeleteRequest;
 use App\Http\Requests\Bill\BillUpdateRequest;
 
 /**
@@ -55,6 +56,9 @@ class BillController extends Controller
     {
         $bill->delete();
 
+        if (preg_match('/\/bills\/\d+$/', URL::previous())) {
+            return redirect()->route('bills.index');
+        }
         return redirect()->back();
     }
 
