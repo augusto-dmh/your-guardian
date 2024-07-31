@@ -28,3 +28,11 @@ button {
 input[type='checkbox'] {
     @apply rounded-sm;
 }
+
+body::-webkit-scrollbar {
+    width: 10px;
+}
+body {
+    scrollbar-width: thin;
+    scrollbar-color: #e4aa70 transparent;
+}
