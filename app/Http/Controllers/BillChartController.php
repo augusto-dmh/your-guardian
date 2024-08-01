@@ -7,36 +7,48 @@ use App\Charts\DailyPaidBillsChart;
 use App\Charts\YearlyPaidBillsChart;
 use Illuminate\Support\Facades\Auth;
 use App\Charts\MonthlyPaidBillsChart;
+use App\Services\BillChartDataService;
 
 class BillChartController extends Controller
 {
-    public function getBills(Request $request)
-    {
-        $chart = $this->getChartByRange($request['type'], $request['length']);
+    protected $billChartDataService;
 
-        return response()->json([
-            'labels' => $chart->labels,
-            'label' => $chart->datasets[0]->name,
-            'data' => $chart->datasets[0]->values,
-        ]);
+    public function __construct(BillChartDataService $billChartDataService)
+    {
+        $this->billChartDataService = $billChartDataService;
     }
 
-    protected function getChartByRange($type, $length)
+    public function fetchChartData(Request $request)
+    {
+        $chartData = $this->getChartDataByInterval(
+            $request->input('type', 'yearly'),
+            $request->input('length', '1')
+        );
+
+        return response()->json($chartData);
+    }
+
+    protected function getChartDataByInterval($type, $length)
     {
         switch ($type) {
-            case 'month':
-                $chart = new MonthlyPaidBillsChart($length);
+            case 'daily':
+                $chartData = $this->billChartDataService->getNumberOfDailyPaidBills(
+                    $length
+                );
                 break;
-            case 'day':
-                $chart = new DailyPaidBillsChart($length);
+            case 'monthly':
+                $chartData = $this->billChartDataService->getNumberOfMonthlyPaidBills(
+                    $length
+                );
                 break;
-            case 'year':
+            case 'yearly':
             default:
-                $chart = new YearlyPaidBillsChart($length);
+                $chartData = $this->billChartDataService->getNumberOfYearlyPaidBills(
+                    $length
+                );
                 break;
         }
 
-        $chart->buildChart();
-        return $chart;
+        return $chartData;
     }
 }
