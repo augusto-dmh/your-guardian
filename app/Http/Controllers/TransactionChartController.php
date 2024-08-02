@@ -6,40 +6,50 @@ use Illuminate\Http\Request;
 use App\Charts\YearlyTransactionsChart;
 use App\Charts\MonthlyTransactionsChart;
 use App\Charts\DailyTransactionsChart;
+use App\Services\TransactionChartDataService;
 use Illuminate\Support\Facades\Auth;
 
 class TransactionChartController extends Controller
 {
-    public function getTransactions(Request $request)
+    protected $transactionChartDataService;
+
+    public function __construct(
+        TransactionChartDataService $transactionChartDataService
+    ) {
+        $this->transactionChartDataService = $transactionChartDataService;
+    }
+
+    public function fetchChartData(Request $request)
     {
-        $chart = $this->getChartByRange(
+        $chartData = $this->getChartDataByInterval(
             $request->input('type', 'yearly'),
             $request->input('length', '1')
         );
 
-        return response()->json([
-            'labels' => $chart->labels,
-            'label' => $chart->datasets[0]->name,
-            'data' => $chart->datasets[0]->values,
-        ]);
+        return response()->json($chartData);
     }
 
-    protected function getChartByRange($type, $length)
+    protected function getChartDataByInterval($type, $length)
     {
         switch ($type) {
-            case 'month':
-                $chart = new MonthlyTransactionsChart($length);
+            case 'daily':
+                $chartData = $this->transactionChartDataService->getTotalAmountOnTransactionsDaily(
+                    $length
+                );
                 break;
-            case 'day':
-                $chart = new DailyTransactionsChart($length);
+            case 'monthly':
+                $chartData = $this->transactionChartDataService->getTotalAmountOnTransactionsMonthly(
+                    $length
+                );
                 break;
-            case 'year':
+            case 'yearly':
             default:
-                $chart = new YearlyTransactionsChart($length);
+                $chartData = $this->transactionChartDataService->getTotalAmountOnTransactionsYearly(
+                    $length
+                );
                 break;
         }
 
-        $chart->buildChart();
-        return $chart;
+        return $chartData;
     }
 }

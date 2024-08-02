@@ -7,15 +7,15 @@ use App\Http\Controllers\TransactionChartController;
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
-        $chart = new YearlyTransactionsChart('1');
-        $chart->buildChart();
-
-        return view('dashboard', compact('chart'));
+        return view('dashboard');
     })->name('dashboard');
 
-    Route::post('/api/charts/transactions', [
+    Route::post('/api/chart-data/transactions', [
         TransactionChartController::class,
-        'getTransactions',
+        'fetchChartData',
     ]);
-    Route::post('/api/charts/bills', [BillChartController::class, 'getBills']);
+    Route::post('/api/chart-data/bills', [
+        BillChartController::class,
+        'fetchChartData',
+    ]);
 });
