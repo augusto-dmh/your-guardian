@@ -213,5 +213,17 @@
     "Your guardian will be with you - and your finances, in a good sense.": "Seu guardião estará com você - e suas finanças, no bom sentido.",
     "Waiting bills...": "Aguardando contas...",
     "Waiting tasks...": "Aguardando tarefas...",
-    "Welcome": "Saudações"
+    "Welcome": "Saudações",
+    "Best regards, Your Guardian.": "Atenciosamente, Seu Guardião.",
+    "Hello :name": "Olá :name",
+    "Bills Due Tomorrow": "Contas Vencendo Amanhã",
+    "Your bills :bills are due tomorrow.": "Suas contas :bills vencem amanhã.",
+    "View Bills": "Ver Contas",
+    "Please make sure to pay them on time to avoid any late fees.": "Por favor, certifique-se de pagá-las a tempo para evitar quaisquer taxas de atraso.",
+    "If you have already paid these bills, no further action is required.": "Se você já pagou essas contas, nenhuma ação adicional é necessária.",
+    "Bill Due Tomorrow": "Conta Vencendo Amanhã",
+    "Your bill \":title\" is due tomorrow.": "Sua conta \":title\" vence amanhã.",
+    "View Bill": "Ver Conta",
+    "Please make sure to pay it on time to avoid any late fees.": "Por favor, certifique-se de pagá-la a tempo para evitar quaisquer taxas de atraso.",
+    "If you have already paid this bill, no further action is required.": "Se você já pagou esta conta, nenhuma ação adicional é necessária."
 }
