@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -13,13 +14,15 @@ class BillDueTomorrow extends Notification
     use Queueable;
 
     protected $bill;
+    public $locale;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($bill)
+    public function __construct($bill, $locale)
     {
         $this->bill = $bill;
+        $this->locale = $locale;
     }
 
     /**
@@ -37,24 +40,24 @@ class BillDueTomorrow extends Notification
      */
     public function toMail($notifiable)
     {
+        App::setLocale($this->locale);
+
         return (new MailMessage())
-            ->from('app.yourguardian@gmail.com', 'YourGuardian')
-            ->salutation('Best regards, Your Guardian.')
-            ->greeting(Lang::get("Hello $notifiable->first_name"))
-            ->subject(Lang::get('Bill Due Tomorrow Notification'))
+            ->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'))
+            ->salutation(__('Best regards, Your Guardian.'))
+            ->greeting(__('Hello :name', ['name' => $notifiable->first_name]))
+            ->subject(__('Bill Due Tomorrow'))
             ->line(
-                Lang::get(
-                    'Your bill "' . $this->bill->title . '" is due tomorrow.'
-                )
+                __('Your bill ":title" is due tomorrow.', [
+                    'title' => $this->bill->title,
+                ])
             )
-            ->action(Lang::get('View Bill'), url('/bills/' . $this->bill->id))
+            ->action(__('View Bill'), url('/bills/' . $this->bill->id))
             ->line(
-                Lang::get(
-                    'Please make sure to pay it on time to avoid any late fees.'
-                )
+                __('Please make sure to pay it on time to avoid any late fees.')
             )
             ->line(
-                Lang::get(
+                __(
                     'If you have already paid this bill, no further action is required.'
                 )
             );
