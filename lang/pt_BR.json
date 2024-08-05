@@ -225,5 +225,7 @@
     "Your bill \":title\" is due tomorrow.": "Sua conta \":title\" vence amanhã.",
     "View Bill": "Ver Conta",
     "Please make sure to pay it on time to avoid any late fees.": "Por favor, certifique-se de pagá-la a tempo para evitar quaisquer taxas de atraso.",
-    "If you have already paid this bill, no further action is required.": "Se você já pagou esta conta, nenhuma ação adicional é necessária."
+    "If you have already paid this bill, no further action is required.": "Se você já pagou esta conta, nenhuma ação adicional é necessária.",
+    "Paid": "Paga",
+    "Overdue": "Em Atraso"
 }

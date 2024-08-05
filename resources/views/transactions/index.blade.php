@@ -40,19 +40,19 @@
                     <div class="form-group">
                         <p class="mb-1 text-secondary-txt">{{ __('Type') }}</p>
                         <div class="flex flex-col">
-                            <label
-                                class="inline-flex items-center cursor-pointer text-tertiary-txt hover:text-secondary-txt">
-                                <input type="checkbox" name="filterByType" value="income"
+                            <label for="input-type-income"
+                                class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
+                                <input type="checkbox" name="filterByType" id="input-type-income" value="income"
                                     class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
                                     {{ request('filterByType') == 'income' ? 'checked' : '' }}>
-                                <span class="ml-2 font-thin">{{ __('Income') }}</span>
+                                <span class="ml-2">{{ __('Income') }}</span>
                             </label>
-                            <label
-                                class="inline-flex items-center cursor-pointer text-tertiary-txt hover:text-secondary-txt">
-                                <input type="checkbox" name="filterByType" value="expense"
+                            <label for="input-type-expense"
+                                class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
+                                <input type="checkbox" name="filterByType" id="input-type-expense" value="expense"
                                     class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
                                     {{ request('filterByType') == 'expense' ? 'checked' : '' }}>
-                                <span class="ml-2 font-light">{{ __('Expense') }}</span>
+                                <span class="ml-2">{{ __('Expense') }}</span>
                             </label>
                         </div>
                     </div>

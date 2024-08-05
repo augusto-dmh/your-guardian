@@ -43,12 +43,26 @@
                     <div class="form-group">
                         <p class="mb-1 text-secondary-txt">{{ __('Status') }}</p>
                         <div class="flex flex-col">
-                            <label
-                                class="inline-flex items-center cursor-pointer text-tertiary-txt hover:text-secondary-txt">
-                                <input type="checkbox" name="filterByStatus[]" value="pending"
+                            <label for="input-status-pending"
+                                class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
+                                <input type="checkbox" name="filterByStatus[]" id="input-status-pending" value="pending"
                                     class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
                                     {{ is_array(request('filterByStatus')) && in_array('pending', request('filterByStatus')) ? 'checked' : '' }}>
-                                <span class="ml-2 font-thin">{{ __('Pending') }}</span>
+                                <span class="ml-2">{{ __('Pending') }}</span>
+                            </label>
+                            <label for="input-status-paid"
+                                class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
+                                <input type="checkbox" name="filterByStatus[]" id="input-status-paid" value="paid"
+                                    class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
+                                    {{ is_array(request('filterByStatus')) && in_array('paid', request('filterByStatus')) ? 'checked' : '' }}>
+                                <span class="ml-2">{{ __('Paid') }}</span>
+                            </label>
+                            <label for="input-status-overdue"
+                                class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
+                                <input type="checkbox" name="filterByStatus[]" id="input-status-overdue" value="overdue"
+                                    class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
+                                    {{ is_array(request('filterByStatus')) && in_array('overdue', request('filterByStatus')) ? 'checked' : '' }}>
+                                <span class="ml-2">{{ __('Overdue') }}</span>
                             </label>
                         </div>
                     </div>
@@ -121,8 +135,9 @@
                                 </a>
                                 <a href="{{ route('bills.show', $bill) }}"
                                     class="block rounded-full text-tertiary-txt hover:shadow-inner hover:text-secondary-txt">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 p-1 hover:text-secondary-txt"
-                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="w-8 h-8 p-1 hover:text-secondary-txt" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M12 6a9.77 9.77 0 018.7 5.47c.2.38.2.82 0 1.2A9.77 9.77 0 0112 18a9.77 9.77 0 01-8.7-5.47 1.23 1.23 0 010-1.2A9.77 9.77 0 0112 6zm0 4a2 2 0 100 4 2 2 0 000-4z" />
                                     </svg>
