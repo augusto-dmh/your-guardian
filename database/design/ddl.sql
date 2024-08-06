@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
     birthdate DATE NOT NULL,
     email VARCHAR(255) NOT NULL,
     language_preference ENUM('en', 'pt_BR') DEFAULT 'en',
+    index_view_preference ENUM('cards', 'table') DEFAULT 'cards',
     password VARCHAR(255) NOT NULL,
     is_admin BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
