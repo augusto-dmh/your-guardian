@@ -26,3 +26,4 @@ require __DIR__ . '/custom/bill.php';
 require __DIR__ . '/custom/task.php';
 require __DIR__ . '/custom/custom-buttons.php';
 require __DIR__ . '/custom/language-switch.php';
+require __DIR__ . '/custom/index-view-preference-switch.php';
