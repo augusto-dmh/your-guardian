@@ -43,12 +43,12 @@
                             <label for="input-type-income"
                                 class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
                                 <input type="checkbox" name="filterByType" id="input-type-income" value="income"
-                                    class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
+                                    class="border-0 cursor-pointer input-type focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
                                     {{ request('filterByType') == 'income' ? 'checked' : '' }}>
                                 <span class="ml-2">{{ __('Income') }}</span>
                             </label>
                             <label for="input-type-expense"
-                                class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
+                                class="inline-flex items-center font-thin cursor-pointer input-type text-tertiary-txt hover:text-secondary-txt">
                                 <input type="checkbox" name="filterByType" id="input-type-expense" value="expense"
                                     class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
                                     {{ request('filterByType') == 'expense' ? 'checked' : '' }}>
@@ -61,21 +61,44 @@
 
             <button type="submit"
                 class="px-4 py-1 shadow-inner text-tertiary-txt hover:shadow-innerHover hover:text-secondary-txt">{{ __('Apply') }}</button>
+
+            <label class="inline-flex items-center cursor-pointer">
+                <input type="checkbox" value="" class="sr-only peer" id="table-view-toggle"
+                    {{ Auth::user()->index_view_preference === 'table' ? 'checked' : '' }}>
+                <div
+                    class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 ring-orange-300 peer-focus:bg-quinary-bg dark:peer-focus:bg-quinary-bg rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-quinary-bg">
+                </div>
+                <span class="text-sm font-medium text-gray-900 ms-3 dark:text-gray-300">{{ __('Table view') }}</span>
+            </label>
         </div>
     </form>
 
     @if ($transactions->isNotEmpty())
-        <div class="grid grid-cols-2 gap-4">
-            @foreach ($transactions as $transaction)
-                <x-card-index :entityInstance="$transaction" :entityName="'transaction'">
-                    @if ($transaction->type === 'income')
-                        <x-heroicon-o-trending-up class="w-6 h-6 text-green-500" />
-                    @else
-                        <x-heroicon-o-trending-down class="w-6 h-6 text-red-500" />
-                    @endif
-                </x-card-index>
-            @endforeach
-        </div>
+        @if (auth()->user()->index_view_preference === 'cards')
+            <div class="grid grid-cols-2 gap-4">
+                @foreach ($transactions as $transaction)
+                    <x-card-index :entityInstance="$transaction" :entityName="'transaction'">
+                        @if ($transaction->type === 'income')
+                            <x-heroicon-o-trending-up class="w-6 h-6 text-green-500" />
+                        @else
+                            <x-heroicon-o-trending-down class="w-6 h-6 text-red-500" />
+                        @endif
+                    </x-card-index>
+                @endforeach
+            </div>
+        @else
+            <div class="w-full overflow-x-auto rounded-lg">
+                <table class="w-full bg-secondary-bg">
+                    <x-table-index-columns :entity="\App\Models\Transaction::class" />
+                    @foreach ($transactions as $transaction)
+                        <tr
+                            class="{{ $loop->iteration % 2 == 0 ? 'text-tertiary-txt bg-secondary-bg' : 'text-secondary-txt bg-tertiary-bg' }}">
+                            <x-table-index-row :entityName="'transaction'" :entityInstance="$transaction" />
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
+        @endif
     @else
         <div class="flex items-center justify-center h-40">
             <p class="text-4xl text-center select-none text-tertiary-bg">{{ __('Waiting transactions...') }}</p>
@@ -84,3 +107,15 @@
 
     {{ $transactions->links() }}
 </x-app-layout>
+
+<script>
+    const tableView = document.querySelector('#table-view-toggle');
+    tableView.addEventListener('change', function() {
+        const isChecked = tableView.checked;
+        const viewPreference = isChecked ? 'table' : 'cards';
+        fetch(`/index-view-preference-switch/${viewPreference}`, {
+            method: 'GET',
+        }).then(response =>
+            location.reload());
+    });
+</script>

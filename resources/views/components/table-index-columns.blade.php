@@ -18,9 +18,9 @@
     }
 
     $attributeMapping = [
-        'bill_id' => 'bill',
-        'transaction_category_id' => 'transaction category',
-        'task_category_id' => 'task category',
+        'bill_id' => __('bill'),
+        'transaction_category_id' => __('category'),
+        'task_category_id' => __('category'),
     ];
 
     $transformAttribute = function ($attribute, $mapping) {
