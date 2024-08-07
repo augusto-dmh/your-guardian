@@ -15,12 +15,12 @@ class Transaction extends Model
     protected $table = 'transactions';
 
     protected $fillable = [
-        'user_id',
-        'bill_id',
-        'transaction_category_id',
         'amount',
-        'type',
         'description',
+        'type',
+        'transaction_category_id',
+        'bill_id',
+        'user_id',
     ];
 
     protected $attributes = [

@@ -19,12 +19,12 @@ class Task extends Model
     protected $table = 'tasks';
 
     protected $fillable = [
-        'user_id',
-        'task_category_id',
         'title',
         'description',
-        'due_date',
         'status',
+        'due_date',
+        'task_category_id',
+        'user_id',
     ];
 
     protected $attributes = [

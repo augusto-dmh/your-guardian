@@ -19,12 +19,12 @@ class Bill extends Model
     protected $table = 'bills';
 
     protected $fillable = [
-        'user_id',
+        'amount',
         'title',
         'description',
-        'amount',
-        'due_date',
         'status',
+        'due_date',
+        'user_id',
     ];
 
     protected $attributes = [
