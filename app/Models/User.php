@@ -27,6 +27,7 @@ class User extends Authenticatable
         'birthdate',
         'email',
         'language_preference',
+        'index_view_preference',
         'password',
     ];
 

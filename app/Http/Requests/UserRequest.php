@@ -27,6 +27,7 @@ class UserRequest extends FormRequest
             'birthdate' => 'required|date',
             'email' => 'required|string|lowercase|email|max:255|unique:users',
             'language_preference' => 'in:en,pt_BR',
+            'index_view_preference' => 'in:cards,table',
             'password' => 'bail|required|confirmed|min:8',
         ];
     }
