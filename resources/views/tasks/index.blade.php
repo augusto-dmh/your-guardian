@@ -14,6 +14,9 @@
                     <p class="mb-1 text-secondary-txt">{{ __('Due date:') }}</p>
                     <select name="sortByDueDate"
                         class="font-thin border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg">
+                        <option class="font-thin" value="">
+                            {{ __('Select') }}
+                        </option>
                         <option id="sortByDueDateAsc" value="asc"
                             class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
                             {{ request('sortByDueDate') == 'asc' ? 'selected' : '' }}>{{ __('Ascending') }}</option>
