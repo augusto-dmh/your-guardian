@@ -15,6 +15,13 @@
 
             <fieldset>
                 <div class="form-group">
+                    <label for="title">{{ __('Title') }}:</label>
+                    <input type="text" name="title" value="{{ old('title') }}">
+                    @error('title')
+                        <p>{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="form-group">
                     <label for="amount">{{ __('Amount:') }}</label>
                     <input type="text" name="amount" value="{{ old('amount') }}">
                     @error('amount')

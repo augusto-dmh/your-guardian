@@ -22,6 +22,7 @@ entity Transaction {
     transaction_category_id BIGINT UNSIGNED <<FK>>
     amount DECIMAL(11, 2)
     type ENUM('income', 'expense')
+    title VARCHAR(255)
     description TEXT
     created_at DATE
     updated_at DATE

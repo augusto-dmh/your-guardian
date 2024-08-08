@@ -37,6 +37,8 @@ class TransactionUpdateRequest extends FormRequest
             'amount' => 'numeric',
             'type' => 'string|in:income,expense',
             'description' => 'string|max:65535',
+            'title' => 'nullable|string|max:255',
+            'description' => 'nullable|string|max:65535',
         ];
     }
 }
