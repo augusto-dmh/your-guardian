@@ -14,7 +14,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('transaction_category_id')->nullable();
             $table->decimal('amount', 11, 2);
             $table->enum('type', ['income', 'expense'])->default('expense');
-            $table->text('description');
+            $table->string('title');
+            $table->text('description')->nullable();
             $table->timestamps();
 
             $table

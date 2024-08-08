@@ -34,7 +34,8 @@ class TransactionStoreRequest extends FormRequest
             ],
             'amount' => 'required|numeric',
             'type' => 'string|in:income,expense',
-            'description' => 'required|string|max:65535',
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string|max:65535',
         ];
     }
 }

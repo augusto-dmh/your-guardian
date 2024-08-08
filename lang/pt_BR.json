@@ -231,5 +231,8 @@
     "Table view": "Visualização tabela",
     "category": "categoria",
     "bill": "conta",
-    "Select": "Selecionar"
+    "Select": "Selecionar",
+    "paid at": "pago em",
+    "Bill status changed to 'paid' successfully!": "Status da conta alterado para 'pago' com sucesso!",
+    "Change status to 'paid'": "Mudar status para 'pago'"
 }
