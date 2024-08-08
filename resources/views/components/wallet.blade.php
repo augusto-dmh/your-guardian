@@ -19,12 +19,13 @@
     </p>
     <p><span>{{ __('Last Transaction:') }}</span>
         @if ($user->lastTransaction)
-            {{ __('Amount:') }} ${{ $user->lastTransaction->amount }} |
-            {{ __('Type:') }} {{ $user->lastTransaction->type }} |
-            {{ __('Category:') }}
-            {{ Str::limit($user->lastTransaction->transactionCategory?->name, 10, '...') ?? __('not available') }} |
-            {{ __('Description:') }}
-            {{ Str::limit($user->lastTransaction->description, 5, '...') ?? __('not available') }}
+            <a href="{{ route('transactions.show', $user->lastTransaction) }}" class="hover:underline">
+                {{ __('Amount:') }} ${{ $user->lastTransaction->amount }} |
+                {{ __('Title:') }} ${{ Str::limit($user->lastTransaction->title, 20, '...') }} |
+                {{ __('Category:') }}
+                {{ Str::limit($user->lastTransaction->transactionCategory?->name, 10, '...') ?? __('not available') }}
+                |
+            </a>
         @else
             {{ __('not available') }}
         @endif

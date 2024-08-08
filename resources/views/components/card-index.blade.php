@@ -9,7 +9,7 @@
                         <a class="mr-2" href="{{ route($entityName . 's.show', $entityInstance) }}">
                             <h3
                                 class="max-w-full text-2xl font-bold break-words text-tertiary-txt hover:underline hover:text-secondary-txt title">
-                                {{ Str::limit($entityInstance->title, 30, '...') ?? 'Placeholder Title' }}
+                                {{ Str::limit($entityInstance->title, 30, '...') }}
                             </h3>
                         </a>
                         {{ $slot }}
