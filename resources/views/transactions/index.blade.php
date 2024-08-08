@@ -42,16 +42,16 @@
                         <div class="flex flex-col">
                             <label for="input-type-income"
                                 class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
-                                <input type="checkbox" name="filterByType" id="input-type-income" value="income"
+                                <input type="checkbox" name="filterByType[]" id="input-type-income" value="income"
                                     class="border-0 cursor-pointer input-type focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
-                                    {{ request('filterByType') == 'income' ? 'checked' : '' }}>
+                                    {{ in_array('income', $filterByType) ? 'checked' : '' }}>
                                 <span class="ml-2">{{ __('Income') }}</span>
                             </label>
                             <label for="input-type-expense"
                                 class="inline-flex items-center font-thin cursor-pointer input-type text-tertiary-txt hover:text-secondary-txt">
-                                <input type="checkbox" name="filterByType" id="input-type-expense" value="expense"
+                                <input type="checkbox" name="filterByType[]" id="input-type-expense" value="expense"
                                     class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
-                                    {{ request('filterByType') == 'expense' ? 'checked' : '' }}>
+                                    {{ in_array('expense', $filterByType) ? 'checked' : '' }}>
                                 <span class="ml-2">{{ __('Expense') }}</span>
                             </label>
                         </div>

@@ -14,6 +14,7 @@ use App\Http\Requests\Task\TaskShowRequest;
 use App\Http\Requests\Task\TaskStoreRequest;
 use App\Http\Requests\Task\TaskDeleteRequest;
 use App\Http\Requests\Task\TaskUpdateRequest;
+use Illuminate\Http\Request;
 
 /**
  * @see \App\Observers\TaskObserver
@@ -27,16 +28,29 @@ class TaskController extends Controller
         return redirect()->back();
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $filterByStatus = $request->input('filterByStatus') ?? [];
+        $sortByDueDate = $request->input('sortByDueDate');
+
         $query = Auth::user()->tasks()->getQuery();
 
         $tasks = Pipeline::send($query)
-            ->through([DueDate::class, Status::class])
+            ->through([
+                function ($query, $next) use ($filterByStatus) {
+                    return (new Status($filterByStatus))->handle($query, $next);
+                },
+                function ($query, $next) use ($sortByDueDate) {
+                    return (new DueDate($sortByDueDate))->handle($query, $next);
+                },
+            ])
             ->thenReturn()
             ->paginate(10);
 
-        return view('tasks.index', compact('tasks'));
+        return view(
+            'tasks.index',
+            compact('tasks', 'filterByStatus', 'sortByDueDate')
+        );
     }
 
     public function show(TaskShowRequest $request, Task $task)
