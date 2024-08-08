@@ -36,21 +36,21 @@
                             class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
                             <input type="checkbox" name="filterByStatus[]" id="input-status-pending" value="pending"
                                 class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
-                                {{ in_array('pending', $filterByStatus) ? 'checked' : '' }}>
+                                {{ request('filterByStatus') && in_array('pending', request('filterByStatus')) ? 'checked' : '' }}>
                             <span class="ml-2">{{ __('Pending') }}</span>
                         </label>
                         <label for="input-status-completed"
                             class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
                             <input type="checkbox" name="filterByStatus[]" id="input-status-completed" value="completed"
                                 class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
-                                {{ in_array('completed', $filterByStatus) ? 'checked' : '' }}>
+                                {{ request('filterByStatus') && in_array('completed', request('filterByStatus')) ? 'checked' : '' }}>
                             <span class="ml-2">{{ __('Completed') }}</span>
                         </label>
                         <label for="input-status-failed"
                             class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
                             <input type="checkbox" name="filterByStatus[]" id="input-status-failed" value="failed"
                                 class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
-                                {{ in_array('failed', $filterByStatus) ? 'checked' : '' }}>
+                                {{ is_array(request('filterByStatus')) && in_array('failed', request('filterByStatus')) ? 'checked' : '' }}>
                             <span class="ml-2">{{ __('Failed') }}</span>
                         </label>
                     </div>

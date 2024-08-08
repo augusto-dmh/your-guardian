@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Request;
 use App\Models\Transaction;
 use App\QueryOptions\Sort\Date;
 use App\QueryOptions\Filter\Type;
@@ -16,7 +17,6 @@ use App\Http\Requests\Transaction\TransactionShowRequest;
 use App\Http\Requests\Transaction\TransactionStoreRequest;
 use App\Http\Requests\Transaction\TransactionDeleteRequest;
 use App\Http\Requests\Transaction\TransactionUpdateRequest;
-use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
@@ -29,36 +29,14 @@ class TransactionController extends Controller
 
     public function index(Request $request)
     {
-        $filterByType = $request->input('filterByType') ?? [];
-        $sortByAmount = $request->input('sortByAmount');
-        $sortByDate = $request->input('sortByDate');
-
         $query = Auth::user()->transactions()->getQuery();
 
         $transactions = Pipeline::send($query)
-            ->through([
-                function ($query, $next) use ($filterByType) {
-                    return (new Type($filterByType))->handle($query, $next);
-                },
-                function ($query, $next) use ($sortByAmount) {
-                    return (new Amount($sortByAmount))->handle($query, $next);
-                },
-                function ($query, $next) use ($sortByDate) {
-                    return (new Date($sortByDate))->handle($query, $next);
-                },
-            ])
+            ->through([Amount::class, Date::class, Type::class])
             ->thenReturn()
             ->paginate(10);
 
-        return view(
-            'transactions.index',
-            compact(
-                'transactions',
-                'filterByType',
-                'sortByAmount',
-                'sortByDate'
-            )
-        );
+        return view('transactions.index', compact('transactions'));
     }
 
     public function show(

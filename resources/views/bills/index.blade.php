@@ -17,11 +17,11 @@
                         <option class="font-thin" value="">
                             {{ __('Select') }}
                         </option>
-                        <option class="font-thin" value="asc" {{ $sortByAmount == 'asc' ? 'selected' : '' }}>
-                            {{ __('Ascending') }}
+                        <option class="font-thin" value="asc"
+                            {{ request('sortByAmount') == 'asc' ? 'selected' : '' }}>{{ __('Ascending') }}
                         </option>
-                        <option class="font-thin" value="desc" {{ $sortByAmount == 'desc' ? 'selected' : '' }}>
-                            {{ __('Descending') }}
+                        <option class="font-thin" value="desc"
+                            {{ request('sortByAmount') == 'desc' ? 'selected' : '' }}>{{ __('Descending') }}
                         </option>
                     </select>
                 </div>
@@ -33,11 +33,11 @@
                         <option class="font-thin" value="">
                             {{ __('Select') }}
                         </option>
-                        <option class="font-thin" value="asc" {{ $sortByDueDate == 'asc' ? 'selected' : '' }}>
-                            {{ __('Ascending') }}
+                        <option class="font-thin" value="asc"
+                            {{ request('sortByDueDate') == 'asc' ? 'selected' : '' }}>{{ __('Ascending') }}
                         </option>
-                        <option class="font-thin" value="desc" {{ $sortByDueDate == 'desc' ? 'selected' : '' }}>
-                            {{ __('Descending') }}
+                        <option class="font-thin" value="desc"
+                            {{ request('sortByDueDate') == 'desc' ? 'selected' : '' }}>{{ __('Descending') }}
                         </option>
                     </select>
                 </div>
@@ -53,21 +53,21 @@
                                 class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
                                 <input type="checkbox" name="filterByStatus[]" id="input-status-pending" value="pending"
                                     class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
-                                    {{ in_array('pending', $filterByStatus) ? 'checked' : '' }}>
+                                    {{ request('filterByStatus') && in_array('pending', request('filterByStatus')) ? 'checked' : '' }}>
                                 <span class="ml-2">{{ __('Pending') }}</span>
                             </label>
                             <label for="input-status-paid"
                                 class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
                                 <input type="checkbox" name="filterByStatus[]" id="input-status-paid" value="paid"
                                     class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
-                                    {{ in_array('paid', $filterByStatus) ? 'checked' : '' }}>
+                                    {{ request('filterByStatus') && in_array('paid', request('filterByStatus')) ? 'checked' : '' }}>
                                 <span class="ml-2">{{ __('Paid') }}</span>
                             </label>
                             <label for="input-status-overdue"
                                 class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
                                 <input type="checkbox" name="filterByStatus[]" id="input-status-overdue" value="overdue"
                                     class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
-                                    {{ in_array('overdue', $filterByStatus) ? 'checked' : '' }}>
+                                    {{ request('filterByStatus') && in_array('overdue', request('filterByStatus')) ? 'checked' : '' }}>
                                 <span class="ml-2">{{ __('Overdue') }}</span>
                             </label>
                         </div>
