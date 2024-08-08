@@ -30,14 +30,31 @@ class BillController extends Controller
 
     public function index(Request $request)
     {
+        $filterByStatus = $request->input('filterByStatus') ?? [];
+        $sortByAmount = $request->input('sortByAmount');
+        $sortByDueDate = $request->input('sortByDueDate');
+
         $query = Auth::user()->bills()->getQuery();
 
         $bills = Pipeline::send($query)
-            ->through([DueDate::class, Amount::class, Status::class])
+            ->through([
+                function ($query, $next) use ($filterByStatus) {
+                    return (new Status($filterByStatus))->handle($query, $next);
+                },
+                function ($query, $next) use ($sortByAmount) {
+                    return (new Amount($sortByAmount))->handle($query, $next);
+                },
+                function ($query, $next) use ($sortByDueDate) {
+                    return (new DueDate($sortByDueDate))->handle($query, $next);
+                },
+            ])
             ->thenReturn()
             ->paginate(10);
 
-        return view('bills.index', compact('bills'));
+        return view(
+            'bills.index',
+            compact('bills', 'filterByStatus', 'sortByAmount', 'sortByDueDate')
+        );
     }
 
     public function show(BillShowRequest $request, Bill $bill)
