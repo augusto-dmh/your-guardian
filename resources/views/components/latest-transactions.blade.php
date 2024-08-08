@@ -15,7 +15,7 @@
                                 {{ __('Amount') }}
                             </th>
                             <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left uppercase ">
-                                {{ __('Description') }}
+                                {{ __('Title') }}
                             </th>
                             <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left uppercase ">
                                 {{ __('Category') }}
@@ -33,7 +33,7 @@
                                     {{ $transaction->amount }}
                                 </td>
                                 <td class="p-3 text-sm font-normal whitespace-nowrap">
-                                    {{ Str::limit($transaction?->description, 10, '...') }}
+                                    {{ Str::limit($transaction->title, 20, '...') }}
                                 </td>
                                 <td class="p-3 text-sm font-normal whitespace-nowrap">
                                     {{ Str::limit($transaction->transactionCategory?->name, 10, '...') }}

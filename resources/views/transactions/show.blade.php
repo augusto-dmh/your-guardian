@@ -38,7 +38,10 @@
             </div>
 
             <div class="flex flex-col gap-3 [&>div>span]:text-tertiary-txt">
-
+                <div class="flex gap-2">
+                    <span>Title:</span>
+                    <div>{{ $transaction->title }}</div>
+                </div>
                 <div class="flex gap-2">
                     <span>Amount:</span>
                     <div>{{ $transaction->amount }}</div>
@@ -59,7 +62,6 @@
                     <div>{{ $transaction->created_at->format('m-d-Y') }}</div>
                 </div>
             </div>
-
         </div>
     </div>
 </x-app-layout>

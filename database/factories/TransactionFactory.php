@@ -43,7 +43,9 @@ class TransactionFactory extends Factory
             'transaction_category_id' => $randomCategoryId,
             'amount' => $this->faker->numberBetween(1, 1000),
             'type' => $type,
+            'title' => $this->faker->sentence(random_int(1, 3)),
             'description' => $this->faker->sentence,
+            'created_at' => $this->faker->date(),
         ];
     }
 }

@@ -1,7 +1,7 @@
 <x-layout>
-    <div id="overlay" class="hidden fixed inset-0 z-10 cursor-pointer"></div>
+    <div id="overlay" class="fixed inset-0 z-10 hidden cursor-pointer"></div>
 
-    <h2 class="absolute top-0 left-1/2 transform -translate-x-1/2 hidden" id="loading">Loading...</h2>
+    <h2 class="absolute top-0 hidden transform -translate-x-1/2 left-1/2" id="loading">Loading...</h2>
 
     <div class="form-wrapper">
         <div class="flex justify-center">
@@ -15,6 +15,14 @@
             @method('PUT')
 
             <fieldset>
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" name="title" placeholder="Title"
+                        value="{{ old('title', $transaction->title) }}">
+                    @error('title')
+                        <p>{{ $message }}</p>
+                    @enderror
+                </div>
                 <div class="form-group">
                     <label for="amount">Amount:</label>
                     <input type="text" name="amount" placeholder="Amount"
@@ -90,4 +98,3 @@
         </script>
     </div>
 </x-layout>
-
