@@ -47,8 +47,21 @@ class BillController extends Controller
 
     public function update(BillUpdateRequest $request, Bill $bill)
     {
+        $originalBillStatus = $bill->status;
+
         $bill->update($request->validated());
 
+        if (
+            $request->validated('status') === 'paid' &&
+            $originalBillStatus !== 'paid'
+        ) {
+            $request
+                ->session()
+                ->flash(
+                    'success',
+                    __("Bill status changed to 'paid' successfully!")
+                );
+        }
         return redirect()->back();
     }
 

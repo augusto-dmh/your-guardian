@@ -1,4 +1,11 @@
 <x-app-layout>
+    @if (session('success'))
+        <div id="flash-message"
+            class="absolute z-30 p-4 text-white transition-opacity duration-1000 transform -translate-x-1/2 bg-green-500 rounded-md shadow-md left-1/2">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <x-slot name="header">
     </x-slot>
 
