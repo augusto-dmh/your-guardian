@@ -25,6 +25,7 @@ class BillStoreRequest extends FormRequest
             'title' => 'required|string|max:255',
             'description' => 'nullable|string|max:65535',
             'amount' => 'numeric',
+            'status' => 'in:pending,paid,overdue',
             'due_date' => 'required|date',
         ];
     }
