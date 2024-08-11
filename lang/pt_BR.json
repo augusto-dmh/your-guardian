@@ -234,5 +234,8 @@
     "Select": "Selecionar",
     "paid at": "pago em",
     "Bill status changed to 'paid' successfully!": "Status da conta alterado para 'pago' com sucesso!",
-    "Change status to 'paid'": "Mudar status para 'pago'"
+    "Change status to 'paid'": "Mudar status para 'pago'",
+    "Bills pending x paid x overdue (%)": "Contas pendentes x pagas x em atraso (%)",
+    "Transaction category most used": "Categoria de transação mais usada",
+    "Income x Expense (%)": "Renda x Despesa (%)"
 }
