@@ -25,8 +25,8 @@ class TransactionUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'exists:users,id',
-            'bill_id' => 'exists:bills,id',
+            'user_id' => 'nullable|exists:users,id',
+            'bill_id' => 'nullable|exists:bills,id',
             'transaction_category_id' => [
                 'required',
                 Rule::exists('transaction_categories', 'id')->where(
@@ -34,11 +34,11 @@ class TransactionUpdateRequest extends FormRequest
                     $this->type
                 ),
             ],
-            'amount' => 'numeric',
-            'type' => 'string|in:income,expense',
-            'description' => 'string|max:65535',
-            'title' => 'nullable|string|max:255',
+            'amount' => 'nullable|numeric',
+            'type' => 'nullable|string|in:income,expense',
             'description' => 'nullable|string|max:65535',
+            'title' => 'nullable|nullable|string|max:255',
+            'description' => 'nullable|nullable|string|max:65535',
         ];
     }
 }

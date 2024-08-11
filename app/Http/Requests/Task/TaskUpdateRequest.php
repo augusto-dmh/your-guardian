@@ -24,9 +24,9 @@ class TaskUpdateRequest extends FormRequest
     {
         return [
             'task_category_id' => 'nullable|exists:task_categories,id',
-            'title' => 'string|max:255',
+            'title' => 'nullable|string|max:255',
             'description' => 'nullable|string|max:65535',
-            'due_date' => 'date',
+            'due_date' => 'nullable|date',
         ];
     }
 }

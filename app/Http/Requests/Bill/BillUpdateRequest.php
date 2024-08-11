@@ -23,10 +23,11 @@ class BillUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'string|max:255',
+            'title' => 'nullable|string|max:255',
             'description' => 'nullable|string|max:65535',
-            'amount' => 'numeric',
-            'due_date' => 'date',
+            'amount' => 'nullable|numeric',
+            'status' => 'nullable|in:pending,paid,overdue',
+            'due_date' => 'nullable|date',
         ];
     }
 }
