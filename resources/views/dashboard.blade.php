@@ -7,6 +7,12 @@
         </div>
     </x-slot>
 
+    <div class="flex gap-6">
+        <x-dashboard-card title="{{ __('Bills pending x paid x overdue (%)') }}" :data="auth()->user()->billsPercentagePerStatus" />
+        <x-dashboard-card title="{{ __('Income x Expense (%)') }}" :data="auth()->user()->transactionsPercentagePerType" />
+        <x-dashboard-card title="{{ __('Transaction category most used') }}" :data="auth()->user()->transactionCategoryWithMostTransactions" />
+    </div>
+
     <div class="flex flex-row min-w-0 gap-6 p-4">
         <div class="flex flex-col flex-1 dashboard-grid-container">
             <div class="flex flex-row justify-between text-center">
