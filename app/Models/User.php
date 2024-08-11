@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Bill;
 use App\Models\Task;
 use App\Models\Transaction;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Notifications\ResetPasswordNotification;
@@ -72,6 +73,47 @@ class User extends Authenticatable
     public function getLastTransactionAttribute()
     {
         return $this->transactions()->latest('created_at')->first();
+    }
+
+    public function getBillsPercentagePerStatusAttribute()
+    {
+        $pendingBillsCount = $this->bills()
+            ->where('status', 'pending')
+            ->count();
+        $paidBillsCount = $this->bills()->where('status', 'paid')->count();
+        $overdueBillsCount = $this->bills()
+            ->where('status', 'overdue')
+            ->count();
+        $totalCount = $pendingBillsCount + $paidBillsCount + $overdueBillsCount;
+
+        $pendingBillsPercentage = ($pendingBillsCount / $totalCount) * 100;
+        $paidBillsPercentage = ($paidBillsCount / $totalCount) * 100;
+        $overdueBillsPercentage = ($overdueBillsCount / $totalCount) * 100;
+
+        return "$pendingBillsPercentage x $paidBillsPercentage x $overdueBillsPercentage";
+    }
+
+    public function getTransactionCategoryWithMostTransactionsAttribute()
+    {
+        return $this->transactions()
+            ->select('transaction_category_id', DB::raw('count(*) as total'))
+            ->groupBy('transaction_category_id')
+            ->orderBy('total', 'desc')
+            ->first()->transactionCategory->name;
+    }
+
+    public function getTransactionsPercentagePerTypeAttribute()
+    {
+        $incomeCount = $this->transactions()->where('type', 'income')->count();
+        $expenseCount = $this->transactions()
+            ->where('type', 'expense')
+            ->count();
+        $totalCount = $incomeCount + $expenseCount;
+
+        $incomePercentage = ($incomeCount / $totalCount) * 100;
+        $expensePercentage = ($expenseCount / $totalCount) * 100;
+
+        return "$incomePercentage x $expensePercentage";
     }
 
     public function getNextPendingBillDueDateAttribute()
