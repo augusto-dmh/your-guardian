@@ -97,6 +97,7 @@ class User extends Authenticatable
     {
         return $this->transactions()
             ->select('transaction_category_id', DB::raw('count(*) as total'))
+            ->whereNotNull('transaction_category_id')
             ->groupBy('transaction_category_id')
             ->orderBy('total', 'desc')
             ->first()->transactionCategory->name;
