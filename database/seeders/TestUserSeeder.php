@@ -29,19 +29,19 @@ class TestUserSeeder extends Seeder
 
         Bill::factory()
             ->count(5000)
-            ->create([
+            ->createQuietly([
                 'user_id' => $user->id,
             ]);
 
         Transaction::factory()
             ->count(5000)
-            ->create([
+            ->createQuietly([
                 'user_id' => $user->id,
             ]);
 
         Task::factory()
             ->count(5000)
-            ->create([
+            ->createQuietly([
                 'user_id' => $user->id,
             ]);
 
