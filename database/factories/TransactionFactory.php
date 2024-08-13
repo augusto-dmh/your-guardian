@@ -51,7 +51,7 @@ class TransactionFactory extends Factory
             'type' => $type,
             'title' => $this->faker->sentence(random_int(1, 3)),
             'description' => $this->faker->sentence,
-            'created_at' => $this->faker->date(),
+            'created_at' => $this->faker->dateTimeBetween('-10 years'),
         ];
     }
 }

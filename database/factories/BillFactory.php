@@ -18,9 +18,11 @@ class BillFactory extends Factory
     public function definition(): array
     {
         $status = $this->faker->randomElement(['pending', 'paid', 'overdue']);
-        $due_date = $this->faker->date();
+        $due_date = $this->faker->dateTimeBetween('-10 years');
         $paidAt =
-            $status !== 'paid' ? null : $this->faker->date(max: $due_date);
+            $status !== 'paid'
+                ? null
+                : $this->faker->dateTimeBetween('-10 years');
 
         return [
             'title' => $this->faker->word,
@@ -48,6 +50,7 @@ class BillFactory extends Factory
                     'type' => 'expense',
                     'title' => $bill->title,
                     'description' => $bill->description,
+                    'created_at' => $this->faker->dateTimeBetween('-10 years'),
                 ]);
             }
         });
