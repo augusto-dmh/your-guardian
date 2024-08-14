@@ -39,13 +39,19 @@ class TransactionFactory extends Factory
         // Randomly pick one category ID from the list
         $randomCategoryId = $this->faker->randomElement($categoryIds);
 
+        // Generate a random amount
+        $amount = $this->faker->numberBetween(1, 5000);
+
+        // Ensure the amount is consistent with the type
+        $amount = $type === 'income' ? abs($amount) : -abs($amount);
+
         return [
             'transaction_category_id' => $randomCategoryId,
-            'amount' => $this->faker->numberBetween(1, 1000),
+            'amount' => $amount,
             'type' => $type,
             'title' => $this->faker->sentence(random_int(1, 3)),
             'description' => $this->faker->sentence,
-            'created_at' => $this->faker->date(),
+            'created_at' => $this->faker->dateTimeBetween('-10 years'),
         ];
     }
 }

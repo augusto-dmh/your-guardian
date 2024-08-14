@@ -86,9 +86,13 @@ class User extends Authenticatable
             ->count();
         $totalCount = $pendingBillsCount + $paidBillsCount + $overdueBillsCount;
 
-        $pendingBillsPercentage = ($pendingBillsCount / $totalCount) * 100;
-        $paidBillsPercentage = ($paidBillsCount / $totalCount) * 100;
-        $overdueBillsPercentage = ($overdueBillsCount / $totalCount) * 100;
+        $pendingBillsPercentage = round(
+            ($pendingBillsCount / $totalCount) * 100
+        );
+        $paidBillsPercentage = round(($paidBillsCount / $totalCount) * 100);
+        $overdueBillsPercentage = round(
+            ($overdueBillsCount / $totalCount) * 100
+        );
 
         return "$pendingBillsPercentage x $paidBillsPercentage x $overdueBillsPercentage";
     }
@@ -97,6 +101,7 @@ class User extends Authenticatable
     {
         return $this->transactions()
             ->select('transaction_category_id', DB::raw('count(*) as total'))
+            ->whereNotNull('transaction_category_id')
             ->groupBy('transaction_category_id')
             ->orderBy('total', 'desc')
             ->first()->transactionCategory->name;
@@ -110,8 +115,8 @@ class User extends Authenticatable
             ->count();
         $totalCount = $incomeCount + $expenseCount;
 
-        $incomePercentage = ($incomeCount / $totalCount) * 100;
-        $expensePercentage = ($expenseCount / $totalCount) * 100;
+        $incomePercentage = round(($incomeCount / $totalCount) * 100, 2);
+        $expensePercentage = round(($expenseCount / $totalCount) * 100, 2);
 
         return "$incomePercentage x $expensePercentage";
     }

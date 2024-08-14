@@ -22,6 +22,7 @@ class Transaction extends Model
         'transaction_category_id',
         'bill_id',
         'user_id',
+        'created_at', // it matters in TransactionFactory
     ];
 
     protected $attributes = [
