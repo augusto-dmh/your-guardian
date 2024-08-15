@@ -43,7 +43,7 @@
 
                 <!-- Page Heading -->
                 <header>
-                    <div class="p-4 sm:p-6">
+                    <div class="p-6">
                         {{ $header }}
                     </div>
                 </header>
