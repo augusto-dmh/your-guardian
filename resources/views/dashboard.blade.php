@@ -1,66 +1,71 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
             <h2 class="dark:text-[#fac189] text-xl font-bold leading-tight">
                 {{ __('Dashboard') }}
             </h2>
         </div>
     </x-slot>
 
-    <div class="flex gap-6">
-        <x-dashboard-card title="{{ __('Bills pending x paid x overdue (%)') }}" :data="auth()->user()->billsPercentagePerStatus" />
-        <x-dashboard-card title="{{ __('Income x Expense (%)') }}" :data="auth()->user()->transactionsPercentagePerType" />
-        <x-dashboard-card title="{{ __('Transaction category most used') }}" :data="auth()->user()->transactionCategoryWithMostTransactions" />
-    </div>
-
-    <div class="flex flex-row min-w-0 gap-6 p-4">
-        <div class="flex flex-col flex-1 dashboard-grid-container">
-            <div class="flex flex-row justify-between text-center">
-                <div class="mb-4">
-                    <label for="data-type" class="block">{{ __('Data Type') }}</label>
-                    <select id="data-type" name="data-type"
-                        class="focus:outline-none focus:ring-2 focus:ring-quinary-bg max-w-38">
-                        <option value="transactions" selected>{{ __('Transactions') }}</option>
-                        <option value="bills">{{ __('Bills') }}</option>
-                    </select>
-                </div>
-
-                <div class="mb-4">
-                    <label for="interval-type" class="block">{{ __('Interval Type') }}</label>
-                    <select id="interval-type" name="interval-type"
-                        class="focus:outline-none focus:ring-2 focus:ring-quinary-bg max-w-38">
-                        <option value="yearly" selected>{{ __('Yearly') }}</option>
-                        <option value="monthly">{{ __('Monthly') }}</option>
-                        <option value="daily">{{ __('Daily') }}</option>
-                    </select>
-                </div>
-
-                <div class="mb-4">
-                    <label for="interval-length" class="block">{{ __('Interval Length') }}</label>
-                    <select id="interval-length" name="interval-length"
-                        class="focus:outline-none focus:ring-2 focus:ring-quinary-bg max-w-38">
-                        <option value="1" selected>{{ __('One year') }}</option>
-                        <option value="5">{{ __('Five Years') }}</option>
-                        <option value="10">{{ __('Ten Years') }}</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="relative flex-1 shadow-inner">
-                @if (!Auth::user()->has_transactions_or_paid_bills)
-                    <div class="absolute inset-0 z-10 flex items-center justify-center">
-                        <p class="text-5xl text-center select-none text-tertiary-bg">
-                            {{ __('Waiting data...') }}
-                        </p>
-                    </div>
-                @endif
-                <canvas id="chart"></canvas>
-            </div>
+    <div class="flex flex-col">
+        <div
+            class="flex flex-col gap-4 w-full lg:gap-4 lg:justify-between lg:flex-row [&>div]:text-center [&>div]:w-full">
+            <x-dashboard-card title="{{ __('Bills pending x paid x overdue (%)') }}" :data="auth()->user()->billsPercentagePerStatus" />
+            <x-dashboard-card title="{{ __('Income x Expense (%)') }}" :data="auth()->user()->transactionsPercentagePerType" />
+            <x-dashboard-card title="{{ __('Transaction category most used') }}" :data="auth()->user()->transactionCategoryWithMostTransactions" />
         </div>
 
-        <div class="flex flex-col flex-1 gap-8">
-            <x-wallet class="flex-1" />
-            <x-latest-transactions class="flex-1" />
+        <div class="flex flex-col gap-4 p-4 lg:flex-row lg:gap-6">
+            <div class="flex flex-col flex-1 dashboard-grid-container">
+                <div class="xl:w-full xl:flex xl:justify-center">
+                    <div class="flex justify-between gap-4 text-center md:flex-row xl:w-3/4">
+                        <div class="mb-4">
+                            <label for="data-type" class="block">{{ __('Data Type') }}</label>
+                            <select id="data-type" name="data-type"
+                                class="focus:outline-none focus:ring-2 focus:ring-quinary-bg">
+                                <option value="transactions" selected>{{ __('Transactions') }}</option>
+                                <option value="bills">{{ __('Bills') }}</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="interval-type" class="block">{{ __('Interval Type') }}</label>
+                            <select id="interval-type" name="interval-type"
+                                class="focus:outline-none focus:ring-2 focus:ring-quinary-bg">
+                                <option value="yearly" selected>{{ __('Yearly') }}</option>
+                                <option value="monthly">{{ __('Monthly') }}</option>
+                                <option value="daily">{{ __('Daily') }}</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="interval-length" class="block">{{ __('Interval Length') }}</label>
+                            <select id="interval-length" name="interval-length"
+                                class="focus:outline-none focus:ring-2 focus:ring-quinary-bg">
+                                <option value="1" selected>{{ __('One year') }}</option>
+                                <option value="5">{{ __('Five Years') }}</option>
+                                <option value="10">{{ __('Ten Years') }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative flex-1 shadow-inner">
+                    @if (!Auth::user()->has_transactions_or_paid_bills)
+                        <div class="absolute inset-0 z-10 flex items-center justify-center">
+                            <p class="text-5xl text-center select-none text-tertiary-bg">
+                                {{ __('Waiting data...') }}
+                            </p>
+                        </div>
+                    @endif
+                    <canvas id="chart"></canvas>
+                </div>
+            </div>
+
+            <div class="flex flex-col flex-1 gap-4 lg:gap-6">
+                <x-wallet class="flex-1" />
+                <x-latest-transactions class="flex-1" />
+            </div>
         </div>
     </div>
 

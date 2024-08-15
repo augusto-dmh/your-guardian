@@ -29,7 +29,7 @@
 @endphp
 
 @foreach ($filteredAttributes as $attribute)
-    <td class="p-3 text-left">
+    <td class="p-3 text-left whitespace-nowrap">
         {{-- @if ($attribute === 'bill_id' && $attributeMapping[$attribute] === 'has_bill')
             <a href="{{ route('bills.show', $entityInstance) }}">
                 <x-heroicon-o-document-text class="flex-shrink-0 w-6 h-6" aria-hidden="true" />

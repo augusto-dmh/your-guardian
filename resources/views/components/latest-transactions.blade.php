@@ -3,7 +3,7 @@
     $transactions = $user->transactions()->latest()->take(5)->with('transactionCategory')->get();
 @endphp
 <div
-    {{ $attributes->merge(['class' => 'relative flex flex-col gap-2 shadow-out p-5 rounded-md [&>p]:text-primary-txt [&>p>span]:text-tertiary-txt']) }}>
+    {{ $attributes->merge(['class' => 'relative flex flex-col rounded-md [&>p]:text-primary-txt [&>p>span]:text-tertiary-txt']) }}>
     <h3 class="inline-block mb-1 text-xl font-bold text-secondary-txt">{{ __('Latest Transactions') }}</h3>
     <div class="shadow sm:rounded-lg">
         @if ($transactions->isNotEmpty())

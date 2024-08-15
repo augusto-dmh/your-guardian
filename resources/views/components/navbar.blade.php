@@ -98,7 +98,7 @@
 </nav>
 
 <!-- Mobile bottom bar -->
-<div class="fixed inset-x-0 bottom-0 flex items-center justify-between px-4 py-4 transition-transform duration-500 bg-white sm:px-6 md:hidden dark:bg-dark-eval-1"
+<div class="fixed inset-x-0 bottom-0 z-10 flex items-center justify-between px-4 py-4 transition-transform duration-500 bg-white sm:px-6 md:hidden dark:bg-dark-eval-1"
     :class="{
         'translate-y-full': scrollingDown,
         'translate-y-0': scrollingUp,
