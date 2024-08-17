@@ -118,7 +118,7 @@
         </div>
     @endif
 
-    {{ $transactions->links() }}
+    {{ $transactions->appends(Request::except('page'))->links() }}
 </x-app-layout>
 
 <script>

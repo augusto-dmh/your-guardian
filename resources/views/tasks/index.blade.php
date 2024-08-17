@@ -114,7 +114,7 @@
         @endif
     </div>
 
-    {{ $tasks->links() }}
+    {{ $tasks->appends(Request::except('page'))->links() }}
 </x-app-layout>
 
 <script>

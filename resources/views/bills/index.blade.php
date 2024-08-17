@@ -126,7 +126,7 @@
         </div>
     @endif
 
-    {{ $bills->links() }}
+    {{ $bills->appends(Request::except('page'))->links() }}
 </x-app-layout>
 
 <script>
