@@ -42,11 +42,13 @@
                 <x-navbar />
 
                 <!-- Page Heading -->
-                <header>
-                    <div class="p-6">
-                        {{ $header }}
-                    </div>
-                </header>
+                @isset($header)
+                    <header>
+                        <div class="p-6">
+                            {{ $header }}
+                        </div>
+                    </header>
+                @endisset
 
                 <!-- Page Content -->
                 <main class="relative flex-1 px-4 sm:px-6">
