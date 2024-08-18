@@ -37,10 +37,10 @@
                         us</a>?
                 </div>
             @endif
-            <div class="flex flex-col items-center justify-center flex-grow px-6">
-                <header class="flex items-center p-4 mb-8 text-center sm:p-6">
-                    <h2 class="flex-1 font-bold text-9xl text-secondary-txt">{{ __('Welcome') }}</h2>
-                    <h1 class="flex-1 text-4xl">
+            <div class="flex flex-col items-center justify-center flex-grow gap-4 px-0 sm:px-6 md:px-8">
+                <header class="flex flex-col items-center gap-3 mb-8 text-center lg:flex-row">
+                    <h2 class="flex-1 font-bold text-8xl text-secondary-txt">{{ __('Welcome') }}</h2>
+                    <h1 class="flex-1 text-3xl">
                         {{ __('Your guardian will be with you - and your finances, in a good sense.') }}
                     </h1>
                 </header>
@@ -53,7 +53,7 @@
             </div>
         </div>
         <!-- Page Footer -->
-        <div class="relative flex items-center justify-center">
+        <div class="relative items-center justify-center hidden md:flex">
             <x-application-logo class="absolute bottom-0 w-16 h-16 mb-8 transition-all duration-200 hover:bottom-3" />
         </div>
     </div>
