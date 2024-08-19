@@ -1,4 +1,4 @@
-<footer class="flex-shrink-0 px-6 py-4">
+<footer class="flex-shrink-0 px-4 py-4">
     <p class="flex items-center justify-center gap-1 text-sm text-[#fac189] dark:text-gray-400">
         <span>{{ __('Made with') }}</span>
 

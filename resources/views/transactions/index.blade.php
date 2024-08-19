@@ -7,54 +7,57 @@
     </x-slot>
 
     <form method="GET" action="{{ route('transactions.index') }}">
-        <div class="flex items-center gap-8 py-6 m-auto">
-            <div class="flex items-center gap-4">
-                <h5 class="font-semibold text-primary-txt">{{ __('Sort by:') }}</h5>
-                <div class="form-group">
-                    <p class="mb-1 text-secondary-txt">{{ __('Amount') }}</p>
-                    <select name="sortByAmount"
-                        class="font-thin border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg">
-                        <option class="font-thin" value="">
-                            {{ __('Select') }}
-                        </option>
-                        <option class="font-thin" value="asc"
-                            {{ request('sortByAmount') == 'asc' ? 'selected' : '' }}>{{ __('Ascending') }}</option>
-                        <option class="font-thin" value="desc"
-                            {{ request('sortByAmount') == 'desc' ? 'selected' : '' }}>{{ __('Descending') }}</option>
-                    </select>
+        <div class="flex flex-col gap-3 pb-8 m-auto mt-6 lg:justify-between xl:justify-start lg:flex-row xl:gap-12">
+            <div class="flex items-end gap-4 md:flex-row">
+                <div class="flex items-end gap-4">
+                    <div class="flex items-end gap-2">
+                        <div class="form-group">
+                            <p class="mb-1 text-secondary-txt">{{ __('Amount') }}</p>
+                            <select name="sortByAmount"
+                                class="font-thin border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg">
+                                <option class="font-thin" value="">
+                                    {{ __('Sort by') }}
+                                </option>
+                                <option class="font-thin" value="asc"
+                                    {{ request('sortByAmount') == 'asc' ? 'selected' : '' }}>{{ __('Ascending') }}
+                                </option>
+                                <option class="font-thin" value="desc"
+                                    {{ request('sortByAmount') == 'desc' ? 'selected' : '' }}>{{ __('Descending') }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <p class="mb-1 text-secondary-txt">{{ __('Date') }}</p>
+                            <select name="sortByDate"
+                                class="font-thin border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg">
+                                <option class="font-thin" value="">
+                                    {{ __('Sort by') }}
+                                </option>
+                                <option class="font-thin" value="asc"
+                                    {{ request('sortByDate') == 'asc' ? 'selected' : '' }}>{{ __('Ascending') }}
+                                </option>
+                                <option class="font-thin" value="desc"
+                                    {{ request('sortByDate') == 'desc' ? 'selected' : '' }}>{{ __('Descending') }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <p class="mb-1 text-secondary-txt">{{ __('Date') }}</p>
-                    <select name="sortByDate"
-                        class="font-thin border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg">
-                        <option class="font-thin" value="">
-                            {{ __('Select') }}
-                        </option>
-                        <option class="font-thin" value="asc"
-                            {{ request('sortByDate') == 'asc' ? 'selected' : '' }}>
-                            {{ __('Ascending') }}</option>
-                        <option class="font-thin" value="desc"
-                            {{ request('sortByDate') == 'desc' ? 'selected' : '' }}>{{ __('Descending') }}</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="flex gap-8">
-                <div class="flex items-center gap-4">
-                    <h5 class="font-semibold text-primary-txt">{{ __('Filter by:') }}</h5>
+                <div class="flex items-end gap-4">
                     <div class="form-group">
                         <p class="mb-1 text-secondary-txt">{{ __('Type') }}</p>
                         <div class="flex flex-col">
                             <label for="input-type-income"
                                 class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
                                 <input type="checkbox" name="filterByType[]" id="input-type-income" value="income"
-                                    class="border-0 cursor-pointer input-type focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
+                                    class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
                                     {{ request('filterByType') && in_array('income', request('filterByType')) ? 'checked' : '' }}>
                                 <span class="ml-2">{{ __('Income') }}</span>
                             </label>
                             <label for="input-type-expense"
-                                class="inline-flex items-center font-thin cursor-pointer input-type text-tertiary-txt hover:text-secondary-txt">
+                                class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
                                 <input type="checkbox" name="filterByType[]" id="input-type-expense" value="expense"
                                     class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
                                     {{ request('filterByType') && in_array('expense', request('filterByType')) ? 'checked' : '' }}>
@@ -64,18 +67,20 @@
                     </div>
                 </div>
             </div>
+            <div class="flex items-end gap-4">
+                <button type="submit"
+                    class="px-4 py-1 shadow-inner text-tertiary-txt hover:shadow-innerHover hover:text-secondary-txt">{{ __('Apply') }}</button>
 
-            <button type="submit"
-                class="px-4 py-1 shadow-inner text-tertiary-txt hover:shadow-innerHover hover:text-secondary-txt">{{ __('Apply') }}</button>
-
-            <label class="inline-flex items-center cursor-pointer">
-                <input type="checkbox" value="" class="sr-only peer" id="table-view-toggle"
-                    {{ Auth::user()->index_view_preference === 'table' ? 'checked' : '' }}>
-                <div
-                    class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 ring-orange-300 peer-focus:bg-quinary-bg dark:peer-focus:bg-quinary-bg rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-quinary-bg">
-                </div>
-                <span class="text-sm font-medium text-gray-900 ms-3 dark:text-gray-300">{{ __('Table view') }}</span>
-            </label>
+                <label class="inline-flex items-center cursor-pointer">
+                    <input type="checkbox" value="" class="sr-only peer" id="table-view-toggle"
+                        {{ Auth::user()->index_view_preference === 'table' ? 'checked' : '' }}>
+                    <div
+                        class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 ring-orange-300 peer-focus:bg-quinary-bg dark:peer-focus:bg-quinary-bg rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-quinary-bg">
+                    </div>
+                    <span
+                        class="text-sm font-medium text-gray-900 ms-3 dark:text-gray-300">{{ __('Table view') }}</span>
+                </label>
+            </div>
         </div>
     </form>
 
@@ -111,7 +116,9 @@
         </div>
     @endif
 
-    {{ $transactions->links() }}
+    <div class="mt-2">
+        {{ $transactions->appends(Request::except('page'))->links() }}
+    </div>
 </x-app-layout>
 
 <script>
