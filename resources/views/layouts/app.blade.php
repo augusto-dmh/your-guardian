@@ -41,19 +41,17 @@
                 <!-- Navbar -->
                 <x-navbar />
 
-                <!-- Page Heading -->
-                @isset($header)
-                    <header>
-                        <div class="p-6">
-                            {{ $header }}
-                        </div>
+                <div class="px-8">
+                    <!-- Page Heading -->
+                    <header class="py-4">
+                        {{ $header }}
                     </header>
-                @endisset
 
-                <!-- Page Content -->
-                <main class="relative flex-1 px-4 sm:px-6">
-                    {{ $slot }}
-                </main>
+                    <!-- Page Content -->
+                    <main class="relative">
+                        {{ $slot }}
+                    </main>
+                </div>
 
                 <!-- Page Footer -->
                 <x-footer />
