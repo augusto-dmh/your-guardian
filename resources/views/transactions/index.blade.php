@@ -1,23 +1,22 @@
 <x-app-layout>
     <a type="button" href="{{ route('transactions.create') }}"
-        class="inline-block px-4 py-1 mb-4 rounded-md shadow-inner text-tertiary-txt hover:shadow-innerHover hover:text-secondary-txt">{{ __('Create') }}</a>
+        class="inline-block px-4 py-1 rounded-md shadow-inner text-tertiary-txt hover:shadow-innerHover hover:text-secondary-txt">{{ __('Create') }}</a>
 
     <x-slot name="header">
         <h2 class="text-4xl font-bold text-secondary-txt">{{ __('Transactions') }}</h2>
     </x-slot>
 
     <form method="GET" action="{{ route('transactions.index') }}">
-        <div class="flex flex-col gap-2 m-auto lg:gap-12 lg:flex-row">
-            <div class="flex items-center gap-6 my-4 md:flex-row">
-                <div class="flex items-center gap-4">
-                    <h5 class="font-semibold text-primary-txt">{{ __('Sort by') }}:</h5>
-                    <div class="flex gap-2">
+        <div class="flex flex-col gap-3 pb-8 m-auto mt-6 lg:justify-between xl:justify-start lg:flex-row xl:gap-12">
+            <div class="flex items-end gap-4 md:flex-row">
+                <div class="flex items-end gap-4">
+                    <div class="flex items-end gap-2">
                         <div class="form-group">
                             <p class="mb-1 text-secondary-txt">{{ __('Amount') }}</p>
                             <select name="sortByAmount"
                                 class="font-thin border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg">
                                 <option class="font-thin" value="">
-                                    {{ __('Select') }}
+                                    {{ __('Sort by') }}
                                 </option>
                                 <option class="font-thin" value="asc"
                                     {{ request('sortByAmount') == 'asc' ? 'selected' : '' }}>{{ __('Ascending') }}
@@ -33,7 +32,7 @@
                             <select name="sortByDate"
                                 class="font-thin border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg">
                                 <option class="font-thin" value="">
-                                    {{ __('Select') }}
+                                    {{ __('Sort by') }}
                                 </option>
                                 <option class="font-thin" value="asc"
                                     {{ request('sortByDate') == 'asc' ? 'selected' : '' }}>{{ __('Ascending') }}
@@ -46,8 +45,7 @@
                     </div>
                 </div>
 
-                <div class="flex items-center gap-4">
-                    <h5 class="font-semibold text-primary-txt">{{ __('Filter by') }}:</h5>
+                <div class="flex items-end gap-4">
                     <div class="form-group">
                         <p class="mb-1 text-secondary-txt">{{ __('Type') }}</p>
                         <div class="flex flex-col">
@@ -69,7 +67,7 @@
                     </div>
                 </div>
             </div>
-            <div class="flex items-center gap-4">
+            <div class="flex items-end gap-4">
                 <button type="submit"
                     class="px-4 py-1 shadow-inner text-tertiary-txt hover:shadow-innerHover hover:text-secondary-txt">{{ __('Apply') }}</button>
 
@@ -100,7 +98,7 @@
                 @endforeach
             </div>
         @else
-            <div class="w-full my-4 overflow-x-auto rounded-lg">
+            <div class="w-full overflow-x-auto rounded-lg">
                 <table class="w-full bg-secondary-bg">
                     <x-table-index-columns :entity="\App\Models\Transaction::class" />
                     @foreach ($transactions as $transaction)
@@ -118,7 +116,9 @@
         </div>
     @endif
 
-    {{ $transactions->appends(Request::except('page'))->links() }}
+    <div class="mt-2">
+        {{ $transactions->appends(Request::except('page'))->links() }}
+    </div>
 </x-app-layout>
 
 <script>
