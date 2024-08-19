@@ -16,12 +16,13 @@ class TransactionChartDataService
     public function getTotalAmountOnTransactionsDaily($intervalLength = 1)
     {
         $startDate = now()->subYears($intervalLength)->startOfDay();
+        $dateFormat = getDateFormatForChartDataQuery();
 
         $transactions = $this->user
             ->transactions()
             ->whereBetween('created_at', [$startDate, now()])
             ->selectRaw(
-                'DATE(created_at) as year, SUM(amount) as total_amount_paid'
+                "DATE_FORMAT(created_at, '{$dateFormat}') as year, SUM(amount) as total_amount_paid"
             )
             ->groupBy('year')
             ->orderBy('year')
@@ -40,12 +41,13 @@ class TransactionChartDataService
     public function getTotalAmountOnTransactionsMonthly($intervalLength = 1)
     {
         $startDate = now()->subYears($intervalLength)->startOfDay();
+        $dateFormat = getDateFormatForChartDataQuery('Y-m');
 
         $transactions = $this->user
             ->transactions()
             ->whereBetween('created_at', [$startDate, now()])
             ->selectRaw(
-                'DATE_FORMAT(created_at, "%Y-%m") as year, SUM(amount) as total_amount_paid'
+                "DATE_FORMAT(created_at, '{$dateFormat}') as year, SUM(amount) as total_amount_paid"
             )
             ->groupBy('year')
             ->orderBy('year')

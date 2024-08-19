@@ -16,12 +16,13 @@ class BillChartDataService
     public function getNumberOfDailyPaidBills($intervalLength = 1)
     {
         $startDate = now()->subYears($intervalLength)->startOfDay();
+        $dateFormat = getDateFormatForChartDataQuery();
 
         $bills = $this->user
             ->bills()
             ->whereBetween('paid_at', [$startDate, now()])
             ->selectRaw(
-                'DATE_FORMAT(paid_at, "%Y-%m-%d") as date, COUNT(*) as count_paid'
+                "DATE_FORMAT(paid_at, '{$dateFormat}') as date, COUNT(*) as count_paid"
             )
             ->groupBy('date')
             ->orderBy('date')
@@ -40,12 +41,13 @@ class BillChartDataService
     public function getNumberOfMonthlyPaidBills($intervalLength = 1)
     {
         $startDate = now()->subYears($intervalLength)->startOfDay();
+        $dateFormat = getDateFormatForChartDataQuery('Y-m');
 
         $bills = $this->user
             ->bills()
             ->whereBetween('paid_at', [$startDate, now()])
             ->selectRaw(
-                'DATE_FORMAT(paid_at, "%Y-%m") as month, COUNT(*) as count_paid'
+                "DATE_FORMAT(paid_at, '{$dateFormat}') as month, COUNT(*) as count_paid"
             )
             ->groupBy('month')
             ->orderBy('month')
