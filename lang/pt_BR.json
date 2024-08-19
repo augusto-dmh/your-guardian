@@ -167,7 +167,7 @@
     "Type:": "Tipo:",
     "Category:": "Categoria:",
     "Description:": "Descrição:",
-    "not available": "indisponível",
+    "N/A": "N/D",
     "Amount": "Quantia",
     "Description": "Descrição",
     "Category": "Categoria",
@@ -210,6 +210,7 @@
     "Due date": "Data de vencimento",
     "Create Bill": "Criar Conta",
     "Create Task": "Criar tarefa",
+    "Title:": "Título:",
     "Your guardian will be with you - and your finances, in a good sense.": "Seu guardião estará com você - e suas finanças, no bom sentido.",
     "Waiting bills...": "Aguardando contas...",
     "Waiting tasks...": "Aguardando tarefas...",
@@ -238,5 +239,6 @@
     "Apply": "Aplicar",
     "Bills Status (%)": "Status de Contas (%)",
     "Transactions Types (%)": "Tipos de Transações (%)",
-    "Top Transaction Category": "Top Categoria de Transação"
+    "Top Transaction Category": "Top Categoria de Transação",
+    "created at": "data de criação"
 }

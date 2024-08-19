@@ -57,12 +57,12 @@
 
                 <div class="flex gap-2">
                     <span>Created at:</span>
-                    <div>{{ $task->created_at->format('m-d-Y') }}</div>
+                    <div>{{ formatDate($task->created_at) }}</div>
                 </div>
 
                 <div class="flex gap-2">
                     <span>Due date:</span>
-                    <div>{{ $task->due_date->format('m-d-Y') }}</div>
+                    <div>{{ formatDate($task->due_date) }}</div>
                 </div>
             </div>
 

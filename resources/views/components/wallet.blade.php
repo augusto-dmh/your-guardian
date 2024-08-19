@@ -11,11 +11,11 @@
     </p>
     <p>
         <span>{{ __('Next Bill Due:') }}</span>
-        {{ $user->nextPendingBillDueDate?->format('Y-m-d') ?? __('not available') }}
+        {{ formatDate($user->nextPendingBillDueDate) }}
     </p>
     <p>
         <span>{{ __('Next Task Due:') }}</span>
-        {{ $user->nextPendingTaskDueDate?->format('Y-m-d') ?? __('not available') }}
+        {{ formatDate($user->nextPendingTaskDueDate) }}
     </p>
     <p><span>{{ __('Last Transaction:') }}</span>
         @if ($user->lastTransaction)
@@ -23,11 +23,11 @@
                 {{ __('Amount:') }} ${{ $user->lastTransaction->amount }} |
                 {{ __('Title:') }} ${{ Str::limit($user->lastTransaction->title, 20, '...') }} |
                 {{ __('Category:') }}
-                {{ Str::limit($user->lastTransaction->transactionCategory?->name, 10, '...') ?? __('not available') }}
+                {{ Str::limit($user->lastTransaction->transactionCategory?->name, 10, '...') ?? __('N/A') }}
                 |
             </a>
         @else
-            {{ __('not available') }}
+            {{ __('N/A') }}
         @endif
     </p>
 </div>

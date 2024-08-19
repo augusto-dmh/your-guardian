@@ -21,7 +21,7 @@
                 <div class="form-group">
                     <label for="due_date">Due date:</label>
                     <input type="date" name="due_date" id="due_date"
-                        value="{{ old('due_date', $task->due_date->format('Y-m-d')) }}">
+                        value="{{ old('due_date', formatDate($task->due_date)) }}">
                     @error('due_date')
                         <p>{{ $message }}</p>
                     @enderror
@@ -66,4 +66,3 @@
         </form>
     </div>
 </x-layout>
-

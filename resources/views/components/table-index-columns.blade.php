@@ -21,6 +21,8 @@
         'bill_id' => __('bill'),
         'transaction_category_id' => __('category'),
         'task_category_id' => __('category'),
+        'created_at' => __('created at'),
+        'paid_at' => __('paid at'),
     ];
 
     $transformAttribute = function ($attribute, $mapping) {

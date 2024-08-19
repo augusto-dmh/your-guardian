@@ -71,8 +71,8 @@ class TaskStoreTest extends TestCase
             ->first();
 
         $this->assertEquals(
-            Cache::get("user_{$this->user->id}_next_task_due")->format('Y-m-d'),
-            $taskCreatedOnSecondRequest->due_date->format('Y-m-d')
+            formatDate(Cache::get("user_{$this->user->id}_next_task_due")),
+            formatDate($taskCreatedOnSecondRequest->due_date)
         );
     }
 }
