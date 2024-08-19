@@ -37,7 +37,7 @@ class TaskUpdateTest extends TestCase
             'status' => 'pending',
             'due_date' => now()->addDays(3)->toDateString(),
         ]);
-        $newDueDate = now()->addDays(2)->format('Y-m-d');
+        $newDueDate = formatDate(now()->addDays(2));
         $response = $this->actingAs($this->user)->put(
             route('tasks.update', $task),
             [
@@ -46,7 +46,7 @@ class TaskUpdateTest extends TestCase
         );
         $task->refresh();
 
-        $this->assertEquals($newDueDate, $task->due_date->format('Y-m-d'));
+        $this->assertEquals($newDueDate, formatDate($task->due_date));
     }
 
     public function testHandleTaskCacheSuccessfullyWorkingOnUpdatingATask()
@@ -58,7 +58,7 @@ class TaskUpdateTest extends TestCase
             'status' => 'pending',
             'due_date' => now()->addDays(3)->toDateString(),
         ]);
-        $newDueDate = now()->addDays(2)->format('Y-m-d');
+        $newDueDate = formatDate(now()->addDays(2));
         $response = $this->actingAs($this->user)->put(
             route('tasks.update', $task),
             [
@@ -68,9 +68,8 @@ class TaskUpdateTest extends TestCase
         $task->refresh();
 
         $this->assertTrue(
-            Cache::get("user_{$task->user_id}_next_task_due")->format(
-                'Y-m-d'
-            ) == $newDueDate
+            formatDate(Cache::get("user_{$task->user_id}_next_task_due")) ==
+                $newDueDate
         );
     }
 }

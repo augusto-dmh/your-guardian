@@ -10,7 +10,9 @@
         'description' => Str::limit($entityInstance->description ?? 'N/A', 30, '...'),
         'transaction_category_id' => $entityInstance->transactionCategory?->name ?? 'N/A',
         'task_category_id' => $entityInstance->taskCategory?->name ?? 'N/A',
-        'due_date' => $entityInstance?->due_date?->format('Y-m-d') ?? 'N/A',
+        'due_date' => formatDate($entityInstance->due_date),
+        'paid_at' => formatDate($entityInstance->paid_at),
+        'created_at' => formatDate($entityInstance->created_at),
     ];
 
     $transformAttribute = function ($attribute, $entityInstance, $mapping) {

@@ -32,13 +32,13 @@ class BillUpdateTest extends TestCase
             'status' => 'pending',
             'due_date' => now()->addDays(3)->toDateString(),
         ]);
-        $newDueDate = now()->addDays(2)->format('Y-m-d');
+        $newDueDate = formatDate(now()->addDays(2));
         $response = $this->actingAs($user)->put(route('bills.update', $bill), [
             'due_date' => $newDueDate,
         ]);
         $bill->refresh();
 
-        $this->assertEquals($newDueDate, $bill->due_date->format('Y-m-d'));
+        $this->assertEquals($newDueDate, formatDate($bill->due_date));
     }
 
     public function testHandleBillCacheSuccessfullyWorkingOnUpdatingABill()
@@ -51,16 +51,15 @@ class BillUpdateTest extends TestCase
             'status' => 'pending',
             'due_date' => now()->addDays(3)->toDateString(),
         ]);
-        $newDueDate = now()->addDays(2)->format('Y-m-d');
+        $newDueDate = formatDate(now()->addDays(2));
         $response = $this->actingAs($user)->put(route('bills.update', $bill), [
             'due_date' => $newDueDate,
         ]);
         $bill->refresh();
 
         $this->assertTrue(
-            Cache::get("user_{$bill->user_id}_next_bill_due")->format(
-                'Y-m-d'
-            ) == $bill->due_date->format('Y-m-d')
+            formatDate(Cache::get("user_{$bill->user_id}_next_bill_due")) ==
+                formatDate($bill->due_date)
         );
     }
 }

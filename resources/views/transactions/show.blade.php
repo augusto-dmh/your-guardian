@@ -59,7 +59,7 @@
 
                 <div class="flex gap-2">
                     <span>Made in:</span>
-                    <div>{{ $transaction->created_at->format('m-d-Y') }}</div>
+                    <div>{{ formatDate($transaction->created_at) }}</div>
                 </div>
             </div>
         </div>

@@ -58,8 +58,8 @@ class BillStoreTest extends TestCase
         $BillCreatedOnSecondRequest = $user->bills()->latest('id')->first();
 
         $this->assertEquals(
-            Cache::get("user_{$user->id}_next_bill_due")->format('Y-m-d'),
-            $BillCreatedOnSecondRequest->due_date->format('Y-m-d')
+            formatDate(Cache::get("user_{$user->id}_next_bill_due")),
+            formatDate($BillCreatedOnSecondRequest->due_date)
         );
     }
 }
