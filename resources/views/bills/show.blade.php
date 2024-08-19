@@ -82,18 +82,18 @@
 
                 <div class="flex gap-2">
                     <span>Created at:</span>
-                    <div>{{ $bill->created_at->format('m-d-Y') }}</div>
+                    <div>{{ formatDate($bill->created_at) }}</div>
                 </div>
 
                 <div class="flex gap-2">
                     <span>Due date:</span>
-                    <div>{{ $bill->due_date->format('m-d-Y') }}</div>
+                    <div>{{ formatDate($bill->due_date) }}</div>
                 </div>
 
                 @if ($bill->paid_at)
                     <div class="flex gap-2">
                         <span>Paid at</span>
-                        <div>{{ $bill->paid_at->format('m-d-Y') }}</div>
+                        <div>{{ formatDate($bill->paid_at) }}</div>
                     </div>
                 @endif
             </div>

@@ -39,7 +39,7 @@
                                     {{ Str::limit($transaction->transactionCategory?->name, 10, '...') }}
                                 </td>
                                 <td class="p-3 text-sm font-normal whitespace-nowrap">
-                                    {{ $transaction->created_at->format('Y-m-d') }}
+                                    {{ formatDate($transaction->created_at) }}
                                 </td>
                             </tr>
                         @endforeach
