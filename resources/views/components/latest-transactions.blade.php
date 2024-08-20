@@ -36,7 +36,7 @@
                                     {{ Str::limit($transaction->title, 20, '...') }}
                                 </td>
                                 <td class="p-3 text-sm font-normal whitespace-nowrap">
-                                    {{ Str::limit($transaction->transactionCategory?->name, 10, '...') }}
+                                    {{ __(Str::limit($transaction->transactionCategory?->name, 10, '...') ?? 'N/A') }}
                                 </td>
                                 <td class="p-3 text-sm font-normal whitespace-nowrap">
                                     {{ formatDate($transaction->created_at) }}
