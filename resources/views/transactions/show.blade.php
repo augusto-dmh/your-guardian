@@ -39,26 +39,27 @@
 
             <div class="flex flex-col gap-3 [&>div>span]:text-tertiary-txt">
                 <div class="flex gap-2">
-                    <span>Title:</span>
+                    <span>{{ __('Title:') }}</span>
                     <div>{{ $transaction->title }}</div>
                 </div>
+
                 <div class="flex gap-2">
-                    <span>Amount:</span>
+                    <span>{{ __('Amount:') }}</span>
                     <div>{{ $transaction->amount }}</div>
                 </div>
 
                 <div class="flex gap-2">
-                    <span>Type:</span>
-                    <div>{{ $transaction->type }}</div>
+                    <span>{{ __('Type:') }}</span>
+                    <div>{{ __($transaction->type) }}</div>
                 </div>
 
                 <div class="flex gap-2">
-                    <span>Category:</span>
-                    <div>{{ $transaction->transactionCategory?->name ?? 'none' }}</div>
+                    <span>{{ __('Category:') }}</span>
+                    <div>{{ __($transaction->transactionCategory?->name ?? 'N/A') }}</div>
                 </div>
 
                 <div class="flex gap-2">
-                    <span>Made in:</span>
+                    <span>{{ __('Made in:') }}</span>
                     <div>{{ formatDate($transaction->created_at) }}</div>
                 </div>
             </div>

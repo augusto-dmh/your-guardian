@@ -244,5 +244,8 @@
     "overdue": "atrasada",
     "income": "renda",
     "expense": "despesa",
-    "Actions": "Ações"
+    "Actions": "Ações",
+    "Title:": "Título:",
+    "Created at:": "Criado em:",
+    "Paid at:": "Pago em:"
 }
