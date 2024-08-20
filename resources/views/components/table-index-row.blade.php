@@ -34,13 +34,13 @@
 
 @foreach ($filteredAttributes as $attribute)
     <td class="p-3 text-left whitespace-nowrap">
-        {{-- @if ($attribute === 'bill_id' && $attributeMapping[$attribute] === 'has_bill')
+        @if ($attribute === 'bill_id' && $attributeMapping[$attribute] === 'has_bill')
             <a href="{{ route('bills.show', $entityInstance) }}">
                 <x-heroicon-o-document-text class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
             </a>
-        @else --}} {{-- not yet necessary: there's no way already in application-level to associate a bill's status change to 'paid' to the creation of a transaction of status 'paid' --}}
-        {{ $transformAttribute($attribute, $entityInstance, $attributeMapping) }}
-        {{-- @endif --}}
+        @else
+            {{ $transformAttribute($attribute, $entityInstance, $attributeMapping) }}
+        @endif
     </td>
 @endforeach
 <td class="flex items-center justify-center p-3 font-normal">
