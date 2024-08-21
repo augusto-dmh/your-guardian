@@ -61,38 +61,38 @@
             <div class="flex flex-col gap-3 [&>div>span]:text-tertiary-txt">
 
                 <div class="flex gap-2">
-                    <span>Title:</span>
+                    <span>{{ __('Title:') }}</span>
                     <div>{{ $bill->title }}</div>
                 </div>
 
                 <div class="flex gap-2">
-                    <span>Amount:</span>
+                    <span>{{ __('Amount:') }}</span>
                     <div>{{ $bill->amount }}</div>
                 </div>
 
                 <div class="flex gap-2">
-                    <span>Category:</span>
-                    <div>{{ $bill->billCategory?->name ?? 'none' }}</div>
+                    <span>{{ __('Category:') }}</span>
+                    <div>{{ __($bill->billCategory?->name ?? 'N/A') }}</div>
                 </div>
 
                 <div class="flex gap-2">
-                    <span>Status</span>
-                    <div>{{ $bill->status }}</div>
+                    <span>{{ __('Status:') }}</span>
+                    <div>{{ __($bill->status) }}</div>
                 </div>
 
                 <div class="flex gap-2">
-                    <span>Created at:</span>
+                    <span>{{ __('Created at:') }}</span>
                     <div>{{ formatDate($bill->created_at) }}</div>
                 </div>
 
                 <div class="flex gap-2">
-                    <span>Due date:</span>
+                    <span>{{ __('Due date:') }}</span>
                     <div>{{ formatDate($bill->due_date) }}</div>
                 </div>
 
                 @if ($bill->paid_at)
                     <div class="flex gap-2">
-                        <span>Paid at</span>
+                        <span>{{ __('Paid at:') }}</span>
                         <div>{{ formatDate($bill->paid_at) }}</div>
                     </div>
                 @endif

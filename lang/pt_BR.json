@@ -240,6 +240,14 @@
     "Bills Status (%)": "Status de Contas (%)",
     "Transactions Types (%)": "Tipos de Transações (%)",
     "Top Transaction Category": "Top Categoria de Transação",
-    "created at": "data de criação",
-    "Search for title or description": "Busque por título ou descrição"
+    "Search for title or description": "Busque por título ou descrição",
+    "pending": "pendente",
+    "paid": "paga",
+    "overdue": "atrasada",
+    "income": "renda",
+    "expense": "despesa",
+    "Actions": "Ações",
+    "Created at:": "Criado em:",
+    "Paid at:": "Pago em:",
+    "created at": "data de criação"
 }

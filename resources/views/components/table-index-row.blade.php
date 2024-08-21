@@ -8,8 +8,10 @@
         'bill_id' => $entityInstance->bill ? 'has_bill' : 'N/A',
         'title' => Str::limit($entityInstance->title, 20, '...'),
         'description' => Str::limit($entityInstance->description ?? 'N/A', 30, '...'),
-        'transaction_category_id' => $entityInstance->transactionCategory?->name ?? 'N/A',
-        'task_category_id' => $entityInstance->taskCategory?->name ?? 'N/A',
+        'transaction_category_id' => __($entityInstance->transactionCategory?->name ?? 'N/A'),
+        'task_category_id' => __($entityInstance->taskCategory?->name ?? 'N/A'),
+        'status' => __($entityInstance->status ?? 'N/A'),
+        'type' => __($entityInstance->type ?? 'N/A'),
         'due_date' => formatDate($entityInstance->due_date),
         'paid_at' => formatDate($entityInstance->paid_at),
         'created_at' => formatDate($entityInstance->created_at),
@@ -32,13 +34,13 @@
 
 @foreach ($filteredAttributes as $attribute)
     <td class="p-3 text-left whitespace-nowrap">
-        {{-- @if ($attribute === 'bill_id' && $attributeMapping[$attribute] === 'has_bill')
+        @if ($attribute === 'bill_id' && $attributeMapping[$attribute] === 'has_bill')
             <a href="{{ route('bills.show', $entityInstance) }}">
                 <x-heroicon-o-document-text class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
             </a>
-        @else --}} {{-- not yet necessary: there's no way already in application-level to associate a bill's status change to 'paid' to the creation of a transaction of status 'paid' --}}
-        {{ $transformAttribute($attribute, $entityInstance, $attributeMapping) }}
-        {{-- @endif --}}
+        @else
+            {{ $transformAttribute($attribute, $entityInstance, $attributeMapping) }}
+        @endif
     </td>
 @endforeach
 <td class="flex items-center justify-center p-3 font-normal">

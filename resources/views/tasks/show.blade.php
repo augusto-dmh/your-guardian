@@ -41,27 +41,27 @@
             <div class="flex flex-col gap-3 [&>div>span]:text-tertiary-txt">
 
                 <div class="flex gap-2">
-                    <span>Title:</span>
+                    <span>{{ __('Title:') }}</span>
                     <div>{{ $task->title }}</div>
                 </div>
 
                 <div class="flex gap-2">
-                    <span>Category:</span>
-                    <div>{{ $task->taskCategory?->name ?? 'none' }}</div>
+                    <span>{{ __('Category:') }}</span>
+                    <div>{{ __($task->taskCategory?->name ?? 'N/A') }}</div>
                 </div>
 
                 <div class="flex gap-2">
-                    <span>Status</span>
-                    <div>{{ $task->status }}</div>
+                    <span>{{ __('Status:') }}</span>
+                    <div>{{ __($task->status) }}</div>
                 </div>
 
                 <div class="flex gap-2">
-                    <span>Created at:</span>
+                    <span>{{ __('Created at:') }}</span>
                     <div>{{ formatDate($task->created_at) }}</div>
                 </div>
 
                 <div class="flex gap-2">
-                    <span>Due date:</span>
+                    <span>{{ __('Due date:') }}</span>
                     <div>{{ formatDate($task->due_date) }}</div>
                 </div>
             </div>

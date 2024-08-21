@@ -23,7 +23,7 @@
                 {{ __('Amount:') }} ${{ $user->lastTransaction->amount }} |
                 {{ __('Title:') }} ${{ Str::limit($user->lastTransaction->title, 20, '...') }} |
                 {{ __('Category:') }}
-                {{ Str::limit($user->lastTransaction->transactionCategory?->name, 10, '...') ?? __('N/A') }}
+                {{ __(Str::limit($user->lastTransaction->transactionCategory?->name, 10, '...') ?? 'N/A') }}
                 |
             </a>
         @else

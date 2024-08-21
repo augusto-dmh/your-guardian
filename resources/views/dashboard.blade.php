@@ -11,7 +11,7 @@
         <div class="flex item flex-col gap-4 w-full lg:justify-between lg:flex-row [&>div]:text-center [&>div]:w-full">
             <x-dashboard-card title="{{ __('Bills Status (%)') }}" :data="auth()->user()->billsPercentagePerStatus" />
             <x-dashboard-card title="{{ __('Transactions Types (%)') }}" :data="auth()->user()->transactionsPercentagePerType" />
-            <x-dashboard-card title="{{ __('Top Transaction Category') }}" :data="auth()->user()->transactionCategoryWithMostTransactions" />
+            <x-dashboard-card title="{{ __('Top Transaction Category') }}" :data="__(auth()->user()->transactionCategoryWithMostTransactions)" />
         </div>
 
         <div class="flex flex-col gap-4 lg:flex-row">
