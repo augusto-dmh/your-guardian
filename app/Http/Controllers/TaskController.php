@@ -14,6 +14,7 @@ use App\Http\Requests\Task\TaskShowRequest;
 use App\Http\Requests\Task\TaskStoreRequest;
 use App\Http\Requests\Task\TaskDeleteRequest;
 use App\Http\Requests\Task\TaskUpdateRequest;
+use Illuminate\Http\Request;
 
 /**
  * @see \App\Observers\TaskObserver
@@ -27,16 +28,32 @@ class TaskController extends Controller
         return redirect()->back();
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $query = Auth::user()->tasks()->getQuery();
 
-        $tasks = Pipeline::send($query)
+        $query = Pipeline::send($query)
             ->through([DueDate::class, Status::class])
-            ->thenReturn()
-            ->paginate(10);
+            ->thenReturn();
 
-        return view('tasks.index', compact('tasks'));
+        $searchTerm = $request->input('searchTerm');
+        $query
+            ->where('title', 'like', '%' . $searchTerm . '%')
+            ->orWhere('description', 'like', '%' . $searchTerm . '%')
+            ->orderByRaw(
+                "
+                    CASE
+                        WHEN title LIKE ? THEN 1
+                        WHEN description LIKE ? THEN 2
+                        ELSE 3
+                    END
+                ",
+                ["%$searchTerm%", "%$searchTerm%"]
+            );
+
+        $tasks = $query->paginate(10);
+
+        return view('tasks.index', compact('tasks', 'searchTerm'));
     }
 
     public function show(TaskShowRequest $request, Task $task)
