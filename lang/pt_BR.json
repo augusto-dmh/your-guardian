@@ -249,5 +249,7 @@
     "Actions": "Ações",
     "Created at:": "Criado em:",
     "Paid at:": "Pago em:",
-    "created at": "data de criação"
+    "created at": "data de criação",
+    "You have one or more bills now overdue.": "Você possui uma ou mais contas em atrasado no momento.",
+    "Make sure to pay them as soon as possible to avoid extra fees.": "Certifique-se de pagá-las assim que possível para evitar cobranças extra."
 }
