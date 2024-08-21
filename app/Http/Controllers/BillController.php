@@ -32,12 +32,28 @@ class BillController extends Controller
     {
         $query = Auth::user()->bills()->getQuery();
 
-        $bills = Pipeline::send($query)
+        $query = Pipeline::send($query)
             ->through([DueDate::class, Amount::class, Status::class])
-            ->thenReturn()
-            ->paginate(10);
+            ->thenReturn();
 
-        return view('bills.index', compact('bills'));
+        $searchTerm = $request->input('searchTerm');
+        $query
+            ->where('title', 'like', '%' . $searchTerm . '%')
+            ->orWhere('description', 'like', '%' . $searchTerm . '%')
+            ->orderByRaw(
+                "
+                CASE
+                    WHEN title LIKE ? THEN 1
+                    WHEN description LIKE ? THEN 2
+                    ELSE 3
+                END
+            ",
+                ["%$searchTerm%", "%$searchTerm%"]
+            );
+
+        $bills = $query->paginate(10);
+
+        return view('bills.index', compact('bills', 'searchTerm'));
     }
 
     public function show(BillShowRequest $request, Bill $bill)

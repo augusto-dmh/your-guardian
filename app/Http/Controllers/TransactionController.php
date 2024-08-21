@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Request;
 use App\Models\Transaction;
 use App\QueryOptions\Sort\Date;
 use App\QueryOptions\Filter\Type;
@@ -17,6 +16,7 @@ use App\Http\Requests\Transaction\TransactionShowRequest;
 use App\Http\Requests\Transaction\TransactionStoreRequest;
 use App\Http\Requests\Transaction\TransactionDeleteRequest;
 use App\Http\Requests\Transaction\TransactionUpdateRequest;
+use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
@@ -31,12 +31,31 @@ class TransactionController extends Controller
     {
         $query = Auth::user()->transactions()->getQuery();
 
-        $transactions = Pipeline::send($query)
+        $query = Pipeline::send($query)
             ->through([Amount::class, Date::class, Type::class])
-            ->thenReturn()
-            ->paginate(10);
+            ->thenReturn();
 
-        return view('transactions.index', compact('transactions'));
+        $searchTerm = $request->input('searchTerm');
+        $query
+            ->where('title', 'like', '%' . $searchTerm . '%')
+            ->orWhere('description', 'like', '%' . $searchTerm . '%')
+            ->orderByRaw(
+                "
+                    CASE
+                        WHEN title LIKE ? THEN 1
+                        WHEN description LIKE ? THEN 2
+                        ELSE 3
+                    END
+                ",
+                ["%$searchTerm%", "%$searchTerm%"]
+            );
+
+        $transactions = $query->paginate(10);
+
+        return view(
+            'transactions.index',
+            compact('transactions', 'searchTerm')
+        );
     }
 
     public function show(
