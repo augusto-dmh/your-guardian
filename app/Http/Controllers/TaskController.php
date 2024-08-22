@@ -37,19 +37,21 @@ class TaskController extends Controller
             ->thenReturn();
 
         $searchTerm = $request->input('searchTerm');
-        $query
-            ->where('title', 'like', '%' . $searchTerm . '%')
-            ->orWhere('description', 'like', '%' . $searchTerm . '%')
-            ->orderByRaw(
-                "
+        $query->when($searchTerm, function ($query, $searchTerm) {
+            $query
+                ->where('title', 'like', '%' . $searchTerm . '%')
+                ->orWhere('description', 'like', '%' . $searchTerm . '%')
+                ->orderByRaw(
+                    "
                     CASE
                         WHEN title LIKE ? THEN 1
                         WHEN description LIKE ? THEN 2
                         ELSE 3
                     END
                 ",
-                ["%$searchTerm%", "%$searchTerm%"]
-            );
+                    ["%$searchTerm%", "%$searchTerm%"]
+                );
+        });
 
         $tasks = $query->paginate(10);
 
