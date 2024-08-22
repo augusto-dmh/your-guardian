@@ -29,27 +29,37 @@ class TransactionController extends Controller
 
     public function index(Request $request)
     {
+        $searchTerm = $request->input('searchTerm');
+
         $query = Auth::user()->transactions()->getQuery();
 
         $query = Pipeline::send($query)
             ->through([Amount::class, Date::class, Type::class])
             ->thenReturn();
 
-        $searchTerm = $request->input('searchTerm');
         $query->when($searchTerm, function ($query, $searchTerm) {
-            $query
-                ->where('title', 'like', '%' . $searchTerm . '%')
-                ->orWhere('description', 'like', '%' . $searchTerm . '%')
-                ->orderByRaw(
-                    "
-                    CASE
-                        WHEN title LIKE ? THEN 1
-                        WHEN description LIKE ? THEN 2
-                        ELSE 3
-                    END
-                ",
-                    ["%$searchTerm%", "%$searchTerm%"]
-                );
+            $query->where(function ($query) use ($searchTerm) {
+                $query
+                    ->where('title', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('description', 'like', '%' . $searchTerm . '%');
+            });
+
+            $query->orderByRaw(
+                "
+                        CASE
+                            WHEN title LIKE ? AND description LIKE ? THEN 1
+                            WHEN title LIKE ? THEN 2
+                            WHEN description LIKE ? THEN 3
+                            ELSE 4
+                        END
+                        ",
+                [
+                    "%$searchTerm%",
+                    "%$searchTerm%",
+                    "%$searchTerm%",
+                    "%$searchTerm%",
+                ]
+            );
         });
 
         $transactions = $query->paginate(10);
