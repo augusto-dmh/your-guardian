@@ -85,11 +85,13 @@
                             d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                     </svg>
                 </div>
-                <input type="search" name="searchTerm" value="{{ $searchTerm }}"
-                    class="block w-full p-4 text-gray-300 bg-opacity-50 border-none rounded-lg appearance-none bg-secondary-bg ps-10 focus:outline-none focus:ring-2 focus:ring-quinary-bg"
-                    placeholder="{{ __('Search for title or description') }}" />
+                <div>
+                    <input type="search" name="searchTerm" value="{{ $searchTerm }}"
+                        class="block w-full p-4 text-gray-300 bg-opacity-50 border-none rounded-lg appearance-none bg-secondary-bg ps-10 pe-[4.75rem] focus:outline-none focus:ring-2 focus:ring-quinary-bg"
+                        placeholder="{{ __('Search for title or description') }}" />
+                </div>
                 <button type="submit"
-                    class="right-0 absolute end-2.5 bottom-2.5 bg-primary-bg shadow-inner hover:shadow-innerHover text-tertiary-txt font-medium rounded-lg text-sm px-4 py-2">Search</button>
+                    class="right-3 absolute end-2.5 bottom-2.5 bg-primary-bg shadow-inner hover:shadow-innerHover text-tertiary-txt font-medium rounded-lg text-sm px-4 py-2">Search</button>
             </div>
         </div>
     </form>
