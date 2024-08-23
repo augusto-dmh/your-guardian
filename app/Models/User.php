@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Notifications\ResetPasswordNotification;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -52,98 +53,122 @@ class User extends Authenticatable
         ];
     }
 
-    public function getFullNameAttribute()
+    protected function fullName(): Attribute
     {
-        return $this->first_name . ' ' . $this->last_name;
-    }
-
-    public function getBalanceAttribute()
-    {
-        $balance = $this->transactions()->sum('amount');
-        return number_format($balance, 2);
-    }
-
-    public function getHasTransactionsOrPaidBillsAttribute()
-    {
-        return $this->transactions()->count() > 0 ||
-            $this->bills()->where('paid_at', '!=', null)->count() > 0 ||
-            $this->tasks()->count() > 0;
-    }
-
-    public function getLastTransactionAttribute()
-    {
-        return $this->transactions()->latest('created_at')->first();
-    }
-
-    public function getBillsPercentagePerStatusAttribute()
-    {
-        $pendingBillsCount = $this->bills()
-            ->where('status', 'pending')
-            ->count();
-        $paidBillsCount = $this->bills()->where('status', 'paid')->count();
-        $overdueBillsCount = $this->bills()
-            ->where('status', 'overdue')
-            ->count();
-        $totalCount = $pendingBillsCount + $paidBillsCount + $overdueBillsCount;
-
-        $pendingBillsPercentage = round(
-            ($pendingBillsCount / $totalCount) * 100
+        return Attribute::make(
+            get: fn() => $this->first_name . ' ' . $this->last_name
         );
-        $paidBillsPercentage = round(($paidBillsCount / $totalCount) * 100);
-        $overdueBillsPercentage = round(
-            ($overdueBillsCount / $totalCount) * 100
+    }
+
+    protected function balance(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => number_format($this->transactions()->sum('amount'), 2)
         );
-
-        return [
-            'pending' => $pendingBillsPercentage,
-            'paid' => $paidBillsPercentage,
-            'overdue' => $overdueBillsPercentage,
-        ];
     }
 
-    public function getTransactionCategoryWithMostTransactionsAttribute()
+    protected function hasTransactionsOrPaidBills(): Attribute
     {
-        return $this->transactions()
-            ->select('transaction_category_id', DB::raw('count(*) as total'))
-            ->whereNotNull('transaction_category_id')
-            ->groupBy('transaction_category_id')
-            ->orderBy('total', 'desc')
-            ->first()->transactionCategory->name;
+        return Attribute::make(
+            get: fn() => $this->transactions()->count() > 0 ||
+                $this->bills()->whereNotNull('paid_at')->count() > 0 ||
+                $this->tasks()->count() > 0
+        );
     }
 
-    public function getTransactionsPercentagePerTypeAttribute()
+    protected function lastTransaction(): Attribute
     {
-        $incomeCount = $this->transactions()->where('type', 'income')->count();
-        $expenseCount = $this->transactions()
-            ->where('type', 'expense')
-            ->count();
-        $totalCount = $incomeCount + $expenseCount;
-
-        $incomePercentage = round(($incomeCount / $totalCount) * 100, 2);
-        $expensePercentage = round(($expenseCount / $totalCount) * 100, 2);
-
-        return [
-            'income' => $incomePercentage,
-            'expense' => $expensePercentage,
-        ];
+        return Attribute::make(
+            get: fn() => $this->transactions()->latest('created_at')->first()
+        );
     }
 
-    public function getNextPendingBillDueDateAttribute()
+    protected function billsPercentagePerStatus(): Attribute
     {
-        return $this->bills()
-            ->where('due_date', '>=', now())
-            ->where('status', '=', 'pending')
-            ->orderBy('due_date', 'asc')
-            ->first()?->due_date;
+        return Attribute::make(
+            get: function () {
+                $pendingBillsCount = $this->bills()
+                    ->where('status', 'pending')
+                    ->count();
+                $paidBillsCount = $this->bills()
+                    ->where('status', 'paid')
+                    ->count();
+                $overdueBillsCount = $this->bills()
+                    ->where('status', 'overdue')
+                    ->count();
+                $totalCount =
+                    $pendingBillsCount + $paidBillsCount + $overdueBillsCount;
+
+                return [
+                    'pending' => round(
+                        ($pendingBillsCount / $totalCount) * 100
+                    ),
+                    'paid' => round(($paidBillsCount / $totalCount) * 100),
+                    'overdue' => round(
+                        ($overdueBillsCount / $totalCount) * 100
+                    ),
+                ];
+            }
+        );
     }
 
-    public function getNextPendingTaskDueDateAttribute()
+    protected function transactionCategoryWithMostTransactions(): Attribute
     {
-        return $this->tasks()
-            ->where('due_date', '>=', now())
-            ->where('status', '=', 'pending')
-            ->orderBy('due_date', 'asc')
-            ->first()?->due_date;
+        return Attribute::make(
+            get: function () {
+                return $this->transactions()
+                    ->select(
+                        'transaction_category_id',
+                        DB::raw('count(*) as total')
+                    )
+                    ->whereNotNull('transaction_category_id')
+                    ->groupBy('transaction_category_id')
+                    ->orderBy('total', 'desc')
+                    ->first()?->transactionCategory->name;
+            }
+        );
+    }
+
+    protected function transactionsPercentagePerType(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $incomeCount = $this->transactions()
+                    ->where('type', 'income')
+                    ->count();
+                $expenseCount = $this->transactions()
+                    ->where('type', 'expense')
+                    ->count();
+                $totalCount = $incomeCount + $expenseCount;
+
+                return [
+                    'income' => round(($incomeCount / $totalCount) * 100, 2),
+                    'expense' => round(($expenseCount / $totalCount) * 100, 2),
+                ];
+            }
+        );
+    }
+
+    protected function nextPendingBillDueDate(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->bills()
+                ->where('due_date', '>=', now())
+                ->where('status', '=', 'pending')
+                ->orderBy('due_date', 'asc')
+                ->first()?->due_date
+        );
+    }
+
+    protected function nextPendingTaskDueDate(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->tasks()
+                ->where('due_date', '>=', now())
+                ->where('status', '=', 'pending')
+                ->orderBy('due_date', 'asc')
+                ->first()?->due_date
+        );
     }
 
     public function sendPasswordResetNotification($token): void
