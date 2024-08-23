@@ -31,11 +31,10 @@
             <x-sidebar.sidebar />
 
             <!-- Page Wrapper -->
-            <div class="flex flex-col min-h-screen"
-                :class="{
+            <div class="flex flex-col min-h-screen md:ml-16" {{-- :class="{
                     'lg:ml-64': isSidebarOpen,
                     'md:ml-16': !isSidebarOpen
-                }"
+                }" --}}
                 style="transition-property: margin; transition-duration: 150ms;">
 
                 <!-- Navbar -->
