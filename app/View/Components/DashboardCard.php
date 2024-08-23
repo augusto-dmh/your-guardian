@@ -11,7 +11,7 @@ class dashboardCard extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $title, public mixed $data)
+    public function __construct(public string $title)
     {
     }
 
@@ -21,9 +21,7 @@ class dashboardCard extends Component
     public function render(): View|Closure|string
     {
         return view('components.dashboard-card', [
-            // i need to explicit this here because a conflict happens if Laravel alone tries to.
-            'title' => $this->title, // probably because 'view' has one of its parameters as 'data' and receives 'data' attribute from the class. If i change from
-            'data' => $this->data, // 'data' to something else no problem occurs.
+            'title' => $this->title,
         ]);
     }
 }

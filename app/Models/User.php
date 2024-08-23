@@ -94,7 +94,11 @@ class User extends Authenticatable
             ($overdueBillsCount / $totalCount) * 100
         );
 
-        return "$pendingBillsPercentage x $paidBillsPercentage x $overdueBillsPercentage";
+        return [
+            'pending' => $pendingBillsPercentage,
+            'paid' => $paidBillsPercentage,
+            'overdue' => $overdueBillsPercentage,
+        ];
     }
 
     public function getTransactionCategoryWithMostTransactionsAttribute()
@@ -118,7 +122,10 @@ class User extends Authenticatable
         $incomePercentage = round(($incomeCount / $totalCount) * 100, 2);
         $expensePercentage = round(($expenseCount / $totalCount) * 100, 2);
 
-        return "$incomePercentage x $expensePercentage";
+        return [
+            'income' => $incomePercentage,
+            'expense' => $expensePercentage,
+        ];
     }
 
     public function getNextPendingBillDueDateAttribute()

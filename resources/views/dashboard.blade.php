@@ -9,9 +9,36 @@
 
     <div class="flex flex-col justify-center gap-4">
         <div class="flex item flex-col gap-4 w-full lg:justify-between lg:flex-row [&>div]:text-center [&>div]:w-full">
-            <x-dashboard-card title="{{ __('Bills Status (%)') }}" :data="auth()->user()->billsPercentagePerStatus" />
-            <x-dashboard-card title="{{ __('Transactions Types (%)') }}" :data="auth()->user()->transactionsPercentagePerType" />
-            <x-dashboard-card title="{{ __('Top Transaction Category') }}" :data="__(auth()->user()->transactionCategoryWithMostTransactions)" />
+            <x-dashboard-card title="{{ __('Bills Status') }}">
+                <div class="flex gap-3">
+                    <div class="flex">
+                        {{ auth()->user()->billsPercentagePerStatus['pending'] . '%' }}<x-heroicon-o-clock
+                            class="w-6 h-6 text-yellow-500" /></div>
+                    <div class="flex">
+                        {{ auth()->user()->billsPercentagePerStatus['paid'] . '%' }}<x-heroicon-o-check-circle
+                            class="w-6 h-6 text-green-500" />
+                    </div>
+                    <div class="flex">
+                        {{ auth()->user()->billsPercentagePerStatus['overdue'] . '%' }}<x-heroicon-o-x-circle
+                            class="w-6 h-6 text-red-500" />
+                    </div>
+                </div>
+            </x-dashboard-card>
+            <x-dashboard-card title="{{ __('Transactions Types') }}">
+                <div class="flex gap-3">
+                    <div class="flex">
+                        {{ auth()->user()->transactionsPercentagePerType['income'] . '%' }}<x-heroicon-o-trending-up
+                            class="w-6 h-6 text-green-500" />
+                    </div>
+                    <div class="flex">
+                        {{ auth()->user()->transactionsPercentagePerType['expense'] . '%' }}<x-heroicon-o-trending-down
+                            class="w-6 h-6 text-red-500" />
+                    </div>
+                </div>
+            </x-dashboard-card>
+            <x-dashboard-card title="{{ __('Top Transaction Category') }}">
+                <span>{{ auth()->user()->transactionCategoryWithMostTransactions }}</span>
+            </x-dashboard-card>
         </div>
 
         <div class="flex flex-col gap-4 lg:flex-row">
