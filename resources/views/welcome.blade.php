@@ -25,11 +25,9 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div x-data="mainState" :class="{ dark: isDarkMode }" x-on:resize.window="handleWindowResize" x-cloak
-        class="flex flex-col min-h-screen">
+    <div x-data="mainState" x-on:resize.window="handleWindowResize" x-cloak class="flex flex-col min-h-screen">
         <x-navbar />
-        <div
-            class="flex flex-col items-center justify-center flex-grow mt-2 text-gray-900 bg-gray-100 dark:bg-dark-eval-0 dark:text-gray-200">
+        <div class="flex flex-col items-center justify-center flex-grow mt-2 text-gray-200 bg-dark-eval-0">
             @if (Auth::user()?->created_at && now()->diffInMinutes(Auth::user()->created_at, true) <= 10)
                 <div class="px-4 py-2 text-2xl rounded-md text-tertiary-txt" role="alert">
                     {{ __('Hi') }} {{ Auth::user()->first_name }}! Wanna know first a bit <a

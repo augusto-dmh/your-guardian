@@ -6,13 +6,13 @@
     'size' => 'base',
     'disabled' => false,
     'pill' => false,
-    'squared' => false
+    'squared' => false,
 ])
 
 @php
 
     $baseClasses =
-        'inline-flex items-center transition-colors font-medium select-none disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-dark-eval-2';
+        'inline-flex items-center transition-colors font-medium select-none disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring focus:ring-offset-2 focus:ring-offset-white focus:ring-offset-dark-eval-2';
 
     switch ($variant) {
         case 'primary':
@@ -20,7 +20,7 @@
             break;
         case 'secondary':
             $variantClasses =
-                'bg-white text-[#e4aa70] hover:bg-[#ffedd5] focus:ring-[#e4aa70] dark:text-[#e4aa70] dark:bg-dark-eval-1 dark:hover:bg-dark-eval-2 dark:hover:text-[#fac189]';
+                'focus:ring-[#e4aa70] text-[#e4aa70] bg-dark-eval-1 hover:bg-dark-eval-2 hover:text-[#fac189]';
             break;
         case 'success':
             $variantClasses = 'bg-green-400 text-[#ffedd5] hover:bg-green-600 focus:ring-green-400';
@@ -35,8 +35,7 @@
             $variantClasses = 'bg-cyan-400 text-[#ffedd5] hover:bg-cyan-600 focus:ring-cyan-400';
             break;
         case 'black':
-            $variantClasses =
-                'bg-black text-gray-300 hover:text-[#ffedd5] hover:bg-gray-800 focus:ring-black dark:hover:bg-dark-eval-3';
+            $variantClasses = 'bg-black text-gray-300 hover:text-[#ffedd5] focus:ring-black hover:bg-dark-eval-3';
             break;
         default:
             $variantClasses = 'bg-[#e4aa70] text-[#ffedd5] hover:bg-[#e4aa70] focus:ring-[#e4aa70]';
@@ -80,4 +79,3 @@
         @endif
     </button>
 @endif
-

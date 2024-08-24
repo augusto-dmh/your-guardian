@@ -8,33 +8,17 @@
 @endphp
 
 <nav aria-label="secondary" x-data="{ open: false }"
-    class="sticky top-0 z-10 flex items-center justify-between px-4 py-4 transition-transform duration-500 bg-white sm:px-6 dark:bg-dark-eval-1"
+    class="sticky top-0 z-10 flex items-center justify-end px-4 py-4 transition-transform duration-500 sm:px-6 bg-dark-eval-1"
     :class="{
         '-translate-y-full': scrollingDown,
         'translate-y-0': scrollingUp,
     }">
 
     <div class="flex items-center gap-3">
-        <x-button type="button" class="md:hidden" icon-only variant="secondary" sr-text="Toggle dark mode"
-            x-on:click="toggleTheme">
-            <x-heroicon-o-moon x-show="!isDarkMode" aria-hidden="true" class="w-6 h-6" />
-
-            <x-heroicon-o-sun x-show="isDarkMode" aria-hidden="true" class="w-6 h-6" />
-        </x-button>
-    </div>
-
-    <div class="flex items-center gap-3">
-        <x-button type="button" class="hidden md:inline-flex" icon-only variant="secondary" sr-text="Toggle dark mode"
-            x-on:click="toggleTheme">
-            <x-heroicon-o-moon x-show="!isDarkMode" aria-hidden="true" class="w-6 h-6" />
-
-            <x-heroicon-o-sun x-show="isDarkMode" aria-hidden="true" class="w-6 h-6" />
-        </x-button>
-
         <x-dropdown align="right" width="48">
             <x-slot name="trigger">
                 <button
-                    class="flex items-center p-2 text-sm font-medium text-gray-500 rounded-md transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none focus:ring focus:ring-[#e4aa70] focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-dark-eval-1 dark:text-gray-400 dark:hover:text-gray-200">
+                    class="flex items-center p-2 text-sm font-medium rounded-md transition duration-150 ease-in-out focus:outline-none focus:ring focus:ring-[#e4aa70] focus:ring-offset-1 focus:ring-offset-dark-eval-1 text-gray-400 hover:text-gray-200">
                     <div class="ml-1">
                         <svg class="w-6 h-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path
@@ -50,8 +34,8 @@
                     @php
                         $isActive = $currentLocale === $localeCode;
                         $cssClasses = $isActive
-                            ? 'text-tertiary-txt dark:hover:text-secondary-txt'
-                            : 'text-gray-700 dark:text-gray-400 dark:hover:text-gray-200';
+                            ? 'text-tertiary-txt hover:text-secondary-txt'
+                            : 'text-gray-400 hover:text-gray-200';
                     @endphp
                     <x-dropdown-link :href="route('locale', ['locale' => $localeCode])" :class="$cssClasses">
                         {{ $locale['flag'] }} {{ $locale['name'] }}
@@ -64,7 +48,7 @@
             <x-dropdown align="right" width="48">
                 <x-slot name="trigger">
                     <button
-                        class="flex items-center p-2 text-sm font-medium text-gray-500 rounded-md transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none focus:ring focus:ring-[#e4aa70] focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-dark-eval-1 dark:text-gray-400 dark:hover:text-gray-200">
+                        class="flex items-center p-2 text-sm font-medium rounded-md transition duration-150 ease-in-out focus:outline-none focus:ring focus:ring-[#e4aa70] focus:ring-offset-1 focus:ring-offset-dark-eval-1 text-gray-400 hover:text-gray-200">
 
                         <div class="ml-1">
                             <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -78,7 +62,7 @@
 
                 <x-slot name="content">
                     <!-- Profile -->
-                    <x-dropdown-link :href="route('profile.edit')" class="text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <x-dropdown-link :href="route('profile.edit')" class="text-gray-400 hover:text-gray-200">
                         {{ __('Profile') }}
                     </x-dropdown-link>
 
@@ -87,7 +71,7 @@
                         @csrf
 
                         <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();"
-                            class="text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                            class="text-gray-400 hover:text-gray-200">
                             {{ __('Log Out') }}
                         </x-dropdown-link>
                     </form>
@@ -98,7 +82,7 @@
 </nav>
 
 <!-- Mobile bottom bar -->
-<div class="fixed inset-x-0 bottom-0 z-10 flex items-center px-4 py-4 transition-transform duration-500 bg-white sm:px-6 md:hidden dark:bg-dark-eval-1"
+<div class="fixed inset-x-0 bottom-0 z-10 flex items-center px-4 py-4 transition-transform duration-500 sm:px-6 md:hidden bg-dark-eval-1"
     :class="{
         'translate-y-full': scrollingDown,
         'translate-y-0': scrollingUp,

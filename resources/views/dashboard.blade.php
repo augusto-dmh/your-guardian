@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-            <h2 class="dark:text-[#fac189] text-xl font-bold leading-tight">
+            <h2 class="text-[#fac189] text-xl font-bold leading-tight">
                 {{ __('Dashboard') }}
             </h2>
         </div>

@@ -42,10 +42,10 @@
                 <div class="flex items-center justify-between">
                     <label for="remember_me" class="inline-flex items-center">
                         <input id="remember_me" type="checkbox"
-                            class="text-purple-500 border-gray-300 rounded focus:border-purple-300 focus:ring focus:ring-purple-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1"
+                            class="text-purple-500 border-gray-600 rounded focus:border-purple-300 focus:ring focus:ring-purple-500 bg-dark-eval-1 focus:ring-offset-dark-eval-1"
                             name="remember">
 
-                        <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">
+                        <span class="ml-2 text-sm text-gray-400">
                             {{ __('Remember me') }}
                         </span>
                     </label>
@@ -66,7 +66,7 @@
                 </div>
 
                 @if (Route::has('register'))
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                    <p class="text-sm text-gray-600">
                         {{ __('Don’t have an account?') }}
                         <a href="{{ route('register') }}" class="text-blue-500 hover:underline">
                             {{ __('Register') }}

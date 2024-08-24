@@ -25,8 +25,8 @@
 </head>
 
 <body>
-    <div x-data="mainState" class="font-sans antialiased" :class="{ dark: isDarkMode }" x-cloak>
-        <div class="flex flex-col min-h-screen text-gray-900 bg-gray-100 dark:bg-dark-eval-0 dark:text-gray-200">
+    <div x-data="mainState" class="font-sans antialiased" x-cloak>
+        <div class="flex flex-col min-h-screen text-gray-200 bg-dark-eval-0">
             {{ $slot }}
 
             <x-footer />
