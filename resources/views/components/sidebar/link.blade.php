@@ -1,13 +1,14 @@
 @props([
     'isActive' => false,
     'title' => '',
-    'collapsible' => false
+    'collapsible' => false,
+    'active' => false,
 ])
 
 @php
     $isActiveClasses = $isActive
         ? 'text-white bg-[#e4aa70] shadow-lg hover:bg-[#fac189]'
-        : 'text-[#e4aa70] hover:text-gray-700 hover:bg-[#ffedd5] dark:hover:text-[#fac189] dark:hover:bg-dark-eval-2';
+        : 'text-[#e4aa70] hover:text-[#fac189] hover:bg-dark-eval-2';
 
     $classes =
         'flex-shrink-0 flex items-center gap-2 p-2 transition-colors rounded-md overflow-hidden ' . $isActiveClasses;
@@ -29,7 +30,7 @@
             {{ $title }}
         </span>
 
-        <span x-show="isSidebarOpen || isSidebarHovered" aria-hidden="true" class="relative block ml-auto w-6 h-6">
+        <span x-show="isSidebarOpen || isSidebarHovered" aria-hidden="true" class="relative block w-6 h-6 ml-auto">
             <span :class="open ? '-rotate-45' : 'rotate-45'"
                 class="absolute right-[9px] bg-[#e4aa70] mt-[-5px] h-2 w-[2px] top-1/2 transition-all duration-200"></span>
 
@@ -50,4 +51,3 @@
         </span>
     </a>
 @endif
-
