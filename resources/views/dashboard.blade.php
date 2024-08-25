@@ -192,13 +192,5 @@
         });
         selectTypeOrStatus.addEventListener('change', updateChart);
         selectLength.addEventListener('change', updateChart);
-        document.querySelector('.transactions-data-btn').addEventListener('click', () => {
-            selectDataType.selectedIndex = 0;
-            updateChart();
-        });
-        document.querySelector('.bills-data-btn').addEventListener('click', () => {
-            selectDataType.selectedIndex = 1;
-            updateChart();
-        });
     </script>
 </x-app-layout>
