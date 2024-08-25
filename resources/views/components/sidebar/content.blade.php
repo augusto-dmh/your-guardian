@@ -6,32 +6,6 @@
         </x-slot>
     </x-sidebar.link>
 
-    @if (request()->routeIs('dashboard'))
-        <x-sidebar.dropdown title="{{ __('Charts') }}" isParentDropdown>
-            <x-slot name="icon">
-                <x-heroicon-o-chart-bar class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
-            </x-slot>
-
-            <x-sidebar.dropdown title="{{ __('Transactions') }}">
-                <x-slot name="icon">
-                    <x-heroicon-s-switch-horizontal class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
-                </x-slot>
-
-                <x-sidebar.button class="transactions-total-paid-btn" title="{{ __('Total paid') }}"
-                    :active="request()->routeIs('transactions.total_paid')" />
-            </x-sidebar.dropdown>
-
-            <x-sidebar.dropdown title="{{ __('Bills') }}">
-                <x-slot name="icon">
-                    <x-heroicon-o-document-text class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
-                </x-slot>
-
-                <x-sidebar.button class="bills-n-of-paid-btn" title="{{ __('Nº of paid') }}" />
-            </x-sidebar.dropdown>
-
-        </x-sidebar.dropdown>
-    @endif
-
     <script></script>
 
     <div x-transition x-show="isSidebarOpen || isSidebarHovered" class="text-sm text-gray-500">

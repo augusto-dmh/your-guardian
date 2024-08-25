@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\Auth;
 
 class BillChartDataService
@@ -11,6 +12,80 @@ class BillChartDataService
     public function __construct()
     {
         $this->user = Auth::user();
+    }
+
+    public function getBillsTotalAmountToBePaidInNextDays($length)
+    {
+        $startDate = now()->startOfDay();
+        $endDate = now()->addDays($length)->endOfDay();
+
+        $bills = $this->user
+            ->bills()
+            ->whereBetween('due_date', [$startDate, $endDate])
+            ->where('status', 'pending')
+            ->selectRaw('DATE(due_date) as date, SUM(amount) as total_amount')
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get()
+            ->keyBy('date');
+
+        $period = CarbonPeriod::create($startDate, $endDate);
+        $labels = [];
+        $data = [];
+
+        foreach ($period as $date) {
+            $formattedDate = $date->format('Y-m-d');
+            $labels[] = $formattedDate;
+            $data[] = $bills->get($formattedDate)->total_amount ?? 0;
+        }
+
+        return [
+            'labels' => $labels,
+            'dataset' => [
+                'label' =>
+                    __('$ to pay in bills') .
+                    ' ' .
+                    __('in next :days days', ['days' => $length]),
+                'data' => $data,
+            ],
+        ];
+    }
+
+    public function getBillsTotalAmountPaidInLastDays($length)
+    {
+        $startDate = now()->subDays($length)->startOfDay();
+        $endDate = now()->endOfDay();
+
+        $bills = $this->user
+            ->bills()
+            ->whereBetween('paid_at', [$startDate, $endDate])
+            ->where('status', 'paid')
+            ->selectRaw('DATE(paid_at) as date, SUM(amount) as total_amount')
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get()
+            ->keyBy('date');
+
+        $period = CarbonPeriod::create($startDate, $endDate);
+        $labels = [];
+        $data = [];
+
+        foreach ($period as $date) {
+            $formattedDate = $date->format('Y-m-d');
+            $labels[] = $formattedDate;
+            $data[] = $bills->get($formattedDate)->total_amount ?? 0;
+        }
+
+        return [
+            'labels' => $labels,
+            'dataset' => [
+                'label' =>
+                    __('$ paid in bills') .
+                    ' ' .
+                    __('in last :days days', ['days' => $length]),
+                'data' => $data,
+            ],
+        ];
     }
 
     public function getNumberOfDailyPaidBills($intervalLength = 1)

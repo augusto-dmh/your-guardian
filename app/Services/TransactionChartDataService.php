@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use Carbon\CarbonPeriod;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 class TransactionChartDataService
@@ -11,6 +13,80 @@ class TransactionChartDataService
     public function __construct()
     {
         $this->user = Auth::user();
+    }
+
+    public function getTotalIncomeOnTransactionsInLastDays($length)
+    {
+        $startDate = now()->subDays($length)->startOfDay();
+        $endDate = now()->endOfDay();
+
+        $transactions = $this->user
+            ->transactions()
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->where('type', 'income')
+            ->selectRaw('DATE(created_at) as date, SUM(amount) as total_amount')
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get()
+            ->keyBy('date');
+
+        $period = CarbonPeriod::create($startDate, $endDate);
+        $labels = [];
+        $data = [];
+
+        foreach ($period as $date) {
+            $formattedDate = $date->format('Y-m-d');
+            $labels[] = $formattedDate;
+            $data[] = $transactions->get($formattedDate)->total_amount ?? 0;
+        }
+
+        return [
+            'labels' => $labels,
+            'dataset' => [
+                'label' =>
+                    __('$ of income on transactions') .
+                    ' ' .
+                    __('in last :days days', ['days' => $length]),
+                'data' => $data,
+            ],
+        ];
+    }
+
+    public function getTotalExpenseOnTransactionsInLastDays($length)
+    {
+        $startDate = now()->subDays($length)->startOfDay();
+        $endDate = now()->endOfDay();
+
+        $transactions = $this->user
+            ->transactions()
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->where('type', 'expense')
+            ->selectRaw('DATE(created_at) as date, SUM(amount) as total_amount')
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get()
+            ->keyBy('date');
+
+        $period = CarbonPeriod::create($startDate, $endDate);
+        $labels = [];
+        $data = [];
+
+        foreach ($period as $date) {
+            $formattedDate = $date->format('Y-m-d');
+            $labels[] = $formattedDate;
+            $data[] = $transactions->get($formattedDate)->total_amount ?? 0;
+        }
+
+        return [
+            'labels' => $labels,
+            'dataset' => [
+                'label' =>
+                    __('$ of expense on transactions') .
+                    ' ' .
+                    __('in last :days days', ['days' => $length]),
+                'data' => $data,
+            ],
+        ];
     }
 
     public function getTotalAmountOnTransactionsDaily($intervalLength = 1)
