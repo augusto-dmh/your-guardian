@@ -46,8 +46,8 @@
                 <div class="">
                     <div class="flex items-end justify-between gap-4 md:flex-row">
                         <div class="flex-1 mb-4 text-center">
-                            <label for="data-type" class="block w-full">{{ __('Data Type') }}</label>
-                            <select id="data-type" name="data-type"
+                            <label for="select-data-type" class="block w-full">{{ __('Data Type') }}</label>
+                            <select id="select-data-type" name="data-type"
                                 class="w-full focus:outline-none focus:ring-2 focus:ring-quinary-bg">
                                 <option value="transactions" selected>{{ __('Transactions') }}</option>
                                 <option value="bills">{{ __('Bills') }}</option>
@@ -55,22 +55,22 @@
                         </div>
 
                         <div class="flex-1 mb-4 text-center">
-                            <label for="interval-type" class="block w-full">{{ __('Interval') }}</label>
-                            <select id="interval-type" name="interval-type"
+                            <label id="label-type-or-status" for="select-type-or-status"
+                                class="block w-full">{{ __('Type') }}</label>
+                            <select id="select-type-or-status" name="type"
                                 class="w-full focus:outline-none focus:ring-2 focus:ring-quinary-bg">
-                                <option value="yearly" selected>{{ __('Yearly') }}</option>
-                                <option value="monthly">{{ __('Monthly') }}</option>
-                                <option value="daily">{{ __('Daily') }}</option>
+                                <option value="income" selected>{{ __('Income') }}</option>
+                                <option value="expense">{{ __('Expense') }}</option>
                             </select>
                         </div>
 
                         <div class="flex-1 mb-4 text-center">
-                            <label for="interval-length" class="block w-full">{{ __('Length') }}</label>
-                            <select id="interval-length" name="interval-length"
+                            <label for="select-length" class="block w-full">{{ __('Length') }}</label>
+                            <select id="select-length" name="length"
                                 class="w-full focus:outline-none focus:ring-2 focus:ring-quinary-bg">
-                                <option value="1" selected>{{ __('One year') }}</option>
-                                <option value="5">{{ __('Five Years') }}</option>
-                                <option value="10">{{ __('Ten Years') }}</option>
+                                <option value="7" selected>{{ '7 ' . __('Days') }}</option>
+                                <option value="14">{{ '14 ' . __('Days') }}</option>
+                                <option value="28">{{ '28 ' . __('Days') }}</option>
                             </select>
                         </div>
                     </div>
@@ -97,6 +97,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        const selectDataType = document.getElementById('select-data-type');
+        const selectTypeOrStatus = document.getElementById('select-type-or-status');
+        const selectLength = document.getElementById('select-length');
+        const labelSelectTypeOrStatus = document.querySelector('#label-type-or-status');
+
         const ctx = document.getElementById('chart');
 
         const chart = new Chart(ctx, {
@@ -114,10 +119,10 @@
         updateChart();
 
         function updateChart() {
-            const dataType = document.getElementById('data-type').value;
-            const interval = {
-                type: document.getElementById('interval-type').value,
-                length: document.getElementById('interval-length').value
+            const dataType = selectDataType.value;
+            const body = {
+                type: selectTypeOrStatus.value,
+                length: selectLength.value
             };
 
             fetch(`/api/chart-data/${dataType}`, {
@@ -126,7 +131,7 @@
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                     },
-                    body: JSON.stringify(interval),
+                    body: JSON.stringify(body),
                 })
                 .then(response => response.json())
                 .then(data => {
@@ -138,15 +143,61 @@
                 });
         }
 
-        document.getElementById('data-type').addEventListener('change', updateChart);
-        document.getElementById('interval-type').addEventListener('change', updateChart);
-        document.getElementById('interval-length').addEventListener('change', updateChart);
-        document.querySelector('.transactions-total-paid-btn').addEventListener('click', () => {
-            document.getElementById('data-type').selectedIndex = 0;
+        selectDataType.addEventListener('change', () => {
+            const selectTypeOptions = {
+                bills: [{
+                        value: 'pending',
+                        text: '{{ __('Pending') }}'
+                    },
+                    {
+                        value: 'paid',
+                        text: '{{ __('Paid') }}'
+                    },
+                ],
+                transactions: [{
+                        value: 'income',
+                        text: '{{ __('Income') }}'
+                    },
+                    {
+                        value: 'expense',
+                        text: '{{ __('Expense') }}'
+                    },
+                ]
+            };
+
+            // clear selectTypeOrStatus
+            selectTypeOrStatus.innerHTML = '';
+
+            selectDataType.value === 'transactions' ?
+                labelSelectTypeOrStatus.innerHTML = "{{ __('Type') }}" :
+                labelSelectTypeOrStatus.innerHTML = "{{ __('Status') }}";
+
+            // get options for selectTypeOrStatus based on dataType
+            const selectTypeNewOptions = selectTypeOptions[selectDataType.value];
+
+            // populate selectTypeOrStatus with new options
+            selectTypeNewOptions.forEach((option, index) => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option.value;
+                optionElement.textContent = option.text;
+
+                if (index === 0) {
+                    optionElement.selected = true;
+                }
+
+                selectTypeOrStatus.appendChild(optionElement);
+            });
+
             updateChart();
         });
-        document.querySelector('.bills-n-of-paid-btn').addEventListener('click', () => {
-            document.getElementById('data-type').selectedIndex = 1;
+        selectTypeOrStatus.addEventListener('change', updateChart);
+        selectLength.addEventListener('change', updateChart);
+        document.querySelector('.transactions-data-btn').addEventListener('click', () => {
+            selectDataType.selectedIndex = 0;
+            updateChart();
+        });
+        document.querySelector('.bills-data-btn').addEventListener('click', () => {
+            selectDataType.selectedIndex = 1;
             updateChart();
         });
     </script>
