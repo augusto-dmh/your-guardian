@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use App\Charts\DailyTransactionsChart;
 use App\Charts\YearlyTransactionsChart;
 use App\Charts\MonthlyTransactionsChart;
-use App\Charts\DailyTransactionsChart;
 use App\Services\TransactionChartDataService;
-use Illuminate\Support\Facades\Auth;
 
 class TransactionChartController extends Controller
 {
@@ -21,30 +22,29 @@ class TransactionChartController extends Controller
 
     public function fetchChartData(Request $request)
     {
-        $chartData = $this->getChartDataByInterval(
-            $request->input('type', 'yearly'),
-            $request->input('length', '1')
+        $chartData = $this->getTransactionChartData(
+            $request->input('type', 'income'),
+            (int) $request->input('length', 7)
         );
 
         return response()->json($chartData);
     }
 
-    protected function getChartDataByInterval($type, $length)
+    protected function getTransactionChartData($type, $length)
     {
         switch ($type) {
-            case 'daily':
-                $chartData = $this->transactionChartDataService->getTotalAmountOnTransactionsDaily(
+            case 'income':
+                $chartData = $this->transactionChartDataService->getTotalIncomeOnTransactionsInLastDays(
                     $length
                 );
                 break;
-            case 'monthly':
-                $chartData = $this->transactionChartDataService->getTotalAmountOnTransactionsMonthly(
+            case 'expense':
+                $chartData = $this->transactionChartDataService->getTotalExpenseOnTransactionsInLastDays(
                     $length
                 );
                 break;
-            case 'yearly':
             default:
-                $chartData = $this->transactionChartDataService->getTotalAmountOnTransactionsYearly(
+                $chartData = $this->transactionChartDataService->getTotalIncomeOnTransactionsInLastDays(
                     $length
                 );
                 break;

@@ -20,30 +20,29 @@ class BillChartController extends Controller
 
     public function fetchChartData(Request $request)
     {
-        $chartData = $this->getChartDataByInterval(
-            $request->input('type', 'yearly'),
-            $request->input('length', '1')
+        $chartData = $this->getBillChartData(
+            $request->input('type', 'pending'),
+            (int) $request->input('length', 7)
         );
 
         return response()->json($chartData);
     }
 
-    protected function getChartDataByInterval($type, $length)
+    protected function getBillChartData($type, $length)
     {
         switch ($type) {
-            case 'daily':
-                $chartData = $this->billChartDataService->getNumberOfDailyPaidBills(
+            case 'pending':
+                $chartData = $this->billChartDataService->getBillsTotalAmountToBePaidInNextDays(
                     $length
                 );
                 break;
-            case 'monthly':
-                $chartData = $this->billChartDataService->getNumberOfMonthlyPaidBills(
+            case 'paid':
+                $chartData = $this->billChartDataService->getBillsTotalAmountPaidInLastDays(
                     $length
                 );
                 break;
-            case 'yearly':
             default:
-                $chartData = $this->billChartDataService->getNumberOfYearlyPaidBills(
+                $chartData = $this->billChartDataService->getBillsTotalAmountToBePaidInNextDays(
                     $length
                 );
                 break;
