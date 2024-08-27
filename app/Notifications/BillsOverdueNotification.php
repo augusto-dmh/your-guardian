@@ -4,12 +4,11 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class BillsDueTomorrow extends Notification
+class BillsOverdueNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -38,7 +37,7 @@ class BillsDueTomorrow extends Notification
     /**
      * Get the mail representation of the notification.
      */
-    public function toMail($notifiable)
+    public function toMail(object $notifiable): MailMessage
     {
         App::setLocale($this->locale);
 
@@ -46,23 +45,18 @@ class BillsDueTomorrow extends Notification
             ->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'))
             ->salutation(__('Best regards, Your Guardian.'))
             ->greeting(__('Hello :name', ['name' => $notifiable->first_name]))
-            ->subject(__('Bills Due Tomorrow'));
+            ->subject(__('Bills Overdue'));
 
-        $billsTitles = $this->bills
-            ->map(function ($bill) {
-                return '"' . $bill->title . '"';
-            })
-            ->join(', ');
-
-        $message->line(
-            __('Your bills :bills are due tomorrow.', ['bills' => $billsTitles])
-        );
+        $message->line(__('You have one or more bills now overdue.'));
 
         $message
-            ->action(__('View Bills'), url('/bills'))
+            ->action(
+                __('View Bills'),
+                url('/bills?filterByStatus%5B%5D=overdue&sortByDueDate=desc')
+            )
             ->line(
                 __(
-                    'Please make sure to pay them on time to avoid any late fees.'
+                    'Make sure to pay them as soon as possible to avoid extra fees.'
                 )
             )
             ->line(
@@ -79,17 +73,10 @@ class BillsDueTomorrow extends Notification
      *
      * @return array<string, mixed>
      */
-    public function toArray($notifiable)
+    public function toArray(object $notifiable): array
     {
         return [
-            'bills' => $this->bills
-                ->map(function ($bill) {
-                    return [
-                        'title' => $bill->title,
-                        'due_date' => $bill->due_date,
-                    ];
-                })
-                ->toArray(),
-        ];
+                //
+            ];
     }
 }

@@ -2,9 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\SendBillsOverdueNotification;
+use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
+use App\Notifications\BillsOverdueNotification;
 
 class SendEmailsBillsOverdue extends Command
 {
@@ -30,7 +32,15 @@ class SendEmailsBillsOverdue extends Command
         $users = User::all();
 
         foreach ($users as $user) {
-            SendBillsOverdueNotification::dispatch($user);
+            $bills = $user->bills()->where('status', '=', 'overdue')->get();
+
+            if ($bills->isEmpty()) {
+                return;
+            }
+
+            $user->notify(
+                new BillsOverdueNotification($bills, $user->language_preference)
+            );
         }
     }
 }

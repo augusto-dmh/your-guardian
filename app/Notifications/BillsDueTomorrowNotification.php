@@ -9,19 +9,19 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class BillDueTomorrow extends Notification
+class BillsDueTomorrowNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    protected $bill;
+    protected $bills;
     public $locale;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($bill, $locale)
+    public function __construct($bills, $locale)
     {
-        $this->bill = $bill;
+        $this->bills = $bills;
         $this->locale = $locale;
     }
 
@@ -42,25 +42,36 @@ class BillDueTomorrow extends Notification
     {
         App::setLocale($this->locale);
 
-        return (new MailMessage())
+        $message = (new MailMessage())
             ->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'))
             ->salutation(__('Best regards, Your Guardian.'))
             ->greeting(__('Hello :name', ['name' => $notifiable->first_name]))
-            ->subject(__('Bill Due Tomorrow'))
+            ->subject(__('Bills Due Tomorrow'));
+
+        $billsTitles = $this->bills
+            ->map(function ($bill) {
+                return '"' . $bill->title . '"';
+            })
+            ->join(', ');
+
+        $message->line(
+            __('Your bills :bills are due tomorrow.', ['bills' => $billsTitles])
+        );
+
+        $message
+            ->action(__('View Bills'), url('/bills'))
             ->line(
-                __('Your bill ":title" is due tomorrow.', [
-                    'title' => $this->bill->title,
-                ])
-            )
-            ->action(__('View Bill'), url('/bills/' . $this->bill->id))
-            ->line(
-                __('Please make sure to pay it on time to avoid any late fees.')
+                __(
+                    'Please make sure to pay them on time to avoid any late fees.'
+                )
             )
             ->line(
                 __(
-                    'If you have already paid this bill, no further action is required.'
+                    'If you have already paid these bills, no further action is required.'
                 )
             );
+
+        return $message;
     }
 
     /**
@@ -71,8 +82,14 @@ class BillDueTomorrow extends Notification
     public function toArray($notifiable)
     {
         return [
-            'title' => $this->bill->title,
-            'due_date' => $this->bill->due_date,
+            'bills' => $this->bills
+                ->map(function ($bill) {
+                    return [
+                        'title' => $bill->title,
+                        'due_date' => $bill->due_date,
+                    ];
+                })
+                ->toArray(),
         ];
     }
 }
