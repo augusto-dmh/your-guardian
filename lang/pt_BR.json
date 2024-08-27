@@ -258,5 +258,7 @@
     "$ of income on transactions": "R$ de renda em transações",
     "$ of expense on transactions": "R$ de despesa em transações",
     "$ to pay in bills": "R$ a pagar em contas",
-    "$ paid in bills": "R$ pago em contas"
+    "$ paid in bills": "R$ pago em contas",
+    "Attention: you have overdue bills.": "Atenção: você tem contas em atraso.",
+    "Check them": "Confira-as"
 }
