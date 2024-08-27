@@ -4,23 +4,24 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class BillsOverdue extends Notification
+class BillDueTomorrowNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    protected $bills;
+    protected $bill;
     public $locale;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($bills, $locale)
+    public function __construct($bill, $locale)
     {
-        $this->bills = $bills;
+        $this->bill = $bill;
         $this->locale = $locale;
     }
 
@@ -37,35 +38,29 @@ class BillsOverdue extends Notification
     /**
      * Get the mail representation of the notification.
      */
-    public function toMail(object $notifiable): MailMessage
+    public function toMail($notifiable)
     {
         App::setLocale($this->locale);
 
-        $message = (new MailMessage())
+        return (new MailMessage())
             ->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'))
             ->salutation(__('Best regards, Your Guardian.'))
             ->greeting(__('Hello :name', ['name' => $notifiable->first_name]))
-            ->subject(__('Bills Overdue'));
-
-        $message->line(__('You have one or more bills now overdue.'));
-
-        $message
-            ->action(
-                __('View Bills'),
-                url('/bills?filterByStatus%5B%5D=overdue&sortByDueDate=desc')
+            ->subject(__('Bill Due Tomorrow'))
+            ->line(
+                __('Your bill ":title" is due tomorrow.', [
+                    'title' => $this->bill->title,
+                ])
+            )
+            ->action(__('View Bill'), url('/bills/' . $this->bill->id))
+            ->line(
+                __('Please make sure to pay it on time to avoid any late fees.')
             )
             ->line(
                 __(
-                    'Make sure to pay them as soon as possible to avoid extra fees.'
-                )
-            )
-            ->line(
-                __(
-                    'If you have already paid these bills, no further action is required.'
+                    'If you have already paid this bill, no further action is required.'
                 )
             );
-
-        return $message;
     }
 
     /**
@@ -73,10 +68,11 @@ class BillsOverdue extends Notification
      *
      * @return array<string, mixed>
      */
-    public function toArray(object $notifiable): array
+    public function toArray($notifiable)
     {
         return [
-                //
-            ];
+            'title' => $this->bill->title,
+            'due_date' => $this->bill->due_date,
+        ];
     }
 }
