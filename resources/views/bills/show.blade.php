@@ -1,16 +1,9 @@
 <x-app-layout>
-    @if (session('success'))
-        <div id="flash-message"
-            class="absolute z-30 p-4 text-white transition-opacity duration-1000 transform -translate-x-1/2 bg-green-500 rounded-md shadow-md left-1/2">
-            {{ session('success') }}
-        </div>
-    @endif
-
     <x-slot name="header">
     </x-slot>
 
     <div
-        class="absolute w-3/4 transform -translate-x-1/2 -translate-y-1/2 rounded-md shadow-inner sm:w-3/4 md:w-2/4 top-1/2 left-1/2 bg-secondary-bg">
+        class="absolute w-3/4 transform -translate-x-1/2 -translate-y-1/2 rounded-md shadow-inner left-1/2 sm:w-3/4 md:w-2/4 top-1/2 bg-secondary-bg">
         <div class="flex flex-col justify-center p-6">
 
             <div class="mb-8">
@@ -101,14 +94,3 @@
         </div>
     </div>
 </x-app-layout>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        setTimeout(function() {
-            const flashMessage = document.getElementById('flash-message');
-            if (flashMessage) {
-                flashMessage.classList.add('opacity-0');
-            }
-        }, 3000);
-    });
-</script>

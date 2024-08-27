@@ -31,23 +31,29 @@
             <x-sidebar.sidebar />
 
             <!-- Page Wrapper -->
-            <div class="flex flex-col min-h-screen md:ml-16" {{-- :class="{
-                    'lg:ml-64': isSidebarOpen,
-                    'md:ml-16': !isSidebarOpen
-                }" --}}
+            <div class="relative flex flex-col justify-between min-h-screen" {{-- :class="{
+                'lg:ml-64': isSidebarOpen,
+                'md:ml-16': !isSidebarOpen
+            }" --}}
                 style="transition-property: margin; transition-duration: 150ms;">
-
                 <!-- Navbar -->
                 <x-navbar />
 
-                <div class="px-8">
+                <div class="px-8 md:ml-16">
+                    @if (session('success'))
+                        <div id="flash-message"
+                            class="fixed z-30 p-4 text-white transition-opacity duration-1000 transform -translate-x-1/2 bg-green-500 rounded-md shadow-md top-24 left-1/2 whitespace-nowrap">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
                     <!-- Page Heading -->
                     <header class="py-4">
                         {{ $header }}
                     </header>
 
                     <!-- Page Content -->
-                    <main class="relative">
+                    <main>
                         {{ $slot }}
                     </main>
                 </div>
@@ -60,3 +66,14 @@
 </body>
 
 </html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            const flashMessage = document.getElementById('flash-message');
+            if (flashMessage) {
+                flashMessage.classList.add('opacity-0');
+            }
+        }, 3000);
+    });
+</script>
