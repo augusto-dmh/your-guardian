@@ -1,9 +1,18 @@
 <x-app-layout>
     @if (auth()->user()->billsPercentagePerStatus['overdue'] > 0)
-        <div class="fixed z-10 px-4 py-2 text-2xl transform -translate-x-1/2 rounded-md shadow-inner top-6 left-1/2 text-tertiary-txt bg-primary-bg"
-            role="alert">
-            {{ __('Attention: you have overdue bills.') }} <a class="shadow-inner text-secondary-txt hover:underline"
-                href="{{ route('bills.index', ['filterByStatus' => ['overdue'], 'sortByDueDate' => 'desc']) }}">{{ __('Check them') }}!</a>
+        <div class="flex justify-center">
+            <div class="fixed z-10 px-4 py-2 text-2xl rounded-md shadow-inner top-6 text-tertiary-txt bg-primary-bg"
+                role="alert">
+                <div class="flex flex-col items-center">
+                    <p>
+                        {{ __('Attention: you have overdue bills.') }}
+                    </p>
+                    <a class="mt-2 text-center shadow-inner text-secondary-txt hover:underline"
+                        href="{{ route('bills.index', ['filterByStatus' => ['overdue'], 'sortByDueDate' => 'desc']) }}">
+                        {{ __('Check them') }}!
+                    </a>
+                </div>
+            </div>
         </div>
     @endif
 
