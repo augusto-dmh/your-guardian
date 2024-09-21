@@ -261,7 +261,6 @@
     "$ paid in bills": "R$ pago em contas",
     "Attention: you have overdue bills.": "Atenção: você tem contas em atraso.",
     "Check them": "Confira-as",
-    "Wanna know a bit about us": "Quer saber um pouco sobre nós",
-    "Click here!": "Clique aqui!",
-    "Hi": "Olá"
+    "Click here": "Clique aqui",
+    "Hi :name! Wanna know a bit about us?": "Olá :name! Quer saber um pouco sobre nós?"
 }

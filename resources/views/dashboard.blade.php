@@ -1,19 +1,8 @@
 <x-app-layout>
     @if (auth()->user()->billsPercentagePerStatus['overdue'] > 0)
-        <div class="flex justify-center">
-            <div class="fixed z-10 px-4 py-2 text-2xl rounded-md shadow-inner top-6 text-tertiary-txt bg-primary-bg"
-                role="alert">
-                <div class="flex flex-col items-center">
-                    <p>
-                        {{ __('Attention: you have overdue bills.') }}
-                    </p>
-                    <a class="mt-2 text-center shadow-inner text-secondary-txt hover:underline"
-                        href="{{ route('bills.index', ['filterByStatus' => ['overdue'], 'sortByDueDate' => 'desc']) }}">
-                        {{ __('Check them') }}!
-                    </a>
-                </div>
-            </div>
-        </div>
+        <x-view-popup-notification description="{{ __('Attention: you have overdue bills.') }}"
+            ctaText="{{ __('Check them') }}"
+            ctaRoute="{{ route('bills.index', ['filterByStatus' => ['overdue'], 'sortByDueDate' => 'desc']) }}" />
     @endif
 
     <x-slot name="header">
