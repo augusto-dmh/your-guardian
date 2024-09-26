@@ -29,11 +29,9 @@
         <x-navbar />
         <div class="flex flex-col items-center justify-center flex-grow mt-2 text-gray-200 bg-dark-eval-0">
             @if (Auth::user()?->created_at && now()->diffInMinutes(Auth::user()->created_at, true) <= 10)
-                <div class="px-4 py-2 text-2xl rounded-md text-tertiary-txt" role="alert">
-                    {{ __('Hi') }} {{ Auth::user()->first_name }}! Wanna know first a bit <a
-                        class="shadow-inner text-secondary-txt hover:underline" href="/">about
-                        us</a>?
-                </div>
+                <x-view-popup-notification
+                    description="{{ __('Hi :name! Wanna know a bit about us?', ['name' => Auth::user()->first_name]) }}"
+                    ctaText="{{ __('Click here') }}" ctaRoute="{{ route('home') }}" />
             @endif
             <div class="flex flex-col items-center justify-center flex-grow gap-4 px-0 sm:px-6 md:px-8">
                 <header class="flex flex-col items-center gap-3 mb-8 text-center lg:flex-row">
