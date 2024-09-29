@@ -1,14 +1,14 @@
 <x-app-layout>
     <a type="button" href="{{ route('tasks.create') }}"
-        class="inline-block px-4 py-1 rounded-md shadow-inner text-tertiary-txt hover:shadow-innerHover hover:text-secondary-txt">{{ __('Create') }}</a>
+        class="inline-block px-4 py-1 my-4 rounded-md shadow-inner text-tertiary-txt hover:shadow-innerHover hover:text-secondary-txt">{{ __('Create') }}</a>
 
     <x-slot name="header">
         <h2 class="text-4xl font-bold text-secondary-txt">{{ __('Tasks') }}</h2>
     </x-slot>
 
     <form method="GET" action="{{ route('tasks.index') }}">
-        <div class="flex flex-col gap-3 pb-4 m-auto lg:justify-between xl:justify-start lg:flex-row xl:gap-12">
-            <div class="flex items-end gap-4 md:flex-row">
+        <div class="flex flex-col gap-3 pb-4 m-auto xl:justify-start lg:flex-row xl:gap-12">
+            <div class="flex flex-col items-start gap-4 sm:items-end md:flex-row sm:flex-row">
                 <div class="flex items-end gap-4">
                     <div class="flex items-end gap-2">
                         <div class="form-group">
@@ -32,7 +32,7 @@
                 <div class="flex items-end gap-4">
                     <div class="form-group">
                         <p class="mb-1 text-secondary-txt">{{ __('Status') }}</p>
-                        <div class="flex flex-col">
+                        <div class="flex flex-row gap-4 sm:gap-0 sm:flex-col">
                             <label for="input-status-pending"
                                 class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
                                 <input type="checkbox" name="filterByStatus[]" id="input-status-pending" value="pending"
@@ -98,15 +98,15 @@
     <div>
         @if ($tasks->isNotEmpty())
             @if (auth()->user()->index_view_preference === 'cards')
-                <div class="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+                <div class="grid gap-4 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-3 2xl:grid-cols-4">
                     @foreach ($tasks as $task)
                         <x-card-index :entityInstance="$task" :entityName="'task'">
                             @if ($task->status === 'pending')
-                                <x-heroicon-o-clock class="w-6 h-6 text-yellow-500" />
+                                <x-heroicon-o-clock class="text-yellow-500 " />
                             @elseif ($task->status === 'completed')
-                                <x-heroicon-o-check-circle class="w-6 h-6 text-green-500" />
+                                <x-heroicon-o-check-circle class="text-green-500" />
                             @else
-                                <x-heroicon-o-x-circle class="w-6 h-6 text-red-500" />
+                                <x-heroicon-o-x-circle class="text-red-500" />
                             @endif
                         </x-card-index>
                     @endforeach

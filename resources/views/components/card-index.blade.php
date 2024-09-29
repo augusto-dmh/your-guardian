@@ -1,6 +1,6 @@
 @props(['entityInstance', 'entityName'])
 
-<div class="rounded-md shadow-inner bg-secondary-bg">
+<div class="relative rounded-md shadow-inner bg-secondary-bg">
     <div class="flex flex-col justify-center px-6 py-4">
         <div class="mb-8">
             <div class="flex items-center justify-between">
@@ -9,10 +9,12 @@
                         <a class="mr-2" href="{{ route($entityName . 's.show', $entityInstance) }}">
                             <h3
                                 class="max-w-full text-2xl font-bold break-words text-tertiary-txt hover:underline hover:text-secondary-txt title">
-                                {{ Str::limit($entityInstance->title, 30, '...') }}
+                                {{ Str::limit($entityInstance->title, 20, '...') }}
                             </h3>
                         </a>
-                        {{ $slot }}
+                        <div class="absolute w-6 h-6 bottom-4 right-6">
+                            {{ $slot }}
+                        </div>
                     </div>
                 </div>
                 <div class="flex items-center">
@@ -41,7 +43,7 @@
             </div>
 
             <div class="overflow-auto font-thin break-all text-primary-txt max-h-32">
-                <p>{{ Str::limit($entityInstance->description, 120, '...') ?? 'No description available' }}</p>
+                <p>{{ Str::limit($entityInstance->description, 45, '...') ?? 'No description available' }}</p>
             </div>
         </div>
     </div>
