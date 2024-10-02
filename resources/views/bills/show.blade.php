@@ -8,7 +8,7 @@
 
             <div class="mb-8">
                 <div class="flex items-center justify-between mb-2">
-                    <h2 class="text-4xl font-bold text-secondary-txt">Bill #{{ $bill->id }}</h2>
+                    <h2 class="text-4xl font-bold text-secondary-txt">{{ $bill->title }}</h2>
                     <div class="flex items-center">
                         <a href="{{ route('bills.edit', ['bill' => $bill]) }}"
                             class="block rounded-full text-tertiary-txt hover:shadow-inner hover:text-secondary-txt">
@@ -52,12 +52,6 @@
             </div>
 
             <div class="flex flex-col gap-3 [&>div>span]:text-tertiary-txt">
-
-                <div class="flex gap-2">
-                    <span>{{ __('Title:') }}</span>
-                    <div>{{ $bill->title }}</div>
-                </div>
-
                 <div class="flex gap-2">
                     <span>{{ __('Amount:') }}</span>
                     <div>{{ $bill->amount }}</div>
