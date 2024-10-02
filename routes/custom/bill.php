@@ -15,7 +15,7 @@ Route::get('/bills', [BillController::class, 'index'])
     ->name('bills.index');
 
 Route::get('bills/{bill}/edit', [BillController::class, 'edit'])
-    ->middleware('auth')
+    ->middleware(['auth', 'store.previous.url.not.edit'])
     ->name('bills.edit');
 
 Route::get('/bills/{bill}', [BillController::class, 'show'])

@@ -18,7 +18,7 @@ Route::get('transactions/{transaction}/edit', [
     TransactionController::class,
     'edit',
 ])
-    ->middleware('auth')
+    ->middleware(['auth', 'store.previous.url.not.edit'])
     ->name('transactions.edit');
 
 Route::get('/transactions/{transaction}', [

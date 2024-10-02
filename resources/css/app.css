@@ -36,3 +36,9 @@ body {
     scrollbar-width: thin;
     scrollbar-color: #e4aa70 transparent;
 }
+
+::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    -webkit-appearance: none;
+    cursor: pointer;
+}
