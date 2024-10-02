@@ -10,7 +10,6 @@ class EditForm extends Component
     public $formAction;
     public $model;
     public $modelName;
-    public $fallbackBackRoute;
 
     public function __construct($formAction, $model)
     {
@@ -18,9 +17,6 @@ class EditForm extends Component
         $this->model = $model;
 
         $this->modelName = strtolower(class_basename($model));
-        $this->fallbackBackRoute = route(
-            Str::plural($this->modelName) . '.index'
-        );
     }
 
     public function render()
