@@ -15,7 +15,7 @@ Route::get('/tasks', [TaskController::class, 'index'])
     ->name('tasks.index');
 
 Route::get('tasks/{task}/edit', [TaskController::class, 'edit'])
-    ->middleware('auth')
+    ->middleware(['auth', 'store.previous.url.not.edit'])
     ->name('tasks.edit');
 
 Route::get('/tasks/{task}', [TaskController::class, 'show'])
