@@ -34,6 +34,18 @@ class AddTriggersToBillsTable extends Migration
             END;
         ');
 
+        // When the status of the bill is changed from 'paid' to another one, then the paid_at becomes null.
+        DB::unprepared('
+            CREATE TRIGGER set_paid_at_null_before_update
+            BEFORE UPDATE ON bills
+            FOR EACH ROW
+            BEGIN
+                if OLD.status = "paid" AND NEW.status <> "paid" THEN
+                SET NEW.paid_at = null;
+                END IF;
+            END
+        ');
+
         DB::unprepared('
             CREATE TRIGGER restrict_paid_at_update
             BEFORE UPDATE ON bills
@@ -83,6 +95,7 @@ class AddTriggersToBillsTable extends Migration
     {
         DB::unprepared('DROP TRIGGER IF EXISTS set_paid_at_before_insert');
         DB::unprepared('DROP TRIGGER IF EXISTS set_paid_at_before_update');
+        DB::unprepared('DROP TRIGGER IF EXISTS set_paid_at_null_before_update');
         DB::unprepared(
             'DROP TRIGGER IF EXISTS insert_transaction_after_insert_on_bills'
         );
