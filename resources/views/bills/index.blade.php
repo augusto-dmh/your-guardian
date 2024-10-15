@@ -114,14 +114,16 @@
         @if (auth()->user()->index_view_preference === 'cards')
             <div class="grid gap-4 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-3 2xl:grid-cols-4">
                 @foreach ($bills as $bill)
-                    <x-card-index :entityInstance="$bill" :entityName="'bill'">
-                        @if ($bill->type === 'income')
-                            <x-heroicon-o-trending-up class="text-green-500" />
-                        @else
-                            <x-heroicon-o-trending-down class="text-red-500" />
-                        @endif
-                    </x-card-index>
-                @endforeach
+                <x-card-index :entityInstance="$bill" :entityName="'bill'">
+                    @if ($bill->status === 'pending')
+                        <x-heroicon-o-clock class="w-6 h-6 text-yellow-500" />
+                    @elseif ($bill->status === 'paid')
+                        <x-heroicon-o-check-circle class="w-6 h-6 text-green-500" />
+                    @else
+                        <x-heroicon-o-exclamation-circle class="w-6 h-6 text-red-500" />
+                    @endif
+                </x-card-index>
+            @endforeach
             </div>
         @else
             <div class="w-full overflow-x-auto rounded-lg">
