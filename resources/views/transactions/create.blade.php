@@ -31,10 +31,9 @@
                 <div class="form-group">
                     <label for="type">{{ __('Type:') }}</label>
                     <select id="type" name="type">
-                        <option value="income" {{ old('type') === 'income' ? 'selected' : '' }}>{{ __('Income') }}
-                        </option>
-                        <option value="expense" {{ old('type') === 'expense' ? 'selected' : '' }}>{{ __('Expense') }}
-                        </option>
+                        @foreach($transactionTypes as $transactionType)
+                            <option value="{{ $transactionType }}">{{ __(ucfirst($transactionType)) }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="form-group">

@@ -33,28 +33,15 @@
                     <div class="form-group">
                         <p class="mb-1 text-secondary-txt">{{ __('Status') }}</p>
                         <div class="flex flex-row gap-4 sm:gap-0 sm:flex-col">
-                            <label for="input-status-pending"
-                                class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
-                                <input type="checkbox" name="filterByStatus[]" id="input-status-pending" value="pending"
-                                    class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
-                                    {{ request('filterByStatus') && in_array('pending', request('filterByStatus')) ? 'checked' : '' }}>
-                                <span class="ml-2">{{ __('Pending') }}</span>
-                            </label>
-                            <label for="input-status-completed"
-                                class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
-                                <input type="checkbox" name="filterByStatus[]" id="input-status-completed"
-                                    value="completed"
-                                    class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
-                                    {{ request('filterByStatus') && in_array('completed', request('filterByStatus')) ? 'checked' : '' }}>
-                                <span class="ml-2">{{ __('Completed') }}</span>
-                            </label>
-                            <label for="input-status-failed"
-                                class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
-                                <input type="checkbox" name="filterByStatus[]" id="input-status-failed" value="failed"
-                                    class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
-                                    {{ request('filterByStatus') && in_array('failed', request('filterByStatus')) ? 'checked' : '' }}>
-                                <span class="ml-2">{{ __('Failed') }}</span>
-                            </label>
+                            @foreach($taskStatuses as $taskStatus)
+                                <label for="input-status-{{ $taskStatus }}"
+                                    class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
+                                    <input type="checkbox" name="filterByStatus[]" id="input-status-{{ $taskStatus }}" value="{{ $taskStatus }}"
+                                        class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
+                                        {{ request('filterByStatus') && in_array($taskStatus, request('filterByStatus')) ? 'checked' : '' }}>
+                                    <span class="ml-2">{{ __(ucfirst($taskStatus)) }}</span>
+                                </label>
+                            @endforeach
                         </div>
                     </div>
                 </div>
