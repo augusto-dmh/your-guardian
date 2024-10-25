@@ -32,14 +32,12 @@
             <select id="type"
                 name="type"
                 class="font-thin text-gray-300 border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg">
-                <option value="income"
-                    {{ old('type', $transaction->type) === 'income' ? 'selected' : '' }}>
-                    Income
-                </option>
-                <option value="expense"
-                    {{ old('type', $transaction->type) === 'expense' ? 'selected' : '' }}>
-                    Expense
-                </option>
+                @foreach($transactionTypes as $transactionType)
+                    <option value="income"
+                        {{ old('type', $transaction->type) === $transactionType ? 'selected' : '' }}>
+                        {{ $transactionType }}
+                    </option>
+                @endforeach
             </select>
         </div>
 

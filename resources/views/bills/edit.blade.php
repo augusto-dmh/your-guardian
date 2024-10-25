@@ -54,15 +54,12 @@
             <select name="status"
                 id="status"
                 class="font-thin text-gray-300 border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg">
-                <option value="pending"
-                    {{ old('status', $bill->status) === 'pending' ? 'selected' : '' }}>
-                    {{ __('Pending') }}</option>
-                <option value="paid"
-                    {{ old('status', $bill->status) === 'paid' ? 'selected' : '' }}>
-                    {{ __('Paid') }}</option>
-                <option value="overdue"
-                    {{ old('status', $bill->status) === 'overdue' ? 'selected' : '' }}>
-                    {{ __('Overdue') }}</option>
+                @foreach($billStatuses as $billStatus)
+                    <option value="{{ $billStatus }}"
+                        {{ old('status', $bill->status) === $billStatus ? 'selected' : '' }}>
+                        {{ __(ucfirst($billStatus)) }}
+                    </option>
+                @endforeach
             </select>
         </div>
     </x-edit-form>

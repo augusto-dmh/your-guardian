@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\EnumHelper;
 use Auth;
 use App\Models\Bill;
 use Illuminate\Http\Request;
@@ -65,7 +66,9 @@ class BillController extends Controller
 
         $bills = $query->paginate(10);
 
-        return view('bills.index', compact('bills', 'searchTerm'));
+        $billStatuses = EnumHelper::getEnumValues('bills', 'status');
+
+        return view('bills.index', compact('bills', 'searchTerm', 'billStatuses'));
     }
 
     public function show(BillShowRequest $request, Bill $bill)
@@ -110,6 +113,8 @@ class BillController extends Controller
 
     public function edit(Bill $bill)
     {
-        return view('bills.edit', compact('bill'));
+        $billStatuses = EnumHelper::getEnumValues('bills', 'status');
+
+        return view('bills.edit', compact('bill', 'billStatuses'));
     }
 }

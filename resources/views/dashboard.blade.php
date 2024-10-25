@@ -1,3 +1,7 @@
+@php
+    $transactionTypes = App\helpers\EnumHelper::getEnumValues('transactions', 'type');
+@endphp
+
 <x-app-layout>
     @if (auth()->user()->billsPercentagePerStatus['overdue'] > 0)
         <x-view-popup-notification description="{{ __('Attention: you have overdue bills.') }}"
@@ -65,8 +69,9 @@
                                 class="block w-full">{{ __('Type') }}</label>
                             <select id="select-type-or-status" name="type"
                                 class="w-full focus:outline-none focus:ring-2 focus:ring-quinary-bg">
-                                <option value="income" selected>{{ __('Income') }}</option>
-                                <option value="expense">{{ __('Expense') }}</option>
+                                @foreach($transactionTypes as $transactionType)
+                                    <option value="{{ $transactionType }}">{{ __(ucfirst($transactionType)) }}</option>
+                                @endforeach
                             </select>
                         </div>
 

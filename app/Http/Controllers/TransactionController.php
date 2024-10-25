@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\EnumHelper;
 use App\Models\Transaction;
 use App\QueryOptions\Sort\Date;
 use App\QueryOptions\Filter\Type;
@@ -64,9 +65,11 @@ class TransactionController extends Controller
 
         $transactions = $query->paginate(10);
 
+        $transactionTypes = EnumHelper::getEnumValues('transactions', 'type');
+
         return view(
             'transactions.index',
-            compact('transactions', 'searchTerm')
+            compact('transactions', 'searchTerm', 'transactionTypes')
         );
     }
 
@@ -103,6 +106,7 @@ class TransactionController extends Controller
     public function create()
     {
         return view('transactions.create', [
+            'transactionTypes' => EnumHelper::getEnumValues('transactions', 'type'),
             'user' => Auth::user(),
             'transactionCategories' => TransactionCategory::all(),
         ]);
@@ -113,6 +117,10 @@ class TransactionController extends Controller
         return view('transactions.edit', [
             'transaction' => $transaction,
             'transactionCategories' => TransactionCategory::all(),
+            'transactionTypes' => EnumHelper::getEnumValues(
+                'transactions',
+                'type'
+            ),
         ]);
     }
 }

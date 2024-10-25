@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\EnumHelper;
 use Auth;
 use App\Models\Task;
 use App\Models\TaskCategory;
@@ -65,7 +66,9 @@ class TaskController extends Controller
 
         $tasks = $query->paginate(10);
 
-        return view('tasks.index', compact('tasks', 'searchTerm'));
+        $taskStatuses = EnumHelper::getEnumValues('tasks', 'status  ');
+
+        return view('tasks.index', compact('tasks', 'searchTerm', 'taskStatuses'));
     }
 
     public function show(TaskShowRequest $request, Task $task)
@@ -95,14 +98,16 @@ class TaskController extends Controller
     public function create()
     {
         $taskCategories = TaskCategory::all();
+        $taskStatuses = EnumHelper::getEnumValues('tasks', 'status');
 
-        return view('tasks.create', compact('taskCategories'));
+        return view('tasks.create', compact('taskCategories', 'taskStatuses'));
     }
 
     public function edit(Task $task)
     {
         $taskCategories = TaskCategory::all();
+        $taskStatuses = EnumHelper::getEnumValues('tasks', 'status');
 
-        return view('tasks.edit', compact('task', 'taskCategories'));
+        return view('tasks.edit', compact('task', 'taskCategories', 'taskStatuses'));
     }
 }

@@ -40,15 +40,11 @@
                 <div class="form-group">
                     <label for="status">{{ __('Status') }}:</label>
                     <select name="status" id="status">
-                        <option value="pending" {{ old('status') === 'pending' ? 'selected' : '' }}>
-                            {{ __('Pending') }}
-                        </option>
-                        <option value="completed" {{ old('status') === 'completed' ? 'selected' : '' }}>
-                            {{ __('Completed') }}
-                        </option>
-                        <option value="failed" {{ old('status') === 'failed' ? 'selected' : '' }}>
-                            {{ __('Failed') }}
-                        </option>
+                        @foreach($taskStatuses as $taskStatus)
+                            <option value="{{ $taskStatus }}" {{ old('status') === $taskStatus ? 'selected' : '' }}>
+                                {{ __(ucfirst($taskStatus)) }}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="form-group">
