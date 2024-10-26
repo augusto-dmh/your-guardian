@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7d6c0e7d092176d66c0976e6f55d7449",
+    "content-hash": "218ff99303ba120827eedfd8b4466569",
     "packages": [
         {
             "name": "blade-ui-kit/blade-heroicons",
@@ -6861,74 +6861,6 @@
             "time": "2023-11-03T12:00:00+00:00"
         },
         {
-            "name": "fly-apps/dockerfile-laravel",
-            "version": "1.0.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/fly-apps/dockerfile-laravel.git",
-                "reference": "d2fabbac41e468a67825b08d140c404596922cf9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/fly-apps/dockerfile-laravel/zipball/d2fabbac41e468a67825b08d140c404596922cf9",
-                "reference": "d2fabbac41e468a67825b08d140c404596922cf9",
-                "shasum": ""
-            },
-            "require-dev": {
-                "illuminate/view": "^10.0",
-                "laravel-zero/framework": "^10.2",
-                "laravel/pint": "^1.13",
-                "mockery/mockery": "^1.6",
-                "nunomaduro/termwind": "^1.15.1",
-                "pestphp/pest": "^2.22",
-                "phpspec/php-diff": "^1.1"
-            },
-            "bin": [
-                "builds/dockerfile-laravel"
-            ],
-            "type": "project",
-            "autoload": {
-                "psr-4": {
-                    "App\\": "app/",
-                    "Database\\Seeders\\": "database/seeders/",
-                    "Database\\Factories\\": "database/factories/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Chris Fidao",
-                    "email": "fideloper@gmail.com"
-                },
-                {
-                    "name": "Kathryn Anne Tan",
-                    "email": "kathryn@fly.io"
-                },
-                {
-                    "name": "Sam Ruby",
-                    "email": "rubys@fly.io"
-                }
-            ],
-            "description": "Dockerfile generator and Fly.io helper.",
-            "homepage": "https://fly.io/docs/laravel",
-            "keywords": [
-                "Fly.io",
-                "cli",
-                "docker",
-                "dockerfile",
-                "generate",
-                "laravel"
-            ],
-            "support": {
-                "issues": "https://github.com/fly-apps/dockerfile-laravel/issues",
-                "source": "https://github.com/fly-apps/dockerfile-laravel/tree/1.0.6"
-            },
-            "time": "2024-07-26T20:08:41+00:00"
-        },
-        {
             "name": "hamcrest/hamcrest-php",
             "version": "v2.0.1",
             "source": {
@@ -7833,6 +7765,76 @@
                 }
             ],
             "time": "2024-01-26T09:46:42+00:00"
+        },
+        {
+            "name": "pestphp/pest-plugin-drift",
+            "version": "v2.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pestphp/pest-plugin-drift.git",
+                "reference": "ed78e637a7f7b77c9b33b02ffba40555e74001ef"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pestphp/pest-plugin-drift/zipball/ed78e637a7f7b77c9b33b02ffba40555e74001ef",
+                "reference": "ed78e637a7f7b77c9b33b02ffba40555e74001ef",
+                "shasum": ""
+            },
+            "require": {
+                "nikic/php-parser": "^5.0.2",
+                "pestphp/pest": "^2.34.4",
+                "php": "^8.2.0",
+                "symfony/finder": "^7.0.0"
+            },
+            "require-dev": {
+                "pestphp/pest-dev-tools": "^2.16.0"
+            },
+            "type": "library",
+            "extra": {
+                "pest": {
+                    "plugins": [
+                        "Pest\\Drift\\Plugin"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Pest\\Drift\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "The Pest Drift Plugin",
+            "keywords": [
+                "framework",
+                "laravel",
+                "pest",
+                "php",
+                "test",
+                "testing",
+                "unit"
+            ],
+            "support": {
+                "issues": "https://github.com/pestphp/pest-plugin-drift/issues",
+                "source": "https://github.com/pestphp/pest-plugin-drift/tree/v2.6.1"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/paypalme/enunomaduro",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/mandisma",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nunomaduro",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-05-05T07:36:43+00:00"
         },
         {
             "name": "pestphp/pest-plugin-laravel",
