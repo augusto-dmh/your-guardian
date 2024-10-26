@@ -19,7 +19,11 @@
                     <input type="text" name="amount">
                 </div>
                 <div class="form-group">
-                    <label for="due_date">{{ __('Due date') }}:</label>
+                    <label for="status">{{ __('Status') }}:</label>
+                    <input type="text" name="status">
+                </div>
+                <div class="form-group">
+                    <label for="due_date">{{ __('Due Date') }}:</label>
                     <input type="date" name="due_date" id="due_date">
                 </div>
                 <div class="form-group">
