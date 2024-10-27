@@ -51,23 +51,23 @@
                         <div class="flex flex-row gap-4 sm:gap-0 sm:flex-col">
                             <label for="input-status-pending"
                                 class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
-                                <input type="checkbox" name="filterByStatus[]" id="input-status-pending" value="pending"
+                                <input type="checkbox" name="filterByStatuses[]" id="input-status-pending" value="pending"
                                     class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
-                                    {{ request('filterByStatus') && in_array('pending', request('filterByStatus')) ? 'checked' : '' }}>
+                                    {{ request('filterByStatuses') && in_array('pending', request('filterByStatuses')) ? 'checked' : '' }}>
                                 <span class="ml-2">{{ __('Pending') }}</span>
                             </label>
                             <label for="input-status-paid"
                                 class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
-                                <input type="checkbox" name="filterByStatus[]" id="input-status-paid" value="paid"
+                                <input type="checkbox" name="filterByStatuses[]" id="input-status-paid" value="paid"
                                     class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
-                                    {{ request('filterByStatus') && in_array('paid', request('filterByStatus')) ? 'checked' : '' }}>
+                                    {{ request('filterByStatuses') && in_array('paid', request('filterByStatuses')) ? 'checked' : '' }}>
                                 <span class="ml-2">{{ __('Paid') }}</span>
                             </label>
                             <label for="input-status-overdue"
                                 class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
-                                <input type="checkbox" name="filterByStatus[]" id="input-status-overdue" value="overdue"
+                                <input type="checkbox" name="filterByStatuses[]" id="input-status-overdue" value="overdue"
                                     class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
-                                    {{ request('filterByStatus') && in_array('overdue', request('filterByStatus')) ? 'checked' : '' }}>
+                                    {{ request('filterByStatuses') && in_array('overdue', request('filterByStatuses')) ? 'checked' : '' }}>
                                 <span class="ml-2">{{ __('Overdue') }}</span>
                             </label>
                         </div>
