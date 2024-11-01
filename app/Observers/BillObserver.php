@@ -61,16 +61,22 @@ class BillObserver
             $bill->status == 'pending' &&
             Cache::get("user_{$bill->user_id}_next_bill_due") == $bill->due_date
         ) {
-            Cache::put(
-                "user_{$bill->user_id}_next_bill_due",
-                $bill->user
-                    ->bills()
-                    ->where('due_date', '>=', now())
-                    ->where('status', '=', 'pending')
-                    ->orderBy('due_date', 'asc')
-                    ->first()?->due_date,
-                60
-            );
+            $nextPendingBillDueDate = $bill->user
+                ->bills()
+                ->where('due_date', '>=', now())
+                ->where('status', '=', 'pending')
+                ->orderBy('due_date', 'asc')
+                ->first()?->due_date;
+
+            if ($nextPendingBillDueDate !== null) {
+                Cache::put(
+                    "user_{$bill->user_id}_next_bill_due",
+                    $nextPendingBillDueDate,
+                    60
+                );
+            } else {
+                Cache::forget("user_{$bill->user_id}_next_bill_due");
+            }
         }
     }
 
