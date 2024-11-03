@@ -3,7 +3,9 @@
 namespace App\Observers;
 
 use App\Models\Bill;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Session;
 
 class BillObserver
 {
@@ -29,6 +31,17 @@ class BillObserver
 
     public function updated(Bill $bill): void
     {
+        if (
+            $bill->status === 'paid' &&
+            $bill->getOriginal('status') !== 'paid' &&
+            isPreviousRoute('bills.show')
+        ) {
+            Session::flash(
+                'success',
+                __("Bill status changed to 'paid' successfully!")
+            );
+        }
+
         $bill->refresh();
 
         if ($bill->due_date->isFuture() && $bill->status == 'pending') {
