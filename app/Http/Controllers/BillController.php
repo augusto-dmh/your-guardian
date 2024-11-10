@@ -84,7 +84,7 @@ class BillController extends Controller
     {
         $bill->delete();
 
-        if (preg_match('/\/bills\/\d+$/', URL::previous())) {
+        if (preg_match('/\/bills\/\d+$/', URL::previous())) { // if the route the bill gets deleted by clicking on button from 'show', then the user is redirected to 'index'
             return redirect()->route('bills.index');
         }
         return redirect()->back();
