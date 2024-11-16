@@ -26,7 +26,8 @@ class TaskUpdateRequest extends FormRequest
             'task_category_id' => 'nullable|exists:task_categories,id',
             'title' => 'required|string|max:255',
             'description' => 'nullable|string|max:65535',
-            'due_date' => 'required|date',
+            'status' => 'nullable|string|in:pending,completed,failed',
+            'due_date' => 'nullable|date',
         ];
     }
 }

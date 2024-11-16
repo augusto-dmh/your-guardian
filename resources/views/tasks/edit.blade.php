@@ -32,6 +32,22 @@
             @enderror
         </div>
 
+        <!-- Task Status Field -->
+        <div class="flex flex-col gap-1">
+            <label for="status"
+                class="cursor-pointer text-secondary-txt">{{ __('Status') }}:</label>
+            <select name="status"
+                id="status"
+                class="font-thin text-gray-300 border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg">
+                <option value="">{{ __('Select a Status') }}</option>
+                @foreach ($taskStatuses as $taskStatus)
+                    <option value="{{ $taskStatus }}"
+                        {{ old('status', $task->status) === $taskStatus ? 'selected' : '' }}>
+                        {{ __(ucfirst($taskStatus)) }}</option>
+                @endforeach
+            </select>
+        </div>
+
         <!-- Task Category Field -->
         <div class="flex flex-col gap-1">
             <label for="task_category_id"
