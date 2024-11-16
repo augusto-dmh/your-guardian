@@ -10,6 +10,7 @@ use App\QueryOptions\Sort\DueDate;
 use App\QueryOptions\Filter\Status;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\Bill\BillEditRequest;
 use Illuminate\Support\Facades\Pipeline;
 use App\Http\Requests\Bill\BillShowRequest;
 use App\Http\Requests\Bill\BillStoreRequest;
@@ -95,7 +96,7 @@ class BillController extends Controller
         return view('bills.create');
     }
 
-    public function edit(Bill $bill)
+    public function edit(BillEditRequest $request, Bill $bill)
     {
         return view('bills.edit', compact('bill'));
     }
