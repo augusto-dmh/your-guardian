@@ -40,6 +40,20 @@ test('cant bill be updated with an empty title', function () {
         ->assertInvalid(['title']);
 });
 
+test('cant bill be updated with a title with more than 255 characters.', function () {
+    $user = User::factory()->create();
+    $bill = Bill::factory()->create(['user_id' => $user->id]);
+
+    $response = actingAs($user)->put(route('bills.update', $bill), [
+        'title' => str_repeat('a', 256),
+        'amount' => $bill->amount,
+        'due_date' => $bill->due_date,
+    ]);
+
+    $response
+        ->assertInvalid(['title']);
+});
+
 test('can bill be updated with a valid description', function () {
     $user = User::factory()->create();
     $bill = Bill::factory()->create(['user_id' => $user->id]);
