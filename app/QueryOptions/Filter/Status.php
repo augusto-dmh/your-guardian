@@ -6,8 +6,8 @@ class Status
 {
     public function handle($query, $next)
     {
-        request()->has('filterByStatus') &&
-            $query->whereIn('status', request()->input('filterByStatus'));
+        request()->has('filterByStatuses') &&
+            $query->whereIn('status', request()->input('filterByStatuses'));
 
         return $next($query);
     }

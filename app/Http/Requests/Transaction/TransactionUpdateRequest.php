@@ -25,19 +25,18 @@ class TransactionUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'nullable|exists:users,id',
+            'user_id' => 'required|exists:users,id',
             'bill_id' => 'nullable|exists:bills,id',
             'transaction_category_id' => [
-                'required',
+                'nullable',
                 Rule::exists('transaction_categories', 'id')->where(
                     'transaction_type',
                     $this->type
                 ),
             ],
-            'amount' => 'nullable|numeric',
+            'amount' => 'required|numeric',
             'type' => 'nullable|string|in:income,expense',
-            'description' => 'nullable|string|max:65535',
-            'title' => 'nullable|nullable|string|max:255',
+            'title' => 'required|nullable|string|max:255',
             'description' => 'nullable|nullable|string|max:65535',
         ];
     }

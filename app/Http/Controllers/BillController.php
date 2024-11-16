@@ -11,6 +11,7 @@ use App\QueryOptions\Sort\DueDate;
 use App\QueryOptions\Filter\Status;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\Bill\BillEditRequest;
 use Illuminate\Support\Facades\Pipeline;
 use App\Http\Requests\Bill\BillShowRequest;
 use App\Http\Requests\Bill\BillStoreRequest;
@@ -78,21 +79,8 @@ class BillController extends Controller
 
     public function update(BillUpdateRequest $request, Bill $bill)
     {
-        $originalBillStatus = $bill->status;
-
         $bill->update($request->validated());
 
-        if (
-            $request->validated('status') === 'paid' &&
-            $originalBillStatus !== 'paid'
-        ) {
-            $request
-                ->session()
-                ->flash(
-                    'success',
-                    __("Bill status changed to 'paid' successfully!")
-                );
-        }
         return redirect()->back();
     }
 
@@ -100,7 +88,7 @@ class BillController extends Controller
     {
         $bill->delete();
 
-        if (preg_match('/\/bills\/\d+$/', URL::previous())) {
+        if (preg_match('/\/bills\/\d+$/', URL::previous())) { // if the route the bill gets deleted by clicking on button from 'show', then the user is redirected to 'index'
             return redirect()->route('bills.index');
         }
         return redirect()->back();
@@ -111,7 +99,7 @@ class BillController extends Controller
         return view('bills.create');
     }
 
-    public function edit(Bill $bill)
+    public function edit(BillEditRequest $request, Bill $bill)
     {
         $billStatuses = EnumHelper::getEnumValues('bills', 'status');
 
