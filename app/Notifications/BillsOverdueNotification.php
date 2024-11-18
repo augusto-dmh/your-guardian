@@ -76,7 +76,8 @@ class BillsOverdueNotification extends Notification implements ShouldQueue
     public function toArray(object $notifiable): array
     {
         return [
-                //
-            ];
+            'message' => __('You have one or more bills now overdue.'),
+            'url' => route('bills.index', ['filterByStatuses' => ['overdue'], 'sortByDueDate' => 'desc']),
+        ];
     }
 }

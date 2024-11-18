@@ -71,8 +71,10 @@ class BillDueTomorrowNotification extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'title' => $this->bill->title,
-            'due_date' => $this->bill->due_date,
+            'message' => __('Your bill ":title" is due tomorrow.', [
+                'title' => $this->bill->title,
+            ]),
+            'url' => route('bills.show', $this->bill),
         ];
     }
 }
