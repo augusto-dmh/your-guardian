@@ -36,9 +36,9 @@
                             @foreach($taskStatuses as $taskStatus)
                                 <label for="input-status-{{ $taskStatus }}"
                                     class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
-                                    <input type="checkbox" name="filterByStatus[]" id="input-status-{{ $taskStatus }}" value="{{ $taskStatus }}"
+                                    <input type="checkbox" name="filterByStatuses[]" id="input-status-{{ $taskStatus }}" value="{{ $taskStatus }}"
                                         class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
-                                        {{ request('filterByStatus') && in_array($taskStatus, request('filterByStatus')) ? 'checked' : '' }}>
+                                        {{ request('filterByStatuses') && in_array($taskStatus, request('filterByStatuses')) ? 'checked' : '' }}>
                                     <span class="ml-2">{{ __(ucfirst($taskStatus)) }}</span>
                                 </label>
                             @endforeach

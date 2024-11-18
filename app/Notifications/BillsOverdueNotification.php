@@ -52,7 +52,7 @@ class BillsOverdueNotification extends Notification implements ShouldQueue
         $message
             ->action(
                 __('View Bills'),
-                url('/bills?filterByStatus%5B%5D=overdue&sortByDueDate=desc')
+                url('/bills?filterByStatuses%5B%5D=overdue&sortByDueDate=desc')
             )
             ->line(
                 __(

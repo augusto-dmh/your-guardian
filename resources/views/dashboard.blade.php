@@ -6,7 +6,7 @@
     @if (auth()->user()->billsPercentagePerStatus['overdue'] > 0)
         <x-view-popup-notification description="{{ __('Attention: you have overdue bills.') }}"
             ctaText="{{ __('Check them') }}"
-            ctaRoute="{{ route('bills.index', ['filterByStatus' => ['overdue'], 'sortByDueDate' => 'desc']) }}" />
+            ctaRoute="{{ route('bills.index', ['filterByStatuses' => ['overdue'], 'sortByDueDate' => 'desc']) }}" />
     @endif
 
     <x-slot name="header">

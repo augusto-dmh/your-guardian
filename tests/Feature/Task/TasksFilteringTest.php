@@ -38,7 +38,7 @@ test('tasks index screen filters tasks correctly', function () {
 
     $response = $this->actingAs($user)->get(
         route('tasks.index', [
-            'filterByStatus' => ['pending', 'completed'],
+            'filterByStatuses' => ['pending', 'completed'],
         ])
     );
 
