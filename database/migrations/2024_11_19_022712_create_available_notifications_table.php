@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::table('available_notifications', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->timestamps();
         });
     }
 
