@@ -55,6 +55,12 @@ entity Notification {
     --
 }
 
+entity AvailableNotification {
+    id BIGINT UNSIGNED <<PK>>
+    name VARCHAR(255)
+    --
+}
+
 entity Task {
     id BIGINT UNSIGNED <<PK>>
     user_id BIGINT UNSIGNED <<FK>>
@@ -91,6 +97,7 @@ User ||--o{ Bill
 Bill ||--o{ Notification
 Task ||--o{ Notification
 User ||--o{ Task
+User }o--o{ AvailableNotification
 TaskCategory ||--o{ Task
 TransactionCategory ||--o{ Transaction
 Bill |o--|| Transaction
