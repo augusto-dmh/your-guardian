@@ -6,6 +6,7 @@ use App\Models\Bill;
 use App\Models\Task;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\DB;
+use App\Models\AvailableNotification;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Notifications\ResetPasswordNotification;
@@ -189,5 +190,10 @@ class User extends Authenticatable
     public function tasks()
     {
         return $this->hasMany(Task::class);
+    }
+
+    public function enabledNotifications()
+    {
+        return $this->belongsToMany(AvailableNotification::class, 'user_available_notifications', 'user_id', 'available_notification_id');
     }
 }
