@@ -13,7 +13,7 @@ class AvailableNotificationsSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('available_notifications')->insert(['name' => 'bills_overdue']);
-        DB::table('available_notifications')->insert(['name' => 'bills_due_tomorrow']);
+        DB::table('available_notifications')->insert(['name' => 'Bills Overdue', 'description' => 'Receive daily when at least one bill is overdue.']);
+        DB::table('available_notifications')->insert(['name' => 'Bills Due Tomorrow', 'description' => 'Receive one day before the due date of a bill comes.']);
     }
 }
