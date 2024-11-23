@@ -42,7 +42,7 @@
                 <x-navbar />
 
                 <!-- Page Main Container -->
-                <div class="flex {{ $contentRowDirection ? 'items-center justify-center' : '' }} gap-8 px-8 md:ml-16">
+                <div class="{{ $contentRowDirection ? 'flex items-center justify-center gap-8' : '' }} px-8 md:ml-16">
                     @if (session('success'))
                         <div id="flash-message"
                             class="fixed z-30 p-4 text-white transition-opacity duration-1000 transform -translate-x-1/2 bg-green-500 rounded-md shadow-md top-24 left-1/2 whitespace-nowrap">
