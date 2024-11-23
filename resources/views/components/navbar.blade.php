@@ -68,6 +68,11 @@
                         {{ __('Profile') }}
                     </x-dropdown-link>
 
+                    <!-- Notifications Preferences -->
+                    <x-dropdown-link :href="route('user-available-notifications.index')" class="text-gray-400 hover:text-gray-200">
+                        {{ __('Notifications') }}
+                    </x-dropdown-link>
+
                     <!-- Authentication -->
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
