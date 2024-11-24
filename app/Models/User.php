@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Bill;
 use App\Models\Task;
 use App\Models\Transaction;
+use App\Observers\UserObserver;
 use Illuminate\Support\Facades\DB;
 use App\Models\AvailableNotification;
 use Illuminate\Notifications\Notifiable;
@@ -12,9 +13,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Notifications\ResetPasswordNotification;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 // class User extends Authenticatable implements MustVerifyEmail
+#[ObservedBy(UserObserver::class)]
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
