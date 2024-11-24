@@ -9,9 +9,9 @@ use App\Models\AvailableNotification;
 use App\Notifications\BillDueTomorrowNotification;
 use App\Notifications\BillsDueTomorrowNotification;
 
-class SendEmailsBillsDueTomorrow extends Command
+class SendNotificationsBillsDueTomorrow extends Command
 {
-    protected $signature = 'send-emails:bills-due-tomorrow';
+    protected $signature = 'send-notifications:bills-due-tomorrow';
 
     protected $description = 'Send a notification for bills due tomorrow';
 

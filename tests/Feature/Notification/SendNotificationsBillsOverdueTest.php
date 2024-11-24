@@ -17,7 +17,7 @@ test('can users with "Bills Overdue" notification enabled receive it in-app', fu
     $bill = Bill::factory()->create(['status' => 'overdue', 'user_id' => $user->id]);
     $user->enabledNotifications()->attach($billsOverdueNotificationId);
 
-    artisan('send-emails:bills-overdue');
+    artisan('send-notifications:bills-overdue');
     artisan('queue:work', ['--stop-when-empty' => true]);
 
     expect($user->notifications()->count())
@@ -31,7 +31,7 @@ test('cant users with "Bills Overdue" notification disabled receive it in-app', 
     });
     $bill = Bill::factory()->create(['status' => 'overdue', 'user_id' => $user->id]);
 
-    artisan('send-emails:bills-overdue');
+    artisan('send-notifications:bills-overdue');
     artisan('queue:work', ['--stop-when-empty' => true]);
 
     expect($user->notifications()->count())
@@ -45,7 +45,7 @@ test('cant users with "Bills Overdue" notification enabled receive it in-app wit
     });
     $bill = Bill::factory()->create(['status' => 'pending', 'user_id' => $user->id]);
 
-    artisan('send-emails:bills-overdue');
+    artisan('send-notifications:bills-overdue');
     artisan('queue:work', ['--stop-when-empty' => true]);
 
     expect($user->notifications()->count())

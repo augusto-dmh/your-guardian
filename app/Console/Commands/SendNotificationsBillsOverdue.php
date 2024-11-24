@@ -8,14 +8,14 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use App\Notifications\BillsOverdueNotification;
 
-class SendEmailsBillsOverdue extends Command
+class SendNotificationsBillsOverdue extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'send-emails:bills-overdue';
+    protected $signature = 'send-notifications:bills-overdue';
 
     /**
      * The console command description.

@@ -17,7 +17,7 @@ test('can users with "Bills Due Tomorrow" notification enabled receive it in-app
     $bill = Bill::factory()->create(['status' => 'pending', 'due_date' => Carbon::tomorrow()->format('Y-m-d'), 'user_id' => $user->id]);
     $user->enabledNotifications()->attach($billsDueTomorrowNotificationId);
 
-    artisan('send-emails:bills-due-tomorrow');
+    artisan('send-notifications:bills-due-tomorrow');
     artisan('queue:work', ['--stop-when-empty' => true]);
 
     expect($user->notifications()->count())
@@ -31,7 +31,7 @@ test('cant users with "Bills Due Tomorrow" notification disabled receive it in-a
     });
     $bill = Bill::factory()->create(['status' => 'pending', 'due_date' => Carbon::tomorrow()->format('Y-m-d'), 'user_id' => $user->id]);
 
-    artisan('send-emails:bills-due-tomorrow');
+    artisan('send-notifications:bills-due-tomorrow');
     artisan('queue:work', ['--stop-when-empty' => true]);
 
     expect($user->notifications()->count())
@@ -45,7 +45,7 @@ test('cant users with "Bills Due Tomorrow" notification enabled receive it in-ap
     });
     $bill = Bill::factory()->create(['status' => 'pending', 'due_date' => Carbon::now()->addDays(3)->format('Y-m-d'), 'user_id' => $user->id]);
 
-    artisan('send-emails:bills-due-tomorrow');
+    artisan('send-notifications:bills-due-tomorrow');
     artisan('queue:work', ['--stop-when-empty' => true]);
 
     expect($user->notifications()->count())
