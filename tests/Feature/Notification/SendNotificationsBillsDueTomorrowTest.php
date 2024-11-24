@@ -11,7 +11,9 @@ use Database\Seeders\AvailableNotificationsSeeder;
 test('can users with "Bills Due Tomorrow" notification enabled receive it in-app', function () {
     seed(AvailableNotificationsSeeder::class);
     $billsDueTomorrowNotificationId = AvailableNotification::where('name', 'Bills Due Tomorrow')->value('id');
-    $user = User::factory()->create();
+    $user = User::withoutEvents(function () {
+        return User::factory()->create();
+    });
     $bill = Bill::factory()->create(['status' => 'pending', 'due_date' => Carbon::tomorrow()->format('Y-m-d'), 'user_id' => $user->id]);
     $user->enabledNotifications()->attach($billsDueTomorrowNotificationId);
 
@@ -24,7 +26,9 @@ test('can users with "Bills Due Tomorrow" notification enabled receive it in-app
 
 test('cant users with "Bills Due Tomorrow" notification disabled receive it in-app', function () {
     seed(AvailableNotificationsSeeder::class);
-    $user = User::factory()->create();
+    $user = User::withoutEvents(function () {
+        return User::factory()->create();
+    });
     $bill = Bill::factory()->create(['status' => 'pending', 'due_date' => Carbon::tomorrow()->format('Y-m-d'), 'user_id' => $user->id]);
 
     artisan('send-emails:bills-due-tomorrow');
@@ -36,7 +40,9 @@ test('cant users with "Bills Due Tomorrow" notification disabled receive it in-a
 
 test('cant users with "Bills Due Tomorrow" notification enabled receive it in-app without any bills whose due date is tomorrow', function () {
     seed(AvailableNotificationsSeeder::class);
-    $user = User::factory()->create();
+    $user = User::withoutEvents(function () {
+        return User::factory()->create();
+    });
     $bill = Bill::factory()->create(['status' => 'pending', 'due_date' => Carbon::now()->addDays(3)->format('Y-m-d'), 'user_id' => $user->id]);
 
     artisan('send-emails:bills-due-tomorrow');

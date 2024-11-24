@@ -11,7 +11,9 @@ use Database\Seeders\AvailableNotificationsSeeder;
 test('can users with "Bills Overdue" notification enabled receive it in-app', function () {
     seed(AvailableNotificationsSeeder::class);
     $billsOverdueNotificationId = AvailableNotification::where('name', 'Bills Overdue')->value('id');
-    $user = User::factory()->create();
+    $user = User::withoutEvents(function () {
+        return User::factory()->create();
+    });
     $bill = Bill::factory()->create(['status' => 'overdue', 'user_id' => $user->id]);
     $user->enabledNotifications()->attach($billsOverdueNotificationId);
 
@@ -24,7 +26,9 @@ test('can users with "Bills Overdue" notification enabled receive it in-app', fu
 
 test('cant users with "Bills Overdue" notification disabled receive it in-app', function () {
     seed(AvailableNotificationsSeeder::class);
-    $user = User::factory()->create();
+    $user = User::withoutEvents(function () {
+        return User::factory()->create();
+    });
     $bill = Bill::factory()->create(['status' => 'overdue', 'user_id' => $user->id]);
 
     artisan('send-emails:bills-overdue');
@@ -36,7 +40,9 @@ test('cant users with "Bills Overdue" notification disabled receive it in-app', 
 
 test('cant users with "Bills Overdue" notification enabled receive it in-app without any bills in overdue', function () {
     seed(AvailableNotificationsSeeder::class);
-    $user = User::factory()->create();
+    $user = User::withoutEvents(function () {
+        return User::factory()->create();
+    });
     $bill = Bill::factory()->create(['status' => 'pending', 'user_id' => $user->id]);
 
     artisan('send-emails:bills-overdue');
