@@ -22,7 +22,7 @@ class UserAvailableNotificationController extends Controller
     private function bulkStore($notificationsIds, $userId)
     {
         foreach ($notificationsIds as $notificationId) {
-            DB::table('user_available_notifications')
+            DB::table('available_notification_user')
                 ->updateOrInsert([
                     'user_id' => $userId,
                     'available_notification_id' => $notificationId
@@ -32,7 +32,7 @@ class UserAvailableNotificationController extends Controller
 
     private function bulkDestroy($notificationsIds, $userId)
     {
-        DB::table('user_available_notifications')
+        DB::table('available_notification_user')
             ->where('user_id', $userId)
             ->whereIn('available_notification_id', $notificationsIds)
             ->delete();

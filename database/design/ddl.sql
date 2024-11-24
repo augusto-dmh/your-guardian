@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS available_notifications {
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 }
 
-CREATE TABLE IF NOT EXISTS user_available_notifications {
+CREATE TABLE IF NOT EXISTS available_notification_user {
     user_id BIGINT UNSIGNED,
     available_notification_id BIGINT UNSIGNED,
 }
@@ -105,9 +105,9 @@ ADD CONSTRAINT fk_bills_user_id FOREIGN KEY (user_id) REFERENCES users(id);
 ALTER TABLE available_notifications
 ADD CONSTRAINT PRIMARY KEY (id);
 
-ALTER TABLE user_available_notifications
-ADD CONSTRAINT fk_user_available_notifications_user_id FOREIGN KEY (user_id) REFERENCES users(id),
-ADD CONSTRAINT fk_user_available_notifications_available_notification_id FOREIGN KEY (available_notification_id) REFERENCES available_notifications(id);
+ALTER TABLE available_notification_user
+ADD CONSTRAINT fk_available_notification_user_user_id FOREIGN KEY (user_id) REFERENCES users(id),
+ADD CONSTRAINT fk_available_notification_user_available_notification_id FOREIGN KEY (available_notification_id) REFERENCES available_notifications(id);
 
 ALTER TABLE notifications
 ADD CONSTRAINT PRIMARY KEY (id),

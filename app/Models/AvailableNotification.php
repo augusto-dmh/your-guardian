@@ -18,6 +18,6 @@ class AvailableNotification extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'user_available_notifications', 'available_notification_id', 'user_id');
+        return $this->belongsToMany(User::class);
     }
 }

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_available_notifications', function (Blueprint $table) {
+        Schema::create('available_notification_user', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('available_notification_id');
 
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_available_notifications');
+        Schema::dropIfExists('available_notification_user');
     }
 };

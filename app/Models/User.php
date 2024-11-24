@@ -194,6 +194,6 @@ class User extends Authenticatable
 
     public function enabledNotifications()
     {
-        return $this->belongsToMany(AvailableNotification::class, 'user_available_notifications', 'user_id', 'available_notification_id');
+        return $this->belongsToMany(AvailableNotification::class);
     }
 }
