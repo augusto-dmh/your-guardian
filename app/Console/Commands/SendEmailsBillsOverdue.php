@@ -29,7 +29,9 @@ class SendEmailsBillsOverdue extends Command
      */
     public function handle()
     {
-        $users = User::all();
+        $users = User::whereHas('enabledNotifications', function ($q) {
+            $q->where('name', 'Bills Overdue');
+        })->get();
 
         foreach ($users as $user) {
             $bills = $user->bills()->where('status', '=', 'overdue')->get();

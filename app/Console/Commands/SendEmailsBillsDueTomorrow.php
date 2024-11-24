@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Console\Command;
+use App\Models\AvailableNotification;
 use App\Notifications\BillDueTomorrowNotification;
 use App\Notifications\BillsDueTomorrowNotification;
 
@@ -17,7 +18,9 @@ class SendEmailsBillsDueTomorrow extends Command
     public function handle()
     {
         $tomorrow = Carbon::tomorrow();
-        $users = User::all();
+        $users = User::whereHas('enabledNotifications', function ($q) {
+            $q->where('name', 'Bills Due Tomorrow');
+        })->get();
 
         foreach ($users as $user) {
             $bills = $user
