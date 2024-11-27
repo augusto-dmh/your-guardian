@@ -32,7 +32,9 @@ class BillsDueTomorrowNotification extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return ['mail', 'database'];
+        $userEnabledNotificationChannels = $notifiable->enabledNotificationChannels()->pluck('name')->toArray();
+
+        return $userEnabledNotificationChannels;
     }
 
     /**
