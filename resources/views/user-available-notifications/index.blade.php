@@ -4,7 +4,7 @@
     </x-slot>
     <form action="{{ route('user-available-notifications.savePreferences') }}" method="POST" class="flex flex-col gap-2">
         @csrf
-        <div class="flex gap-4">
+        <div class="flex flex-col gap-4 lg:flex-row">
             <div class="flex flex-col gap-2">
                 @foreach ($availableNotifications as $notification)
                     <div class="rounded-lg bg-secondary-bg p-2 {{ in_array($notification->id, $userEnabledNotifications->pluck('id')->toArray()) }}">
@@ -32,7 +32,7 @@
                 @endforeach
             </div>
         </div>
-        <div class="mt-4">
+        <div class="mt-4 text-right">
             <button type="submit" class="px-4 py-1 shadow-inner text-tertiary-txt hover:shadow-innerHover hover:text-secondary-txt">Save Preferences</button>
         </div>
     </form>
