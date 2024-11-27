@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Database\Seeders\TestUserSeeder;
 use Database\Seeders\TaskCategorySeeder;
+use Database\Seeders\NotificationChannelSeeder;
 use Database\Seeders\TransactionCategorySeeder;
 use Database\Seeders\AvailableNotificationsSeeder;
 
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
             TaskCategorySeeder::class,
             TransactionCategorySeeder::class,
             AvailableNotificationsSeeder::class,
+            NotificationChannelSeeder::class,
             TestUserSeeder::class,
         ]);
     }
