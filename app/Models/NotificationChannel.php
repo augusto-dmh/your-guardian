@@ -10,6 +10,8 @@ class NotificationChannel extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'slug'];
+
     public function users()
     {
         return $this->belongsToMany(User::class, 'notification_channel_user', 'notification_channel_id', 'user_id');
