@@ -47,17 +47,17 @@ CREATE TABLE IF NOT EXISTS bills (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS available_notifications {
+CREATE TABLE IF NOT EXISTS available_notifications (
     id BIGINT UNSIGNED AUTO_INCREMENT,
     name VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-}
+);
 
-CREATE TABLE IF NOT EXISTS available_notification_user {
+CREATE TABLE IF NOT EXISTS available_notification_user (
     user_id BIGINT UNSIGNED,
-    available_notification_id BIGINT UNSIGNED,
-}
+    available_notification_id BIGINT UNSIGNED
+);
 
 CREATE TABLE IF NOT EXISTS task_categories (
     id BIGINT UNSIGNED AUTO_INCREMENT,
@@ -77,6 +77,22 @@ CREATE TABLE IF NOT EXISTS tasks (
     status ENUM('pending', 'completed', 'failed') DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS notification_channels (
+    id TINYINT UNSIGNED AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    slug VARCHAR(255) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS notification_channel_user (
+    notification_channel_id TINYINT UNSIGNED NOT NULL,
+    user_id BIGINT UNSIGNED NOT NULL,
+    PRIMARY KEY (notification_channel_id, user_id),
+    FOREIGN KEY (notification_channel_id) REFERENCES notification_channels(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 ALTER TABLE users
