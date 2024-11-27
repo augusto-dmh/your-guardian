@@ -7,6 +7,7 @@ use App\Models\Task;
 use App\Models\Transaction;
 use App\Observers\UserObserver;
 use Illuminate\Support\Facades\DB;
+use App\Models\NotificationChannel;
 use App\Models\AvailableNotification;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -198,5 +199,10 @@ class User extends Authenticatable
     public function enabledNotifications()
     {
         return $this->belongsToMany(AvailableNotification::class);
+    }
+
+    public function enabledNotificationChannels()
+    {
+        return $this->belongsToMany(NotificationChannel::class, 'notification_channel_user', 'user_id', 'notification_channel_id');
     }
 }
