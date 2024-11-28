@@ -52,9 +52,9 @@
                             @foreach($billStatuses as $billStatus)
                             <label for="input-status-pending"
                                 class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
-                                <input type="checkbox" name="filterByStatus[]" id="input-status-{{ $billStatus }}" value="{{ $billStatus }}"
+                                <input type="checkbox" name="filterByStatuses[]" id="input-status-{{ $billStatus }}" value="{{ $billStatus }}"
                                     class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
-                                    {{ request('filterByStatus') && in_array($billStatus, request('filterByStatus')) ? 'checked' : '' }}>
+                                    {{ request('filterByStatuses') && in_array($billStatus, request('filterByStatuses')) ? 'checked' : '' }}>
                                 <span class="ml-2">{{ __(ucfirst($billStatus)) }}</span>
                             </label>
                             @endforeach

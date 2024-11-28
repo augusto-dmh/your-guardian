@@ -3,12 +3,6 @@
 @endphp
 
 <x-app-layout>
-    @if (auth()->user()->billsPercentagePerStatus['overdue'] > 0)
-        <x-view-popup-notification description="{{ __('Attention: you have overdue bills.') }}"
-            ctaText="{{ __('Check them') }}"
-            ctaRoute="{{ route('bills.index', ['filterByStatus' => ['overdue'], 'sortByDueDate' => 'desc']) }}" />
-    @endif
-
     <x-slot name="header">
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
             <h2 class="text-[#fac189] text-xl font-bold leading-tight">

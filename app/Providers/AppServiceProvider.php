@@ -3,11 +3,14 @@
 namespace App\Providers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\RateLimiter;
+use App\Policies\DatabaseNotificationPolicy;
 use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\Messages\MailMessage;
 
 class AppServiceProvider extends ServiceProvider
@@ -47,5 +50,7 @@ class AppServiceProvider extends ServiceProvider
                     )
                 );
         });
+
+        Gate::policy(DatabaseNotification::class, DatabaseNotificationPolicy::class); // DatabaseNotification is not in App\Models, so its policy needs to be manually registered
     }
 }

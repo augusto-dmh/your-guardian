@@ -55,6 +55,19 @@ entity Notification {
     --
 }
 
+entity AvailableNotification {
+    id BIGINT UNSIGNED <<PK>>
+    name VARCHAR(255)
+    --
+}
+
+entity NotificationChannel {
+    id TINYINT UNSIGNED <<PK>>
+    name VARCHAR(255)
+    slug VARCHAR(255) <<UK>>
+    --
+}
+
 entity Task {
     id BIGINT UNSIGNED <<PK>>
     user_id BIGINT UNSIGNED <<FK>>
@@ -91,6 +104,8 @@ User ||--o{ Bill
 Bill ||--o{ Notification
 Task ||--o{ Notification
 User ||--o{ Task
+User }o--o{ AvailableNotification
+User }o--o{ NotificationChannel
 TaskCategory ||--o{ Task
 TransactionCategory ||--o{ Transaction
 Bill |o--|| Transaction

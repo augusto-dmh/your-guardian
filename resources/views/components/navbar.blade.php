@@ -1,4 +1,6 @@
 @php
+    $notifications = auth()->user()->notifications;
+
     $locales = [
         'pt_BR' => ['flag' => '🇧🇷', 'name' => __('pt-BR')],
         'en' => ['flag' => '🇬🇧', 'name' => __('en-US')],
@@ -66,6 +68,11 @@
                         {{ __('Profile') }}
                     </x-dropdown-link>
 
+                    <!-- Notifications Preferences -->
+                    <x-dropdown-link :href="route('user-available-notifications.index')" class="text-gray-400 hover:text-gray-200">
+                        {{ __('Notifications') }}
+                    </x-dropdown-link>
+
                     <!-- Authentication -->
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
@@ -75,6 +82,52 @@
                             {{ __('Log Out') }}
                         </x-dropdown-link>
                     </form>
+                </x-slot>
+            </x-dropdown>
+
+            <x-dropdown align="right" width="64 md:w-80">
+                <x-slot name="trigger">
+                    <button
+                        class="flex items-center p-2 text-sm font-medium rounded-md transition duration-150 ease-in-out focus:outline-none focus:ring focus:ring-[#e4aa70] focus:ring-offset-1 focus:ring-offset-dark-eval-1 text-gray-400 hover:text-gray-200">
+                        <div class="ml-1">
+                            <x-heroicon-o-bell class="w-6 h-6" />
+                        </div>
+                    </button>
+                </x-slot>
+
+                <!-- Notifications -->
+                <x-slot name="content">
+                    <div class="w-64 overflow-y-auto md:w-80 max-h-60">
+                        @forelse ($notifications as $notification)
+                            @php $isUnread = is_null($notification->read_at); @endphp
+
+                            <div class="p-2 border-gray-600 {{ $isUnread ? 'bg-gray-800 hover:bg-gray-800/5' : 'bg-gray-700/70 hover:bg-gray-700/5' }} transition duration-100 ease-in-out">
+                                <x-dropdown-link :href="route('notification.read', $notification)">
+                                    <div class="flex items-start">
+                                        <div class="flex-shrink-0">
+                                            @if ($isUnread)
+                                                <x-heroicon-s-bell class="w-5 h-5 text-gray-400" />
+                                            @else
+                                                <x-heroicon-o-bell class="w-5 h-5 text-gray-400" />
+                                            @endif
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm {{ $isUnread ? 'text-gray-200' : 'text-gray-400' }}">
+                                                {{ $notification->data['message'] }}
+                                            </p>
+                                            <p class="text-xs text-gray-500">
+                                                {{ $notification->created_at->diffForHumans() }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </x-dropdown-link>
+                            </div>
+                        @empty
+                            <div class="p-2 text-sm text-gray-400">
+                                No notifications available.
+                            </div>
+                        @endforelse
+                    </div>
                 </x-slot>
             </x-dropdown>
         @endauth

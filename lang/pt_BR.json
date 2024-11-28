@@ -264,5 +264,9 @@
     "Click here": "Clique aqui",
     "Hi :name! Wanna know a bit about us?": "Olá :name! Quer saber um pouco sobre nós?",
     "Update": "Atualizar",
-    "Back": "Voltar"
+    "Back": "Voltar",
+    "No notifications available.": "Nenhuma notificação disponível.",
+    "Notifications preferences updated successfully.": "Preferências de notificação atualizadas com sucesso.",
+    "Manage Notifications": "Gerenciar Notificações",
+    "Notifications": "Notificações"
 }

@@ -12,7 +12,7 @@ class BillsOverdueNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    protected $bills;
+    public $bills;
     public $locale;
 
     /**
@@ -31,7 +31,9 @@ class BillsOverdueNotification extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return ['mail', 'database'];
+        $userEnabledNotificationChannels = $notifiable->enabledNotificationChannels()->pluck('slug')->toArray();
+
+        return $userEnabledNotificationChannels;
     }
 
     /**
@@ -52,7 +54,7 @@ class BillsOverdueNotification extends Notification implements ShouldQueue
         $message
             ->action(
                 __('View Bills'),
-                url('/bills?filterByStatus%5B%5D=overdue&sortByDueDate=desc')
+                url('/bills?filterByStatuses%5B%5D=overdue&sortByDueDate=desc')
             )
             ->line(
                 __(
@@ -76,7 +78,8 @@ class BillsOverdueNotification extends Notification implements ShouldQueue
     public function toArray(object $notifiable): array
     {
         return [
-                //
-            ];
+            'message' => __('You have one or more bills now overdue.'),
+            'url' => route('bills.index', ['filterByStatuses' => ['overdue'], 'sortByDueDate' => 'desc']),
+        ];
     }
 }

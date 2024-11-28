@@ -8,14 +8,14 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use App\Notifications\BillsOverdueNotification;
 
-class SendEmailsBillsOverdue extends Command
+class SendNotificationsBillsOverdue extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'send-emails:bills-overdue';
+    protected $signature = 'send-notifications:bills-overdue';
 
     /**
      * The console command description.
@@ -29,7 +29,9 @@ class SendEmailsBillsOverdue extends Command
      */
     public function handle()
     {
-        $users = User::all();
+        $users = User::whereHas('enabledNotifications', function ($q) {
+            $q->where('name', 'Bills Overdue');
+        })->get();
 
         foreach ($users as $user) {
             $bills = $user->bills()->where('status', '=', 'overdue')->get();

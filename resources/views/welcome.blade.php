@@ -28,11 +28,6 @@
     <div x-data="mainState" x-on:resize.window="handleWindowResize" x-cloak class="flex flex-col min-h-screen">
         <x-navbar />
         <div class="flex flex-col items-center justify-center flex-grow mt-2 text-gray-200 bg-dark-eval-0">
-            @if (Auth::user()?->created_at && now()->diffInMinutes(Auth::user()->created_at, true) <= 10)
-                <x-view-popup-notification
-                    description="{{ __('Hi :name! Wanna know a bit about us?', ['name' => Auth::user()->first_name]) }}"
-                    ctaText="{{ __('Click here') }}" ctaRoute="{{ route('home') }}" />
-            @endif
             <div class="flex flex-col items-center justify-center flex-grow gap-4 px-0 sm:px-6 md:px-8">
                 <header class="flex flex-col items-center gap-3 mb-8 text-center lg:flex-row">
                     <h2 class="flex-1 font-bold text-8xl text-secondary-txt">{{ __('Welcome') }}</h2>

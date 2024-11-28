@@ -10,6 +10,10 @@ Artisan::command('inspire', function () {
     ->purpose('Display an inspiring quote')
     ->hourly();
 
-Schedule::command('send-emails:bills-due-tomorrow')
+Schedule::command('send-notifications:bills-due-tomorrow')
     ->timezone('America/Sao_Paulo')
-    ->dailyAt('08:00');
+    ->dailyAt('05:00');
+
+Schedule::command('send-notifications:bills-overdue')
+    ->timezone('America/Sao_Paulo')
+    ->dailyAt('05:00');
