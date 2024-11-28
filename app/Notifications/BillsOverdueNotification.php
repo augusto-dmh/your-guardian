@@ -12,7 +12,7 @@ class BillsOverdueNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    protected $bills;
+    public $bills;
     public $locale;
 
     /**
