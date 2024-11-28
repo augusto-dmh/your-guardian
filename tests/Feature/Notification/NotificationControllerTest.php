@@ -7,7 +7,7 @@ use function Pest\Laravel\actingAs;
 use function Pest\Laravel\seed;
 use function Pest\Laravel\get;
 use Illuminate\Support\Facades\Log;
-use App\Notifications\BillDueTomorrowNotification;
+use App\Notifications\BillsDueTomorrowNotification;
 use Database\Seeders\AvailableNotificationsSeeder;
 // 'notification.read'
 
@@ -15,7 +15,7 @@ test('can a user that owns a notification read it', function () {
     seed(AvailableNotificationsSeeder::class);
     $user = User::factory()->create();
     $bill = Bill::factory()->create(['user_id' => $user->id, 'status' => 'pending', 'due_date' => Carbon::tomorrow()]);
-    $notification = new BillDueTomorrowNotification($bill, $user->language_preference);
+    $notification = new BillsDueTomorrowNotification($bill, $user->language_preference);
     $user->notify($notification);
     $databaseNotification = $user->notifications->first();
 
@@ -32,7 +32,7 @@ test('cant a user that doesnt own a notification read it', function () {
     $owner = User::factory()->create();
     $nonOwner = User::factory()->create();
     $bill = Bill::factory()->create(['user_id' => $owner->id, 'status' => 'pending', 'due_date' => Carbon::tomorrow()]);
-    $notification = new BillDueTomorrowNotification($bill, $owner->language_preference);
+    $notification = new BillsDueTomorrowNotification($bill, $owner->language_preference);
     $owner->notify($notification);
     $databaseNotification = $owner->notifications->first();
 
@@ -46,7 +46,7 @@ test('cant a guest read a notification', function () {
     seed(AvailableNotificationsSeeder::class);
     $user = User::factory()->create();
     $bill = Bill::factory()->create(['user_id' => $user->id, 'status' => 'pending', 'due_date' => Carbon::tomorrow()]);
-    $notification = new BillDueTomorrowNotification($bill, $user->language_preference);
+    $notification = new BillsDueTomorrowNotification($bill, $user->language_preference);
     $user->notify($notification);
     $databaseNotification = $user->notifications->first();
 
@@ -61,7 +61,7 @@ test('is user redirected to the url of the notification after it gets read', fun
     seed(AvailableNotificationsSeeder::class);
     $user = User::factory()->create();
     $bill = Bill::factory()->create(['user_id' => $user->id, 'status' => 'pending', 'due_date' => Carbon::tomorrow()]);
-    $notification = new BillDueTomorrowNotification($bill, $user->language_preference);
+    $notification = new BillsDueTomorrowNotification($bill, $user->language_preference);
     $user->notify($notification);
     $databaseNotification = $user->notifications->first();
 

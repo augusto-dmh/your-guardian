@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Console\Command;
 use App\Models\AvailableNotification;
-use App\Notifications\BillDueTomorrowNotification;
 use App\Notifications\BillsDueTomorrowNotification;
 
 class SendNotificationsBillsDueTomorrow extends Command
@@ -33,19 +32,12 @@ class SendNotificationsBillsDueTomorrow extends Command
                 return;
             }
 
-            count($bills) > 1
-                ? $user->notify(
-                    new BillsDueTomorrowNotification(
-                        $bills,
-                        $user->language_preference
-                    )
+            $user->notify(
+                new BillsDueTomorrowNotification(
+                    $bills,
+                    $user->language_preference
                 )
-                : $user->notify(
-                    new BillDueTomorrowNotification(
-                        $bills->first(),
-                        $user->language_preference
-                    )
-                );
+            );
         }
     }
 }
