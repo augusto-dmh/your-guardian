@@ -168,3 +168,29 @@ test('cant users with e-mail notification channel and "Bills Overdue" notificati
         }
     );
 });
+
+test('has the "Bills Overdue" notification sent the bills and the user locale', function () {
+    Notification::fake();
+    seed([AvailableNotificationsSeeder::class, NotificationChannelSeeder::class]);
+    $billsOverdueNotificationId = AvailableNotification::where('name', 'Bills Overdue')->value('id');
+    $emailNotificationChannelId = NotificationChannel::where('name', 'E-mail')->value('id');
+    $user = User::withoutEvents(function () {
+        return User::factory()->create();
+    });
+    $overdueBill = Bill::factory()->create(['status' => 'overdue', 'user_id' => $user->id]);
+    $user->enabledNotifications()->attach($billsOverdueNotificationId);
+    $user->enabledNotificationChannels()->attach($emailNotificationChannelId);
+
+    artisan('send-notifications:bills-overdue');
+    artisan('queue:work', ['--stop-when-empty' => true]);
+
+    Notification::assertSentTo(
+        $user,
+        BillsOverdueNotification::class,
+        function ($notification, array $channels) use ($overdueBill, $user) {
+            return $notification->bills->contains(function ($b) use ($overdueBill) {
+                return $b->id === $overdueBill->id;
+            }) && $notification->locale === $user->language_preference && in_array('mail', $channels);
+        }
+    );
+});

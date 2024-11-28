@@ -169,3 +169,29 @@ test('cant users with e-mail notification channel and "Bills Due Tomorrow" notif
         }
     );
 });
+
+test('has the "Bills Due Tomorrow" notification sent the bills and the user locale', function () {
+    Notification::fake();
+    seed([AvailableNotificationsSeeder::class, NotificationChannelSeeder::class]);
+    $billsDueTomorrowNotificationId = AvailableNotification::where('name', 'Bills Due Tomorrow')->value('id');
+    $emailNotificationChannelId = NotificationChannel::where('name', 'E-mail')->value('id');
+    $user = User::withoutEvents(function () {
+        return User::factory()->create();
+    });
+    $dueTomorrowBill = Bill::factory()->create(['status' => 'pending', 'due_date' => Carbon::tomorrow()->format('Y-m-d'), 'user_id' => $user->id]);
+    $user->enabledNotifications()->attach($billsDueTomorrowNotificationId);
+    $user->enabledNotificationChannels()->attach($emailNotificationChannelId);
+
+    artisan('send-notifications:bills-due-tomorrow');
+    artisan('queue:work', ['--stop-when-empty' => true]);
+
+    Notification::assertSentTo(
+        $user,
+        BillsDueTomorrowNotification::class,
+        function ($notification, array $channels) use ($dueTomorrowBill, $user) {
+            return $notification->bills->contains(function ($b) use ($dueTomorrowBill) {
+                return $b->id === $dueTomorrowBill->id;
+            }) && $notification->locale === $user->language_preference && in_array('mail', $channels);
+        }
+    );
+});
