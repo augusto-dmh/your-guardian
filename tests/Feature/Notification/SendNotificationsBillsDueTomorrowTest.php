@@ -7,6 +7,7 @@ use function Pest\Laravel\seed;
 use function Pest\Laravel\artisan;
 use App\Models\NotificationChannel;
 use App\Models\AvailableNotification;
+use App\Notifications\BillsOverdueNotification;
 use Database\Seeders\NotificationChannelSeeder;
 use Database\Seeders\AvailableNotificationsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -109,6 +110,7 @@ test('cant users with e-mail notification channel enabled and "Bills Due Tomorro
     $user = User::withoutEvents(function () {
         return User::factory()->create();
     });
+    $dueTomorrowBill = Bill::factory()->create(['status' => 'pending', 'due_date' => Carbon::tomorrow()->format('Y-m-d'), 'user_id' => $user->id]);
     $user->enabledNotificationChannels()->attach($emailNotificationChannelId);
 
     artisan('send-notifications:bills-due-tomorrow');
@@ -130,6 +132,7 @@ test('cant users with e-mail notification channel disabled and "Bills Due Tomorr
     $user = User::withoutEvents(function () {
         return User::factory()->create();
     });
+    $dueTomorrowBill = Bill::factory()->create(['status' => 'pending', 'due_date' => Carbon::tomorrow()->format('Y-m-d'), 'user_id' => $user->id]);
     $user->enabledNotifications()->attach($billsDueTomorrowNotificationId);
 
     artisan('send-notifications:bills-due-tomorrow');

@@ -109,6 +109,7 @@ test('cant users with e-mail notification channel enabled and "Bills Overdue" no
     $user = User::withoutEvents(function () {
         return User::factory()->create();
     });
+    $overdueBill = Bill::factory()->create(['status' => 'overdue', 'user_id' => $user->id]);
     $user->enabledNotificationChannels()->attach($emailNotificationChannelId);
 
     artisan('send-notifications:bills-overdue');
@@ -130,6 +131,7 @@ test('cant users with e-mail notification channel disabled and "Bills Overdue" n
     $user = User::withoutEvents(function () {
         return User::factory()->create();
     });
+    $overdueBill = Bill::factory()->create(['status' => 'overdue', 'user_id' => $user->id]);
     $user->enabledNotifications()->attach($billsOverdueNotificationId);
 
     artisan('send-notifications:bills-overdue');
