@@ -28,6 +28,7 @@ class UserFactory extends Factory
             'first_name' => $this->faker->firstName,
             'last_name' => $this->faker->lastName,
             'birthdate' => $this->faker->date,
+            'language_preference' => 'en', // it has a default value in db-level, but the created model instances by a factory do not get the default value from the database until they get refreshed
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => (static::$password ??= Hash::make('password')),
