@@ -11,7 +11,7 @@
                             </h3>
                         </a>
                         <div class="absolute w-6 h-6 bottom-4 right-6">
-                            {{ $slot }}
+                            <x-card-icon :instance="$instance" :modelName="$modelName" />
                         </div>
                     </div>
                 </div>
