@@ -1,18 +1,16 @@
-@props(['entity'])
-
 @php
     use Illuminate\Support\Str;
 
     $attributes = null;
 
-    switch ($entity) {
-        case 'App\Models\Transaction':
+    switch ($modelName) {
+        case 'transaction':
             $attributes = (new App\Models\Transaction())->getFillable();
             break;
-        case 'App\Models\Bill':
+        case 'bill':
             $attributes = (new App\Models\Bill())->getFillable();
             break;
-        case 'App\Models\Task':
+        case 'task':
             $attributes = (new App\Models\Task())->getFillable();
             break;
     }
