@@ -100,29 +100,9 @@
 
     @if ($transactions->isNotEmpty())
         @if (auth()->user()->index_view_preference === 'cards')
-            <div class="grid gap-4 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-3 2xl:grid-cols-4">
-                @foreach ($transactions as $transaction)
-                    <x-card-index :entityInstance="$transaction" :entityName="'transaction'">
-                        @if ($transaction->type === 'income')
-                            <x-heroicon-o-trending-up class="text-green-500 " />
-                        @else
-                            <x-heroicon-o-trending-down class="text-red-500" />
-                        @endif
-                    </x-card-index>
-                @endforeach
-            </div>
+            <x-cards :instances="$transactions"/>
         @else
-            <div class="w-full overflow-x-auto rounded-lg">
-                <table class="w-full bg-secondary-bg">
-                    <x-table-index-columns :entity="\App\Models\Transaction::class" />
-                    @foreach ($transactions as $transaction)
-                        <tr
-                            class="{{ $loop->iteration % 2 == 0 ? 'text-tertiary-txt bg-secondary-bg' : 'text-secondary-txt bg-tertiary-bg' }}">
-                            <x-table-index-row :entityName="'transaction'" :entityInstance="$transaction" />
-                        </tr>
-                    @endforeach
-                </table>
-            </div>
+            <x-table :instances="$transactions" />
         @endif
     @else
         <div class="flex items-center justify-center h-40">

@@ -85,31 +85,9 @@
     <div>
         @if ($tasks->isNotEmpty())
             @if (auth()->user()->index_view_preference === 'cards')
-                <div class="grid gap-4 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-3 2xl:grid-cols-4">
-                    @foreach ($tasks as $task)
-                        <x-card-index :entityInstance="$task" :entityName="'task'">
-                            @if ($task->status === 'pending')
-                                <x-heroicon-o-clock class="text-yellow-500 " />
-                            @elseif ($task->status === 'completed')
-                                <x-heroicon-o-check-circle class="text-green-500" />
-                            @else
-                                <x-heroicon-o-x-circle class="text-red-500" />
-                            @endif
-                        </x-card-index>
-                    @endforeach
-                </div>
+                <x-cards :instances="$tasks"/>
             @else
-                <div class="w-full overflow-x-auto rounded-lg">
-                    <table class="w-full bg-secondary-bg">
-                        <x-table-index-columns :entity="\App\Models\Task::class" />
-                        @foreach ($tasks as $task)
-                            <tr
-                                class="{{ $loop->iteration % 2 == 0 ? 'text-tertiary-txt bg-secondary-bg' : 'text-secondary-txt bg-tertiary-bg' }}">
-                                <x-table-index-row :entityName="'task'" :entityInstance="$task" />
-                            </tr>
-                        @endforeach
-                    </table>
-                </div>
+                <x-table :instances="$tasks" />
             @endif
         @else
             <div class="flex items-center justify-center h-40">
