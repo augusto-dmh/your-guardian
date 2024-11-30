@@ -1,15 +1,13 @@
-@props(['entityInstance', 'entityName'])
-
 <div class="relative rounded-md shadow-inner bg-secondary-bg">
     <div class="flex flex-col justify-center px-6 py-4">
         <div class="mb-8">
             <div class="flex items-center justify-between">
                 <div>
                     <div class="flex items-center">
-                        <a class="mr-2" href="{{ route($entityName . 's.show', $entityInstance) }}">
+                        <a class="mr-2" href="{{ route($modelName . 's.show', $instance) }}">
                             <h3
                                 class="max-w-full text-2xl font-bold break-words text-tertiary-txt hover:underline hover:text-secondary-txt title">
-                                {{ Str::limit($entityInstance->title, 20, '...') }}
+                                {{ Str::limit($instance->title, 20, '...') }}
                             </h3>
                         </a>
                         <div class="absolute w-6 h-6 bottom-4 right-6">
@@ -18,7 +16,7 @@
                     </div>
                 </div>
                 <div class="flex items-center">
-                    <form action="{{ route($entityName . 's.destroy', $entityInstance) }}" method="POST">
+                    <form action="{{ route($modelName . 's.destroy', $instance) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="submit"
@@ -31,7 +29,7 @@
                             </svg>
                         </button>
                     </form>
-                    <a href="{{ route($entityName . 's.edit', $entityInstance) }}"
+                    <a href="{{ route($modelName . 's.edit', $instance) }}"
                         class="block rounded-full text-tertiary-txt hover:shadow-inner hover:text-secondary-txt">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 p-1 hover:text-secondary-txt"
                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -43,7 +41,7 @@
             </div>
 
             <div class="overflow-auto font-thin break-all text-primary-txt max-h-32">
-                <p>{{ Str::limit($entityInstance->description, 45, '...') ?? 'No description available' }}</p>
+                <p>{{ Str::limit($instance->description, 45, '...') ?? 'No description available' }}</p>
             </div>
         </div>
     </div>
