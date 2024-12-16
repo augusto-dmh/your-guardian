@@ -32,6 +32,7 @@ class BillController extends Controller
 
     public function index(Request $request)
     {
+        $sortFields = ['Amount', 'Due Date'];
         $searchTerm = $request->input('searchTerm');
 
         $query = Auth::user()->bills()->getQuery();
@@ -69,7 +70,7 @@ class BillController extends Controller
 
         $billStatuses = EnumHelper::getEnumValues('bills', 'status');
 
-        return view('bills.index', compact('bills', 'searchTerm', 'billStatuses'));
+        return view('bills.index', compact('bills', 'searchTerm', 'billStatuses', 'sortFields'));
     }
 
     public function show(BillShowRequest $request, Bill $bill)

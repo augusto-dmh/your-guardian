@@ -30,6 +30,7 @@ class TransactionController extends Controller
 
     public function index(Request $request)
     {
+        $sortFields = ['Amount', 'Due Date'];
         $searchTerm = $request->input('searchTerm');
 
         $query = Auth::user()->transactions()->getQuery();
@@ -69,7 +70,7 @@ class TransactionController extends Controller
 
         return view(
             'transactions.index',
-            compact('transactions', 'searchTerm', 'transactionTypes')
+            compact('transactions', 'searchTerm', 'transactionTypes', 'sortFields')
         );
     }
 

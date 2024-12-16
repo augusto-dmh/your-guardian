@@ -9,41 +9,7 @@
     <form method="GET" action="{{ route('bills.index') }}">
         <div class="flex flex-col gap-3 pb-4 m-auto xl:justify-start lg:flex-row xl:gap-12">
             <div class="flex flex-col items-start gap-4 sm:items-end md:flex-row sm:flex-row">
-                <div class="flex items-end gap-4">
-                    <div class="flex items-end gap-2">
-                        <div class="form-group">
-                            <p class="mb-1 text-secondary-txt">{{ __('Amount') }}</p>
-                            <select name="sortByAmount"
-                                class="font-thin border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg">
-                                <option class="font-thin" value="">
-                                    {{ __('Sort by') }}
-                                </option>
-                                <option class="font-thin" value="asc"
-                                    {{ request('sortByAmount') == 'asc' ? 'selected' : '' }}>{{ __('Ascending') }}
-                                </option>
-                                <option class="font-thin" value="desc"
-                                    {{ request('sortByAmount') == 'desc' ? 'selected' : '' }}>{{ __('Descending') }}
-                                </option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <p class="mb-1 text-secondary-txt">{{ __('Due Date') }}</p>
-                            <select name="sortByDueDate"
-                                class="font-thin border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg">
-                                <option class="font-thin" value="">
-                                    {{ __('Sort by') }}
-                                </option>
-                                <option class="font-thin" value="asc"
-                                    {{ request('sortByDueDate') == 'asc' ? 'selected' : '' }}>{{ __('Ascending') }}
-                                </option>
-                                <option class="font-thin" value="desc"
-                                    {{ request('sortByDueDate') == 'desc' ? 'selected' : '' }}>{{ __('Descending') }}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
+                <x-selects-sort :fields="$sortFields" />
 
                 <div class="flex items-end gap-4">
                     <div class="form-group">
