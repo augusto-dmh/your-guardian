@@ -68,9 +68,13 @@ class TransactionController extends Controller
 
         $transactionTypes = EnumHelper::getEnumValues('transactions', 'type');
 
+        $filterFields = [
+            ['name' => 'Type', 'values' => $transactionTypes],
+        ];
+
         return view(
             'transactions.index',
-            compact('transactions', 'searchTerm', 'transactionTypes', 'sortFields')
+            compact('transactions', 'searchTerm', 'sortFields', 'filterFields')
         );
     }
 

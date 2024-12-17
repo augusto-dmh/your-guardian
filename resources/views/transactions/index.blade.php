@@ -11,22 +11,7 @@
             <div class="flex flex-col items-start gap-4 sm:items-end md:flex-row sm:flex-row">
                 <x-selects-sort :fields="$sortFields" />
 
-                <div class="flex items-end gap-4">
-                    <div class="form-group">
-                        <p class="mb-1 text-secondary-txt">{{ __('Type') }}</p>
-                        <div class="flex flex-row gap-4 sm:gap-0 sm:flex-col">
-                            @foreach($transactionTypes as $transactionType)
-                                <label for="input-type-{{ $transactionType }}"
-                                    class="inline-flex items-center font-thin cursor-pointer text-tertiary-txt hover:text-secondary-txt">
-                                    <input type="checkbox" name="filterByType[]" id="input-type-{{ $transactionType }}" value="{{ $transactionType }}"
-                                        class="border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-quinary-bg text-tertiary-txt bg-secondary-bg hover:bg-tertiary-bg focus:bg-tertiary-bg"
-                                        {{ request('filterByType') && in_array($transactionType, request('filterByType')) ? 'checked' : '' }}>
-                                    <span class="ml-2">{{ __(ucfirst($transactionType)) }}</span>
-                                </label>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
+                <x-checkboxes-filter :fields="$filterFields" />
             </div>
             <div class="flex items-end gap-4">
                 <button type="submit"

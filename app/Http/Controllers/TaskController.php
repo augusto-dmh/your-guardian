@@ -69,7 +69,11 @@ class TaskController extends Controller
 
         $taskStatuses = EnumHelper::getEnumValues('tasks', 'status');
 
-        return view('tasks.index', compact('tasks', 'searchTerm', 'taskStatuses', 'sortFields'));
+        $filterFields = [
+            ['name' => 'Status', 'values' => $taskStatuses],
+        ];
+
+        return view('tasks.index', compact('tasks', 'searchTerm', 'sortFields', 'filterFields'));
     }
 
     public function show(TaskShowRequest $request, Task $task)

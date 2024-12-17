@@ -70,7 +70,11 @@ class BillController extends Controller
 
         $billStatuses = EnumHelper::getEnumValues('bills', 'status');
 
-        return view('bills.index', compact('bills', 'searchTerm', 'billStatuses', 'sortFields'));
+        $filterFields = [
+            ['name' => 'Status', 'values' => $billStatuses],
+        ];
+
+        return view('bills.index', compact('bills', 'searchTerm', 'sortFields', 'filterFields'));
     }
 
     public function show(BillShowRequest $request, Bill $bill)
