@@ -1,31 +1,29 @@
-@props(['entityName', 'entityInstance'])
-
 @php
     use Illuminate\Support\Str;
     use App\Models\Bill;
 
     $attributeMapping = [
-        'bill_id' => $entityInstance->bill ? 'has_bill' : 'N/A',
-        'title' => Str::limit($entityInstance->title, 20, '...'),
-        'description' => Str::limit($entityInstance->description ?? 'N/A', 30, '...'),
-        'transaction_category_id' => __($entityInstance->transactionCategory?->name ?? 'N/A'),
-        'task_category_id' => __($entityInstance->taskCategory?->name ?? 'N/A'),
-        'status' => __($entityInstance->status ?? 'N/A'),
-        'type' => __($entityInstance->type ?? 'N/A'),
-        'due_date' => formatDate($entityInstance->due_date),
-        'paid_at' => formatDate($entityInstance->paid_at),
-        'created_at' => formatDate($entityInstance->created_at),
+        'bill_id' => $instance->bill ? 'has_bill' : 'N/A',
+        'title' => Str::limit($instance->title, 20, '...'),
+        'description' => Str::limit($instance->description ?? 'N/A', 30, '...'),
+        'transaction_category_id' => __($instance->transactionCategory?->name ?? 'N/A'),
+        'task_category_id' => __($instance->taskCategory?->name ?? 'N/A'),
+        'status' => __($instance->status ?? 'N/A'),
+        'type' => __($instance->type ?? 'N/A'),
+        'due_date' => formatDate($instance->due_date),
+        'paid_at' => formatDate($instance->paid_at),
+        'created_at' => formatDate($instance->created_at),
     ];
 
-    $transformAttribute = function ($attribute, $entityInstance, $mapping) {
+    $transformAttribute = function ($attribute, $instance, $mapping) {
         if (array_key_exists($attribute, $mapping)) {
             return $mapping[$attribute] ?? 'N/A';
         }
 
-        return $entityInstance->$attribute ?? 'N/A';
+        return $instance->$attribute ?? 'N/A';
     };
 
-    $attributes = $entityInstance->getFillable();
+    $attributes = $instance->getFillable();
 
     $filteredAttributes = array_filter($attributes, function ($attribute) {
         return $attribute !== 'user_id';
@@ -35,16 +33,16 @@
 @foreach ($filteredAttributes as $attribute)
     <td class="p-3 text-left whitespace-nowrap">
         @if ($attribute === 'bill_id' && $attributeMapping[$attribute] === 'has_bill')
-            <a href="{{ route('bills.show', $entityInstance) }}">
+            <a href="{{ route('bills.show', $instance) }}">
                 <x-heroicon-o-document-text class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
             </a>
         @else
-            {{ $transformAttribute($attribute, $entityInstance, $attributeMapping) }}
+            {{ $transformAttribute($attribute, $instance, $attributeMapping) }}
         @endif
     </td>
 @endforeach
 <td class="flex items-center justify-center p-3 font-normal">
-    <form action="{{ route($entityName . 's.destroy', $entityInstance) }}" method="POST">
+    <form action="{{ route($modelName . 's.destroy', $instance) }}" method="POST">
         @csrf
         @method('DELETE')
         <button type="submit"
@@ -57,7 +55,7 @@
             </svg>
         </button>
     </form>
-    <a href="{{ route($entityName . 's.edit', $entityInstance) }}"
+    <a href="{{ route($modelName . 's.edit', $instance) }}"
         class="block rounded-full text-tertiary-txt hover:shadow-inner hover:text-secondary-txt">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 p-1 hover:text-secondary-txt" fill="none"
             viewBox="0 0 24 24" stroke="currentColor">
@@ -65,7 +63,7 @@
                 d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L12 21H7v-5L16.732 3.196a2.5 2.5 0 01-1.5-.964z" />
         </svg>
     </a>
-    <a href="{{ route($entityName . 's.show', $entityInstance) }}"
+    <a href="{{ route($modelName . 's.show', $instance) }}"
         class="block rounded-full text-tertiary-txt hover:shadow-inner hover:text-secondary-txt">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 p-1 hover:text-secondary-txt" fill="none"
             viewBox="0 0 24 24" stroke="currentColor">

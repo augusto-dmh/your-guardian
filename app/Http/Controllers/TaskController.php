@@ -31,6 +31,7 @@ class TaskController extends Controller
 
     public function index(Request $request)
     {
+        $sortFields = ['Amount', 'Due Date'];
         $searchTerm = $request->input('searchTerm');
 
         $query = Auth::user()->tasks()->getQuery();
@@ -66,9 +67,13 @@ class TaskController extends Controller
 
         $tasks = $query->paginate(10);
 
-        $taskStatuses = EnumHelper::getEnumValues('tasks', 'status  ');
+        $taskStatuses = EnumHelper::getEnumValues('tasks', 'status');
 
-        return view('tasks.index', compact('tasks', 'searchTerm', 'taskStatuses'));
+        $filterFields = [
+            ['name' => 'Status', 'values' => $taskStatuses],
+        ];
+
+        return view('tasks.index', compact('tasks', 'searchTerm', 'sortFields', 'filterFields'));
     }
 
     public function show(TaskShowRequest $request, Task $task)

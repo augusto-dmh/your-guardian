@@ -6,8 +6,8 @@ class Type
 {
     public function handle($query, $next)
     {
-        request()->has('filterByType') &&
-            $query->whereIn('type', request()->input('filterByType'));
+        request()->has('filterByTypes') &&
+            $query->whereIn('type', request()->input('filterByTypes'));
 
         return $next($query);
     }

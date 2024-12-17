@@ -37,7 +37,7 @@ test('transactions index screen filters transactions correctly', function () {
 
     $response = $this->actingAs($this->user)->get(
         route('transactions.index', [
-            'filterByType' => 'income',
+            'filterByTypes' => 'income',
         ])
     );
 
