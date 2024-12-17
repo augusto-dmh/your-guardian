@@ -39,9 +39,7 @@
                 <x-table :instances="$tasks" />
             @endif
         @else
-            <div class="flex items-center justify-center h-40">
-                <p class="text-4xl text-center select-none text-tertiary-bg">{{ __('Waiting tasks...') }}</p>
-            </div>
+            <x-waiting-instances-message :modelInstances="$tasks" />
         @endif
     </div>
 
