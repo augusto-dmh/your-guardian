@@ -119,13 +119,33 @@ class TransactionController extends Controller
 
     public function edit(Transaction $transaction)
     {
+        $textFields = [
+            ['name' => 'amount', 'exhibitionName' => 'Amount', 'value' => $transaction->amount],
+        ];
+
+        $selectFields = [
+            [
+                'name' => 'type',
+                'exhibitionName' => 'Type',
+                'value' => $transaction->type,
+                'options' => array_map(function ($type) {
+                    return ['value' => $type, 'label' => $type];
+                }, EnumHelper::getEnumValues('transactions', 'type'))
+            ],
+            [
+                'name' => 'transaction_category_id',
+                'exhibitionName' => 'Category',
+                'value' => $transaction->transactionCategory?->id,
+                'options' => TransactionCategory::all()->map(function ($category) {
+                    return ['value' => $category->id, 'label' => $category->name];
+                })->toArray()
+            ]
+        ];
+
         return view('transactions.edit', [
             'transaction' => $transaction,
-            'transactionCategories' => TransactionCategory::all(),
-            'transactionTypes' => EnumHelper::getEnumValues(
-                'transactions',
-                'type'
-            ),
+            'textFields' => $textFields,
+            'selectFields' => $selectFields,
         ]);
     }
 }

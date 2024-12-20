@@ -106,8 +106,32 @@ class BillController extends Controller
 
     public function edit(BillEditRequest $request, Bill $bill)
     {
-        $billStatuses = EnumHelper::getEnumValues('bills', 'status');
+        $textFields = [
+            ['name' => 'title', 'exhibitionName' => 'Title', 'value' => $bill->title],
+            ['name' => 'description', 'exhibitionName' => 'Description', 'value' => $bill->description],
+            ['name' => 'amount', 'exhibitionName' => 'Amount', 'value' => $bill->amount],
+        ];
 
-        return view('bills.edit', compact('bill', 'billStatuses'));
+        $calendarFields = [
+            ['name' => 'due_date', 'exhibitionName' => 'Due Date', 'value' => $bill->due_date],
+        ];
+
+        $selectFields = [
+            [
+                'name' => 'status',
+                'exhibitionName' => 'Status',
+                'value' => $bill->status,
+                'options' => array_map(function ($status) {
+                    return ['value' => $status, 'label' => ucfirst($status)];
+                }, EnumHelper::getEnumValues('bills', 'status'))
+            ]
+        ];
+
+        return view('bills.edit', [
+            'bill' => $bill,
+            'textFields' => $textFields,
+            'calendarFields' => $calendarFields,
+            'selectFields' => $selectFields,
+        ]);
     }
 }

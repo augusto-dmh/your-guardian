@@ -110,9 +110,34 @@ class TaskController extends Controller
 
     public function edit(Task $task)
     {
-        $taskCategories = TaskCategory::all();
-        $taskStatuses = EnumHelper::getEnumValues('tasks', 'status');
+        $textFields = [
+            ['name' => 'title', 'exhibitionName' => 'Title', 'value' => $task->title],
+            ['name' => 'description', 'exhibitionName' => 'Description', 'value' => $task->description],
+        ];
 
-        return view('tasks.edit', compact('task', 'taskCategories', 'taskStatuses'));
+        $selectFields = [
+            [
+                'name' => 'status',
+                'exhibitionName' => 'Status',
+                'value' => $task->status,
+                'options' => array_map(function ($status) {
+                    return ['value' => $status, 'label' => ucfirst($status)];
+                }, EnumHelper::getEnumValues('tasks', 'status'))
+            ],
+            [
+                'name' => 'task_category_id',
+                'exhibitionName' => 'Category',
+                'value' => $task->taskCategory?->id,
+                'options' => TaskCategory::all()->map(function ($category) {
+                    return ['value' => $category->id, 'label' => $category->name];
+                })->toArray()
+            ]
+        ];
+
+        return view('tasks.edit', [
+            'task' => $task,
+            'textFields' => $textFields,
+            'selectFields' => $selectFields,
+        ]);
     }
 }
