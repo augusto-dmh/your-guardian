@@ -14,7 +14,7 @@
         @endforeach
 
         @foreach($selectFields as $selectField)
-            <x-edit-form-select-field :field="$selectField" :options="$selectField['options']" />
+            <x-edit-form-select-field :field="$selectField" />
         @endforeach
     </x-edit-form>
 </x-app-layout>

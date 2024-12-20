@@ -9,12 +9,10 @@ use Illuminate\View\Component;
 class EditFormSelectField extends Component
 {
     public $field;
-    public $options;
 
-    public function __construct($field, $options)
+    public function __construct($field)
     {
         $this->field = $field;
-        $this->options = $options;
     }
 
     public function render(): View|Closure|string
