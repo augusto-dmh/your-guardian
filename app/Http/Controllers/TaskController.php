@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\EnumHelper;
 use Auth;
 use App\Models\Task;
+use App\Helpers\EnumHelper;
 use App\Models\TaskCategory;
+use Illuminate\Http\Request;
 use App\QueryOptions\Sort\DueDate;
+use App\Services\TaskFieldService;
 use App\QueryOptions\Filter\Status;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Gate;
@@ -15,13 +17,19 @@ use App\Http\Requests\Task\TaskShowRequest;
 use App\Http\Requests\Task\TaskStoreRequest;
 use App\Http\Requests\Task\TaskDeleteRequest;
 use App\Http\Requests\Task\TaskUpdateRequest;
-use Illuminate\Http\Request;
 
 /**
  * @see \App\Observers\TaskObserver
  */
 class TaskController extends Controller
 {
+    public $taskFieldService;
+
+    public function __construct(TaskFieldService $taskFieldService)
+    {
+        $this->taskFieldService = $taskFieldService;
+    }
+
     public function store(TaskStoreRequest $request)
     {
         $task = Auth::user()->tasks()->create($request->validated());
@@ -31,7 +39,7 @@ class TaskController extends Controller
 
     public function index(Request $request)
     {
-        $sortFields = ['Amount', 'Due Date'];
+        $sortFields = $this->taskFieldService->getSortFields();
         $searchTerm = $request->input('searchTerm');
 
         $query = Auth::user()->tasks()->getQuery();
@@ -67,11 +75,7 @@ class TaskController extends Controller
 
         $tasks = $query->paginate(10);
 
-        $taskStatuses = EnumHelper::getEnumValues('tasks', 'status');
-
-        $filterFields = [
-            ['name' => 'Status', 'values' => $taskStatuses],
-        ];
+        $filterFields = $this->taskFieldService->getFilterFields();
 
         return view('tasks.index', compact('tasks', 'searchTerm', 'sortFields', 'filterFields'));
     }
@@ -110,29 +114,8 @@ class TaskController extends Controller
 
     public function edit(Task $task)
     {
-        $textFields = [
-            ['name' => 'title', 'exhibitionName' => 'Title', 'value' => $task->title],
-            ['name' => 'description', 'exhibitionName' => 'Description', 'value' => $task->description],
-        ];
-
-        $selectFields = [
-            [
-                'name' => 'status',
-                'exhibitionName' => 'Status',
-                'value' => $task->status,
-                'options' => array_map(function ($status) {
-                    return ['value' => $status, 'label' => ucfirst($status)];
-                }, EnumHelper::getEnumValues('tasks', 'status'))
-            ],
-            [
-                'name' => 'task_category_id',
-                'exhibitionName' => 'Category',
-                'value' => $task->taskCategory?->id,
-                'options' => TaskCategory::all()->map(function ($category) {
-                    return ['value' => $category->id, 'label' => $category->name];
-                })->toArray()
-            ]
-        ];
+        $textFields = $this->taskFieldService->getTextFields($task);
+        $selectFields = $this->taskFieldService->getSelectFields($task);
 
         return view('tasks.edit', [
             'task' => $task,

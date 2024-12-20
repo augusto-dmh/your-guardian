@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\EnumHelper;
 use Auth;
 use App\Models\Bill;
+use App\Helpers\EnumHelper;
 use Illuminate\Http\Request;
 use App\QueryOptions\Sort\Amount;
 use App\QueryOptions\Sort\DueDate;
+use App\Services\BillFieldService;
 use App\QueryOptions\Filter\Status;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Gate;
-use App\Http\Requests\Bill\BillEditRequest;
 use Illuminate\Support\Facades\Pipeline;
+use App\Http\Requests\Bill\BillEditRequest;
 use App\Http\Requests\Bill\BillShowRequest;
 use App\Http\Requests\Bill\BillStoreRequest;
 use App\Http\Requests\Bill\BillDeleteRequest;
@@ -23,6 +24,13 @@ use App\Http\Requests\Bill\BillUpdateRequest;
  */
 class BillController extends Controller
 {
+    public $billFieldService;
+
+    public function __construct(BillFieldService $billFieldService)
+    {
+        $this->billFieldService = $billFieldService;
+    }
+
     public function store(BillStoreRequest $request)
     {
         $bill = Auth::user()->bills()->create($request->validated());
@@ -32,7 +40,7 @@ class BillController extends Controller
 
     public function index(Request $request)
     {
-        $sortFields = ['Amount', 'Due Date'];
+        $sortFields = $this->billFieldService->getSortFields();
         $searchTerm = $request->input('searchTerm');
 
         $query = Auth::user()->bills()->getQuery();
@@ -68,11 +76,7 @@ class BillController extends Controller
 
         $bills = $query->paginate(10);
 
-        $billStatuses = EnumHelper::getEnumValues('bills', 'status');
-
-        $filterFields = [
-            ['name' => 'Status', 'values' => $billStatuses],
-        ];
+        $filterFields = $this->billFieldService->getFilterFields();
 
         return view('bills.index', compact('bills', 'searchTerm', 'sortFields', 'filterFields'));
     }
@@ -106,26 +110,9 @@ class BillController extends Controller
 
     public function edit(BillEditRequest $request, Bill $bill)
     {
-        $textFields = [
-            ['name' => 'title', 'exhibitionName' => 'Title', 'value' => $bill->title],
-            ['name' => 'description', 'exhibitionName' => 'Description', 'value' => $bill->description],
-            ['name' => 'amount', 'exhibitionName' => 'Amount', 'value' => $bill->amount],
-        ];
-
-        $calendarFields = [
-            ['name' => 'due_date', 'exhibitionName' => 'Due Date', 'value' => $bill->due_date],
-        ];
-
-        $selectFields = [
-            [
-                'name' => 'status',
-                'exhibitionName' => 'Status',
-                'value' => $bill->status,
-                'options' => array_map(function ($status) {
-                    return ['value' => $status, 'label' => ucfirst($status)];
-                }, EnumHelper::getEnumValues('bills', 'status'))
-            ]
-        ];
+        $textFields = $this->billFieldService->getTextFields($bill);
+        $calendarFields = $this->billFieldService->getCalendarFields($bill);
+        $selectFields = $this->billFieldService->getSelectFields($bill);
 
         return view('bills.edit', [
             'bill' => $bill,
