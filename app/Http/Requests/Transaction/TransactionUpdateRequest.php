@@ -4,8 +4,11 @@ namespace App\Http\Requests\Transaction;
 
 use App\Models\Transaction;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class TransactionUpdateRequest extends FormRequest
 {
@@ -25,7 +28,6 @@ class TransactionUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
             'bill_id' => 'nullable|exists:bills,id',
             'transaction_category_id' => [
                 'nullable',
