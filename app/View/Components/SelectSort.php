@@ -12,7 +12,7 @@ class SelectSort extends Component
 
     public function __construct($field)
     {
-        $this->field = $field;
+        $this->field = str_replace(' ', '', $field);
     }
 
     public function render(): View|Closure|string
