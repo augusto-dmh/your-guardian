@@ -8,7 +8,7 @@
             $attributes = (new App\Models\Transaction())->getFillable();
             break;
         case 'bill':
-            $attributes = (new App\Models\Bill())->getFillable();
+            $attributes = array_merge((new App\Models\Bill())->getFillable(), ['paid_at']);
             break;
         case 'task':
             $attributes = (new App\Models\Task())->getFillable();
@@ -20,6 +20,7 @@
         'transaction_category_id' => __('category'),
         'task_category_id' => __('category'),
         'created_at' => __('created at'),
+        'due_date' => __('due date'),
         'paid_at' => __('paid at'),
     ];
 

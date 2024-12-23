@@ -15,6 +15,14 @@
         'created_at' => formatDate($instance->created_at),
     ];
 
+    $attributes = class_basename($instance) !== 'Bill' ? $instance->getFillable() : array_merge($instance->getFillable(), ['paid_at']);
+
+    $filteredAttributes = array_filter($attributes, function ($attribute) {
+        return $attribute !== 'user_id';
+    });
+@endphp
+
+@php
     $transformAttribute = function ($attribute, $instance, $mapping) {
         if (array_key_exists($attribute, $mapping)) {
             return $mapping[$attribute] ?? 'N/A';
@@ -22,12 +30,6 @@
 
         return $instance->$attribute ?? 'N/A';
     };
-
-    $attributes = $instance->getFillable();
-
-    $filteredAttributes = array_filter($attributes, function ($attribute) {
-        return $attribute !== 'user_id';
-    });
 @endphp
 
 @foreach ($filteredAttributes as $attribute)
