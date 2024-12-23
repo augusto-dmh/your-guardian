@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\EnumHelper;
 use App\Models\Transaction;
+use Illuminate\Http\Request;
 use App\QueryOptions\Sort\Date;
 use App\QueryOptions\Filter\Type;
 use App\QueryOptions\Sort\Amount;
@@ -13,14 +14,21 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Pipeline;
+use App\Services\TransactionFieldService;
 use App\Http\Requests\Transaction\TransactionShowRequest;
 use App\Http\Requests\Transaction\TransactionStoreRequest;
 use App\Http\Requests\Transaction\TransactionDeleteRequest;
 use App\Http\Requests\Transaction\TransactionUpdateRequest;
-use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
+    public $transactionFieldService;
+
+    public function __construct(TransactionFieldService $transactionFieldService)
+    {
+        $this->transactionFieldService = $transactionFieldService;
+    }
+
     public function store(TransactionStoreRequest $request)
     {
         Auth::user()->transactions()->create($request->validated());
@@ -30,7 +38,7 @@ class TransactionController extends Controller
 
     public function index(Request $request)
     {
-        $sortFields = ['Amount', 'Due Date'];
+        $sortFields = $this->transactionFieldService->getSortFields();
         $searchTerm = $request->input('searchTerm');
 
         $query = Auth::user()->transactions()->getQuery();
@@ -66,11 +74,7 @@ class TransactionController extends Controller
 
         $transactions = $query->paginate(10);
 
-        $transactionTypes = EnumHelper::getEnumValues('transactions', 'type');
-
-        $filterFields = [
-            ['name' => 'Type', 'values' => $transactionTypes],
-        ];
+        $filterFields = $this->transactionFieldService->getFilterFields();
 
         return view(
             'transactions.index',
@@ -119,13 +123,13 @@ class TransactionController extends Controller
 
     public function edit(Transaction $transaction)
     {
+        $textFields = $this->transactionFieldService->getTextFields($transaction);
+        $selectFields = $this->transactionFieldService->getSelectFields($transaction);
+
         return view('transactions.edit', [
             'transaction' => $transaction,
-            'transactionCategories' => TransactionCategory::all(),
-            'transactionTypes' => EnumHelper::getEnumValues(
-                'transactions',
-                'type'
-            ),
+            'textFields' => $textFields,
+            'selectFields' => $selectFields,
         ]);
     }
 }
