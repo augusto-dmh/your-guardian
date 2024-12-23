@@ -18,12 +18,13 @@ class BillChartDataService
     {
         $startDate = now()->startOfDay();
         $endDate = now()->addDays($length)->endOfDay();
+        $dateFormat = getDateFormatForChartDataQuery();
 
         $bills = $this->user
             ->bills()
             ->whereBetween('due_date', [$startDate, $endDate])
             ->where('status', 'pending')
-            ->selectRaw('DATE(due_date) as date, SUM(amount) as total_amount')
+            ->selectRaw("DATE_FORMAT(due_date, '{$dateFormat}') as date, SUM(amount) as total_amount")
             ->groupBy('date')
             ->orderBy('date')
             ->get()
@@ -34,9 +35,9 @@ class BillChartDataService
         $data = [];
 
         foreach ($period as $date) {
-            $formattedDate = $date->format('Y-m-d');
+            $formattedDate = formatDate($date);
             $labels[] = $formattedDate;
-            $data[] = $bills->get($formattedDate)->total_amount ?? 0;
+            $data[] = $bills->get(formatDate($date))->total_amount ?? 0;
         }
 
         return [
@@ -55,12 +56,13 @@ class BillChartDataService
     {
         $startDate = now()->subDays($length)->startOfDay();
         $endDate = now()->endOfDay();
+        $dateFormat = getDateFormatForChartDataQuery();
 
         $bills = $this->user
             ->bills()
             ->whereBetween('paid_at', [$startDate, $endDate])
             ->where('status', 'paid')
-            ->selectRaw('DATE(paid_at) as date, SUM(amount) as total_amount')
+            ->selectRaw("DATE_FORMAT(paid_at, '{$dateFormat}') as date, SUM(amount) as total_amount")
             ->groupBy('date')
             ->orderBy('date')
             ->get()
@@ -71,9 +73,9 @@ class BillChartDataService
         $data = [];
 
         foreach ($period as $date) {
-            $formattedDate = $date->format('Y-m-d');
+            $formattedDate = formatDate($date);
             $labels[] = $formattedDate;
-            $data[] = $bills->get($formattedDate)->total_amount ?? 0;
+            $data[] = $bills->get(formatDate($date))->total_amount ?? 0;
         }
 
         return [

@@ -19,12 +19,13 @@ class TransactionChartDataService
     {
         $startDate = now()->subDays($length)->startOfDay();
         $endDate = now()->endOfDay();
+        $dateFormat = getDateFormatForChartDataQuery();
 
         $transactions = $this->user
             ->transactions()
             ->whereBetween('created_at', [$startDate, $endDate])
             ->where('type', 'income')
-            ->selectRaw('DATE(created_at) as date, SUM(amount) as total_amount')
+            ->selectRaw("DATE_FORMAT(created_at, '{$dateFormat}') as date, SUM(amount) as total_amount")
             ->groupBy('date')
             ->orderBy('date')
             ->get()
@@ -35,9 +36,9 @@ class TransactionChartDataService
         $data = [];
 
         foreach ($period as $date) {
-            $formattedDate = $date->format('Y-m-d');
+            $formattedDate = formatDate($date);
             $labels[] = $formattedDate;
-            $data[] = $transactions->get($formattedDate)->total_amount ?? 0;
+            $data[] = $transactions->get(formatDate($date))->total_amount ?? 0;
         }
 
         return [
@@ -56,12 +57,13 @@ class TransactionChartDataService
     {
         $startDate = now()->subDays($length)->startOfDay();
         $endDate = now()->endOfDay();
+        $dateFormat = getDateFormatForChartDataQuery();
 
         $transactions = $this->user
             ->transactions()
             ->whereBetween('created_at', [$startDate, $endDate])
             ->where('type', 'expense')
-            ->selectRaw('DATE(created_at) as date, SUM(amount) as total_amount')
+            ->selectRaw("DATE_FORMAT(created_at, '{$dateFormat}') as date, SUM(amount) as total_amount")
             ->groupBy('date')
             ->orderBy('date')
             ->get()
@@ -72,9 +74,9 @@ class TransactionChartDataService
         $data = [];
 
         foreach ($period as $date) {
-            $formattedDate = $date->format('Y-m-d');
+            $formattedDate = formatDate($date);
             $labels[] = $formattedDate;
-            $data[] = $transactions->get($formattedDate)->total_amount ?? 0;
+            $data[] = $transactions->get(formatDate($date))->total_amount ?? 0;
         }
 
         return [
