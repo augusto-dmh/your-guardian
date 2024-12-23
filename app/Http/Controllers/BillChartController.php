@@ -3,10 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Charts\DailyPaidBillsChart;
-use App\Charts\YearlyPaidBillsChart;
-use Illuminate\Support\Facades\Auth;
-use App\Charts\MonthlyPaidBillsChart;
 use App\Services\BillChartDataService;
 
 class BillChartController extends Controller
@@ -18,18 +14,11 @@ class BillChartController extends Controller
         $this->billChartDataService = $billChartDataService;
     }
 
-    public function fetchChartData(Request $request)
+    public function __invoke(Request $request)
     {
-        $chartData = $this->getBillChartData(
-            $request->input('type', 'pending'),
-            (int) $request->input('length', 7)
-        );
+        $type = $request->input('type', 'pending');
+        $length = (int) $request->input('length', 7);
 
-        return response()->json($chartData);
-    }
-
-    protected function getBillChartData($type, $length)
-    {
         switch ($type) {
             case 'pending':
                 $chartData = $this->billChartDataService->getBillsTotalAmountToBePaidInNextDays(
@@ -48,6 +37,6 @@ class BillChartController extends Controller
                 break;
         }
 
-        return $chartData;
+        return response()->json($chartData);
     }
 }

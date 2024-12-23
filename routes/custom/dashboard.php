@@ -10,12 +10,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::post('/api/chart-data/transactions', [
-        TransactionChartController::class,
-        'fetchChartData',
-    ]);
-    Route::post('/api/chart-data/bills', [
-        BillChartController::class,
-        'fetchChartData',
-    ]);
+    Route::post('/api/chart-data/transactions', TransactionChartController::class);
+    Route::post('/api/chart-data/bills', BillChartController::class);
 });
